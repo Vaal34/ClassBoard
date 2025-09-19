@@ -1,0 +1,134 @@
+.minuteur {
+  width: 300px;
+  height: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+  overflow: hidden;
+  border-radius: 3.5rem;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: bottom;
+  z-index: 0;
+}
+
+.night-image {
+  z-index: 1;
+  transition: clip-path 0.5s ease-in-out;
+  clip-path: circle(100% at center);
+}
+
+.day-image {
+  z-index: 0;
+  clip-path: circle(100% at center);
+}
+
+.running .night-image {
+  clip-path: circle(0% at center);
+}
+
+.running .day-image {
+  clip-path: circle(100% at center);
+}
+
+.content-minuteur {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 80%;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-direction: column;
+}
+
+.button-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.button-action {
+  width: 3.5rem;
+  height: 3.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.button-action:hover {
+  transform: scale(1.05);
+}
+
+.button-action-restart:hover {
+  transform: scale(1.05);
+}
+
+.button-action-active {
+  background-color: #07040b;
+}
+
+.button-action-inactive {
+  background-color: #fffcdd;
+}
+
+.button-action svg {
+  transform: scale(1); /* Force l'icône à garder sa taille originale */
+  transition: none;
+}
+
+.time-block {
+  gap: 10px;
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+}
+
+.time-text {
+  font-size: 3rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  transition: color 0.5s ease-in-out;
+  user-select: none;
+}
+
+.span-time {
+  font-weight: 600;
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+  
+}
+
+.span-night {
+  color: #07040b;
+}
+
+.span-day {
+  color: #fffcdd;
+}
+
+.span-label {
+  margin-top: -10px;
+  font-size: 1rem;
+  font-weight: 200;
+  text-align: center;
+}

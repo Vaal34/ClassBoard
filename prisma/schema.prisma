@@ -1,0 +1,24 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Classe {
+  id      Int     @id @default(autoincrement())
+  name    String
+  path    String  @unique
+  eleves  Eleve[]
+}
+
+model Eleve {
+  id       Int     @id @default(autoincrement())
+  prenom   String
+  nom      String
+  checked  Boolean @default(true)
+  classeId Int
+  classe   Classe  @relation(fields: [classeId], references: [id])
+}
