@@ -8,11 +8,36 @@
   box-sizing: border-box;
 }
 
+.header-selector {
+  display: flex;
+  justify-content: space-between;
+}
+
 .title-selector {
   font-size: 2rem;
   text-align: left;
-  font-weight: 600;
+  font-weight: 300;
 }
+
+.btn-setting-data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 0;
+  border-radius: 1.25rem;
+  padding: 0.75rem;
+  transition: all 0.25s linear;
+  background: transparent;
+  text-decoration: none;
+  color: inherit;
+}
+
+.btn-setting-data:hover {
+  color: #681eea;
+  background: #faf9ff;
+}
+
 
 .grid-selector {
   display: grid;
@@ -31,12 +56,12 @@
   padding: 0.5rem;
   text-decoration: none;
   transition: all 0.3s ease-in-out;
-  box-shadow: 15px 15px 30px #bebebe, -15px -15px 30px #ffffff;
+  box-shadow: 4px 4px 20px #bebebe;
   gap: 0.5rem;
 }
 
 .selector-class-item:hover {
-  box-shadow: 15px 15px 30px #dac2ff, -15px -15px 30px #f8edff;
+  box-shadow: 4px 4px 20px #dac2ff;
   background: #f7f3fd;
 }
 
@@ -116,11 +141,11 @@
   cursor: pointer;
   font-weight: 200;
   font-style: italic;
-  transition: all 0.5s ease;
+  transition: all 0.3s ease;
 }
 
-.btn-class-selector:hover {
-  transform: scale(1.05);
+.selector-class-item:hover .btn-class-selector {
+  transform: scale(1.01);
   color: #681eea;
   background: #ede4ff;
 }

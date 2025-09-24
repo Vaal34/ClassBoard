@@ -56,7 +56,7 @@ export function Generate({ eleves, Elvalue, Gpvalue, method, handleIsGenerate })
         ))}
       </div>
       <button className="btn-reset" onClick={handleIsGenerate}>
-        <RotateCcw size={15} />
+        <RotateCcw size={15} strokeWidth={1}/>
       </button>
     </div>
   );

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "./classSelector.css";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Bolt } from "lucide-react";
 import { useClasses } from "../../hooks/useClasses";
 
 function ClassSelector() {
@@ -8,7 +8,12 @@ function ClassSelector() {
 
   return (
     <div className="container-class-selector">
-      <span className="title-selector">Class</span>
+      <div className="header-selector">
+        <span className="title-selector">CLASSBOARD.</span>
+        <Link className="btn-setting-data" to={`/setting-class`}>
+          <Bolt strokeWidth={1} />
+        </Link>
+      </div>
       <div className="grid-selector">
         {Object.values(listClasses).map((classe) => (
           <div className="selector-class-item" key={classe.id}>
@@ -23,7 +28,7 @@ function ClassSelector() {
               key={classe.id}
               to={`/classe/${classe.path}`}
             >
-              <ArrowRight size={15} />
+              <ArrowRight size={15} strokeWidth={1} />
             </Link>
           </div>
         ))}

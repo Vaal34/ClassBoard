@@ -4,17 +4,17 @@ import "./addItems.css";
 
 const tools = [
   {
-    icon: <Timer />,
+    icon: <Timer strokeWidth={1} />,
     label: "Minuteur",
     type: "minuteur",
   },
   {
-    icon: <Paperclip />,
+    icon: <Paperclip strokeWidth={1} />,
     label: "Consigne",
     type: "consigne",
   },
   {
-    icon: <Users />,
+    icon: <Users strokeWidth={1} />,
     label: "Groupe",
     type: "group",
   },
@@ -26,7 +26,7 @@ function AddItem({ onAdd }) {
   return (
     <div className="open-button">
       <button className="add-button" onClick={() => navigate(-1)}>
-        <CornerUpLeft />
+        <CornerUpLeft strokeWidth={1} />
       </button>
       {tools.map((tool) => (
         <button

@@ -20,7 +20,7 @@ export function SettingGenerate({ eleves, Gpvalue, Elvalue, increment, decrement
           <span className="span-counter">nb. groupes</span>
           <div className="counter-grp">
             <button className="btn-counter" id="gp" onClick={decrement}>
-              <Minus size={15} color="#681EEA" />
+              <Minus size={15} color="#681EEA" strokeWidth={1} />
             </button>
             <Counter
               value={Gpvalue}
@@ -32,18 +32,18 @@ export function SettingGenerate({ eleves, Gpvalue, Elvalue, increment, decrement
               textColor="#000"
             />
             <button className="btn-counter" id="gp" onClick={increment}>
-              <Plus size={15} color="#681EEA" />
+              <Plus size={15} color="#681EEA" strokeWidth={1}/>
             </button>
           </div>
           <button className="btn-generate" onClick={() => handleIsGenerate("gp")}>
-            <Rocket size={15} />
+            <Rocket size={15} strokeWidth={1} />
           </button>
         </div>
         <div className="nb-item">
           <span className="span-counter">nb. élèves</span>
           <div className="counter-grp">
             <button className="btn-counter" id="el" onClick={decrement}>
-              <Minus size={15} color="#681EEA" />
+              <Minus size={15} color="#681EEA" strokeWidth={1} />
             </button>
             <Counter
               value={Elvalue}
@@ -55,11 +55,11 @@ export function SettingGenerate({ eleves, Gpvalue, Elvalue, increment, decrement
               textColor="#000"
             />
             <button className="btn-counter" id="el" onClick={increment}>
-              <Plus size={15} color="#681EEA" />
+              <Plus size={15} color="#681EEA" strokeWidth={1}/>
             </button>
           </div>
           <button className="btn-generate" onClick={() => handleIsGenerate("el")}>
-            <Rocket size={15} />
+            <Rocket size={15} strokeWidth={1}/>
           </button>
         </div>
       </div>
