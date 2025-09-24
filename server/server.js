@@ -9,7 +9,9 @@ app.use(express.json());
 
 // GET
 app.get("/api/classes", async (req, res) => {
-  const classes = await prisma.classe.findMany();
+  const classes = await prisma.classe.findMany({
+    include: { eleves: true },
+  });
   res.json(classes);
 });
 
@@ -61,7 +63,7 @@ app.delete("/api/classes/", async (req, res) => {
   const deleteClasse = await prisma.classe.delete({
     where: {
       name: req.body.name,
-      path: req.body.path
+      path: req.body.path,
     },
   });
 
@@ -71,6 +73,8 @@ app.delete("/api/classes/", async (req, res) => {
 app.delete("/api/classes/:path", async (req, res) => {
   const { path } = req.params;
   const { prenom, nom } = req.body;
+
+  console.log(path)
 
   const classe = await prisma.classe.findUnique({
     where: { path },
@@ -132,6 +136,5 @@ app.put("/api/classes/:path/eleves/:id", async (req, res) => {
 
   res.status(201).json(updatedEleve);
 });
-
 
 app.listen(3001, () => console.log("Server running on http://localhost:3001"));
