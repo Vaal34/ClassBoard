@@ -6,10 +6,12 @@ import {
   Navigate,
   useParams,
 } from "react-router-dom";
-import Tableau from "./tableau.jsx";
 import { createRoot } from "react-dom/client";
-import ClassSelector from "./pages/classSelector/classSelector.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Tableau from "./tableau.jsx";
+import ClassSelector from "./pages/classSelector/classSelector.jsx";
+import SettingsData from "./pages/settingsData/settingsData.jsx";
 
 function TableauPerClass() {
   // récupere :path de l'url /classe/:path
@@ -25,9 +27,11 @@ createRoot(document.getElementById("root")).render(
         <Routes>
           <Route path="/" element={<Navigate to="/class" replace />} />
           <Route path="/classes" element={<ClassSelector />} />
+          <Route path="/setting-class" element={<SettingsData />} />
           <Route path="/classe/:path" element={<TableauPerClass />} />
           <Route path="*" element={<Navigate to="/classes" replace />} />
         </Routes>
       </BrowserRouter>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
 );
