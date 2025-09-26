@@ -62,8 +62,7 @@ app.post("/api/classes/:path", async (req, res) => {
 app.delete("/api/classes/", async (req, res) => {
   const deleteClasse = await prisma.classe.delete({
     where: {
-      name: req.body.name,
-      path: req.body.path,
+      id: req.body.id
     },
   });
 
@@ -72,22 +71,18 @@ app.delete("/api/classes/", async (req, res) => {
 
 app.delete("/api/classes/:path", async (req, res) => {
   const { path } = req.params;
-  const { prenom, nom } = req.body;
-
-  console.log(path)
 
   const classe = await prisma.classe.findUnique({
     where: { path },
     select: { id: true },
   });
+  
+  console.log(req.body)
 
-  console.log(path, prenom, nom, classe.id);
-
-  const deleteEleve = await prisma.eleve.deleteMany({
+  const deleteEleve = await prisma.eleve.delete({
     where: {
-      prenom,
-      nom,
-      classeId: classe.id,
+      id: req.body.id,
+      classeId: classe.id
     },
   });
 
