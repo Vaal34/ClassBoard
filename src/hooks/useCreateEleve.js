@@ -7,29 +7,30 @@ export function useCreateEleve(path) {
   return useMutation({
     mutationKey: ["create-eleve", path],
     mutationFn: async (newEleve) => {
-      const { data } = await axios.post(`/api/classes/${path}`, newEleve);
+      const { data } = await axios.post(`http://localhost:3001/api/classes/${path}`, newEleve);
       return data;
     },
     onMutate: async (newEleve) => {
-      await queryClient.cancelQueries({ queryKey: ["eleves", path] });
+      await queryClient.cancelQueries({ queryKey: ["classe", path] });
 
-      const previousEleves = queryClient.getQueryData([
-        "eleves",
-        path,
-      ]);
+      const previousClasse = queryClient.getQueryData(["classe", path]);
 
-      queryClient.setQueryData(["eleves", path], (old = []) => [
-        ...old,
-        { ...newEleve, id: Date.now() }, // id temporaire
-      ]);
+      queryClient.setQueryData(["classe", path], (oldClasse = {}) => {
+        const tempId = Date.now();
+        const oldEleves = Array.isArray(oldClasse?.eleves) ? oldClasse.eleves : [];
+        return {
+          ...oldClasse,
+          eleves: [...oldEleves, { ...newEleve, id: tempId }],
+        };
+      });
 
-      return { previousEleves };
+      return { previousClasse };
     },
     onError: (_err, _newEleve, context) => {
-      queryClient.setQueryData(["eleves", path], context?.previousEleves);
+      queryClient.setQueryData(["classe", path], context?.previousClasse);
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["eleves", path] });
+      queryClient.invalidateQueries({ queryKey: ["classe", path] });
     },
   });
 }
