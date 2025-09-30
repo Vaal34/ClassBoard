@@ -20,5 +20,5 @@ model Eleve {
   nom      String
   checked  Boolean @default(true)
   classeId Int
-  classe   Classe  @relation(fields: [classeId], references: [id])
+  classe   Classe  @relation(fields: [classeId], references: [id], onDelete: Cascade)
 }
