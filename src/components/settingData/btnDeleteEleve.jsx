@@ -1,5 +1,6 @@
 import { X } from "lucide-react";
 import { useDeleteEleve } from "../../hooks/useDeleteEleve";
+import "./btnDeleteEleve.css"
 
 function BtnDeleteEleve(params) {
   const row = params?.data;
@@ -23,8 +24,8 @@ function BtnDeleteEleve(params) {
   };
 
   return (
-    <button onClick={handleDelete}>
-      <X strokeWidth={1} />
+    <button onClick={handleDelete} className="btn-delete-eleve">
+      <X strokeWidth={1} size={20}/>
     </button>
   );
 }
