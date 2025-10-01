@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useCreateEleve } from "../../hooks/useCreateEleve";
-import "./formClasse.css"
+import "./formEleve.css";
+import { useDeleteEleve } from "../../hooks/useDeleteEleve";
 
-function FormEleve({ selectClass }) {
+function FormEleve({ selectClass, selectEleves }) {
   const createEleve = useCreateEleve(selectClass);
+  const deleteEleve = useDeleteEleve(selectClass);
   const [prenom, setPrenom] = useState("");
   const [nom, setNom] = useState("");
 
@@ -21,25 +23,39 @@ function FormEleve({ selectClass }) {
     );
   };
 
+  const handleDelete = (e) => {
+    e?.stopPropagation?.();
+    if (selectEleves.length === 0) return;
+    const ids = selectEleves.map((eleve) => eleve.id);
+    deleteEleve.mutate(ids);
+  };
+
   return (
-    <form onSubmit={handleOnSubmit} style={{ display: "flex", gap: 8, margin: "12px 0" }}>
-      <input
-        placeholder="Prénom"
-        value={prenom}
-        onChange={(e) => setPrenom(e.target.value)}
-      />
-      <input
-        placeholder="Nom"
-        value={nom}
-        onChange={(e) => setNom(e.target.value)}
-      />
-      <button type="submit" disabled={!selectClass || createEleve.isPending}>
-        {createEleve.isPending ? "Ajout..." : "Ajouter l'élève"}
+    <div className="setting-data-eleve">
+      <form onSubmit={handleOnSubmit} className="form-data-eleve">
+        <div className="input-data-eleve">
+          <input
+            placeholder="Prénom"
+            value={prenom}
+            onChange={(e) => setPrenom(e.target.value)}
+          />
+          <input
+            placeholder="Nom"
+            value={nom}
+            onChange={(e) => setNom(e.target.value)}
+          />
+        </div>
+        <button type="submit" disabled={!selectClass || createEleve.isPending}>
+          {createEleve.isPending ? "Ajout..." : "Ajouter l'élève"}
+        </button>
+      </form>
+      <button disabled={selectEleves.length === 0} onClick={handleDelete}>
+        {selectEleves.length <= 1
+          ? "Supprimer l'élève"
+          : "Supprimer les élèves"}
       </button>
-    </form>
+    </div>
   );
 }
 
 export default FormEleve;
-
-

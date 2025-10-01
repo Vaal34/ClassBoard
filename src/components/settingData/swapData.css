@@ -1,0 +1,56 @@
+.setting-swap-container {
+  padding: 1rem;
+  background-color: blueviolet;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  border-radius: 2rem;
+  gap: 1rem;
+}
+
+.setting-swap-label {
+  color: black;
+  font-size: 1.3rem;
+  font-weight: 200;
+}
+
+.setting-swap-btn-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  gap: 1rem;
+}
+
+.setting-swap-btn {
+  height: 100%;
+  width: 100%;
+  border-radius: 2rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s, transform 0.2s;
+  background-color: #ff7575;
+  border: 3px solid;
+  border-color: #fd5252;
+}
+
+.setting-swap-btn:hover {
+  background-color: #75ffaf;
+  border-color: #1be16e;
+}
+
+.setting-swap-btn:active {
+  background-color: #75ffaf;
+  transform: scale(0.98);
+}
+
+.setting-swap-btn.active {
+  background-color: #75ffaf;
+  border-color: #1be16e;
+}
+
+.span-swap-btn {
+  color: black;
+  font-size: 1.3rem;
+  font-weight: 800;
+}

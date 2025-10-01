@@ -1,0 +1,17 @@
+.setting-data-eleve {
+  padding: 1rem;
+  background-color: blueviolet;
+  height: 100%;
+  border-radius: 2rem;
+}
+
+.form-data-eleve {
+  display: flex;
+}
+
+.input-data-eleve {
+  display: flex;
+  flex-direction: column;
+}
+
+
