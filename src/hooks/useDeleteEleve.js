@@ -5,42 +5,66 @@ export function useDeleteEleve(path) {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationKey: ["delete-eleve", path],
-    mutationFn: async (deleteEleve) => {
+    mutationKey: ["delete-eleve"],
+    mutationFn: async (ids) => {
       const { data } = await axios.delete(
-        `http://localhost:3001/api/classes/${path}`,
-        { data: deleteEleve }
+        "http://localhost:3001/api/eleves",
+        { data: { ids } }
       );
       return data;
     },
-    onMutate: async (deleteEleve) => {
+    onMutate: async (ids) => {
+      // Annuler les requêtes en cours pour la classe spécifique
       await queryClient.cancelQueries({ queryKey: ["classe", path] });
+      // Annuler les requêtes en cours pour tous les élèves
+      await queryClient.cancelQueries({ queryKey: ["all-eleves"] });
 
+      // Sauvegarder les données précédentes
       const previousClasse = queryClient.getQueryData(["classe", path]);
+      const previousAllEleves = queryClient.getQueryData(["all-eleves"]);
 
-      // Optimistic delete: retirer l'élève ciblé du cache (id uniquement)
-      queryClient.setQueryData(["classe", path], (oldClasse = {}) => {
-        const oldEleves = Array.isArray(oldClasse && oldClasse.eleves)
-          ? oldClasse.eleves
-          : [];
+      const idsArray = Array.isArray(ids) ? ids : [ids];
 
-        const hasId = !!(deleteEleve && deleteEleve.id !== undefined && deleteEleve.id !== null);
-        const filteredEleves = oldEleves.filter((e) => {
-          if (!e) return true;
-          if (!hasId) return true; // si pas d'id, ne pas modifier le cache
-          return e.id !== deleteEleve.id;
+      // Mise à jour optimiste pour la classe spécifique
+      if (path) {
+        queryClient.setQueryData(["classe", path], (oldClasse = {}) => {
+          const oldEleves = Array.isArray(oldClasse?.eleves)
+            ? oldClasse.eleves
+            : [];
+
+          const filteredEleves = oldEleves.filter((e) => {
+            return e && !idsArray.includes(e.id);
+          });
+
+          return { ...oldClasse, eleves: filteredEleves };
         });
+      }
 
-        return { ...oldClasse, eleves: filteredEleves };
+      // Mise à jour optimiste pour tous les élèves
+      queryClient.setQueryData(["all-eleves"], (oldEleves = []) => {
+        const elevesArray = Array.isArray(oldEleves) ? oldEleves : [];
+        return elevesArray.filter((e) => {
+          return e && !idsArray.includes(e.id);
+        });
       });
 
-      return { previousClasse };
+      return { previousClasse, previousAllEleves };
     },
-    onError: (_err, _deleteEleve, context) => {
-      queryClient.setQueryData(["classe", path], context?.previousClasse);
+    onError: (_err, _ids, context) => {
+      // Restaurer les données en cas d'erreur
+      if (path && context?.previousClasse) {
+        queryClient.setQueryData(["classe", path], context.previousClasse);
+      }
+      if (context?.previousAllEleves) {
+        queryClient.setQueryData(["all-eleves"], context.previousAllEleves);
+      }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["classe", path] });
+      // Invalider les caches pour refetch les données
+      if (path) {
+        queryClient.invalidateQueries({ queryKey: ["classe", path] });
+      }
+      queryClient.invalidateQueries({ queryKey: ["all-eleves"] });
     },
   });
 }

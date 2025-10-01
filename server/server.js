@@ -24,6 +24,11 @@ app.get("/api/classes/:path", async (req, res) => {
   res.json(classe);
 });
 
+app.get("/api/eleves", async (req, res) => {
+  const eleves = await prisma.eleve.findMany();
+  res.status(201).json(eleves);
+});
+
 // POST
 app.post("/api/classes", async (req, res) => {
   if (req.body == undefined) {
@@ -62,27 +67,18 @@ app.post("/api/classes/:path", async (req, res) => {
 app.delete("/api/classes/", async (req, res) => {
   const deleteClasse = await prisma.classe.delete({
     where: {
-      id: req.body.id
+      id: req.body.id,
     },
   });
 
   return res.status(201).json(deleteClasse);
 });
 
-app.delete("/api/classes/:path", async (req, res) => {
-  const { path } = req.params;
+app.delete("/api/eleves", async (req, res) => {
 
-  const classe = await prisma.classe.findUnique({
-    where: { path },
-    select: { id: true },
-  });
-  
-  console.log(req.body)
-
-  const deleteEleve = await prisma.eleve.delete({
+  const deleteEleve = await prisma.eleve.deleteMany({
     where: {
-      id: req.body.id,
-      classeId: classe.id
+      id: { in: req.body.ids },
     },
   });
 
