@@ -1,39 +1,37 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import { useClasse } from "../../hooks/useClasse";
 import { useClasses } from "../../hooks/useClasses";
+import { useEleves } from "../../hooks/useEleves";
 import "./settingsData.css";
 import FormClass from "../../components/settingData/formClasse";
 import FormEleve from "../../components/settingData/formEleve";
-import BtnDeleteEleve from "../../components/settingData/btnDeleteEleve";
-import BtnDeleteClasse from "../../components/settingData/btnDeleteClasse";
-import { useDeleteClasse } from "../../hooks/useDeleteClasse";
+import { myTheme } from "./agGridTheme";
+import SwapData from "../../components/settingData/swapData";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 function SettingsData() {
-  const { listClasses, isLoading, error } = useClasses();
+  const { listClasses } = useClasses();
+  const { allEleves } = useEleves();
   const [selectClass, setSelectClass] = useState();
-  const [selectEleve, setSelectEleve] = useState();
-  const [formOpen, setFormOpen] = useState(false);
+  const [selectEleves, setSelectEleves] = useState([]);
   const gridRef = useRef(null);
+  const [swapData, setSwapData] = useState("byClass");
 
   const { dataClasse } = useClasse(selectClass?.path);
-
 
   const [colDefs, setColDefs] = useState([
     { field: "prenom", headerName: "Prenom" },
     { field: "nom", headerName: "Nom" },
-    {
-      headerName: "action",
-      lockPosition: "right",
-      cellRenderer: BtnDeleteEleve,
-    },
   ]);
 
   const defaultColDef = {
     flex: 1,
+    minWidth: 120,
+    resizable: false,
+    // floatingFilter: true,
   };
 
   const handleSelectClass = (e) => {
@@ -44,9 +42,20 @@ function SettingsData() {
     setSelectClass(classe);
   };
 
-  const handleFormOpen = () => {
-    setFormOpen(!formOpen);
+  const handleSwapData = (data) => {
+    setSwapData(data);
   };
+
+  const rowSelection = useMemo(() => {
+    return {
+      mode: "multiRow",
+    };
+  }, []);
+
+  const onSelectionChanged = useCallback(() => {
+    const selectedRows = gridRef.current.api.getSelectedRows();
+    setSelectEleves(selectedRows);
+  }, []);
 
   useEffect(() => {
     if (listClasses.length === 0 && selectClass) {
@@ -64,28 +73,30 @@ function SettingsData() {
 
   return (
     <div className="setting-data-container">
-      <select value={selectClass?.path || ""} onChange={handleSelectClass}>
-        {listClasses.map((data) => (
-          <option key={data.id} value={data.path}>
-            {data.name}
-          </option>
-        ))}
-      </select>
-      <button onClick={handleFormOpen}>
-        <span>Ajouter une classe</span>
-      </button>
-      <BtnDeleteClasse selectClass={selectClass} />
-      {formOpen && <FormClass handleFormOpen={handleFormOpen} />}
-      <FormEleve selectClass={selectClass?.path} />
+      <div className="setting-header">
+        <FormClass
+          selectClass={selectClass}
+          listClasses={listClasses}
+          handleSelectClass={handleSelectClass}
+          disabled={swapData === "byEleves"}
+        />
+        <FormEleve
+          selectClass={selectClass?.path}
+          selectEleves={selectEleves}
+        />
+        <SwapData handleSwapData={handleSwapData} activeSwap={swapData} />
+      </div>
       <AgGridReact
         ref={gridRef}
-        rowData={dataClasse?.eleves || []}
+        rowData={swapData === "byClass" ? dataClasse?.eleves : allEleves}
         columnDefs={colDefs}
         defaultColDef={defaultColDef}
         context={{ selectClass: selectClass?.path }}
-        onCellClicked={(event) => {
-          setSelectEleve(event.data);
-        }}
+        className="grid"
+        theme={myTheme}
+        pagination={true}
+        rowSelection={rowSelection}
+        onSelectionChanged={onSelectionChanged}
       />
     </div>
   );
