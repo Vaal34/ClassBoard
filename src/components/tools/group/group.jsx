@@ -1,4 +1,3 @@
-import "./group.css";
 import { useState, useId } from "react";
 import { SettingGenerate } from "./settingsGenerate/settingGenerate";
 import { Generate } from "./generate/generate";

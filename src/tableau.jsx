@@ -68,7 +68,7 @@ function Tableau({classePath}) {
       sensors={sensors}
       modifiers={[restrictToWindowEdges]}
       onDragEnd={handleDragEnd}
-      className="tableau"
+      className="w-screen h-screen"
     >
       {toolsList.map((tool) => (
         <DraggableWrapper

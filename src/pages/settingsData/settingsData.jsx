@@ -4,7 +4,6 @@ import { AgGridReact } from "ag-grid-react";
 import { useClasse } from "../../hooks/useClasse";
 import { useClasses } from "../../hooks/useClasses";
 import { useEleves } from "../../hooks/useEleves";
-import "./settingsData.css";
 import FormClass from "../../components/settingData/formClasse";
 import FormEleve from "../../components/settingData/formEleve";
 import { myTheme } from "./agGridTheme";
@@ -72,8 +71,8 @@ function SettingsData() {
   }, [listClasses]);
 
   return (
-    <div className="setting-data-container">
-      <div className="setting-header">
+    <div className="p-5 h-screen  flex gap-4">
+      <div className="flex flex-col h-full gap-4">
         <FormClass
           selectClass={selectClass}
           listClasses={listClasses}
@@ -92,9 +91,9 @@ function SettingsData() {
         columnDefs={colDefs}
         defaultColDef={defaultColDef}
         context={{ selectClass: selectClass?.path }}
-        className="grid"
+        className="h-full w-full"
         theme={myTheme}
-        pagination={true}
+        pagination={true} 
         rowSelection={rowSelection}
         onSelectionChanged={onSelectionChanged}
       />

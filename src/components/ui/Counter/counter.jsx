@@ -1,8 +1,6 @@
 import { motion, useSpring, useTransform } from 'motion/react';
 import { useEffect } from 'react';
 
-import './counter.css';
-
 function Number({ mv, number, height }) {
   let y = useTransform(mv, latest => {
     let placeValue = latest % 10;
@@ -14,7 +12,7 @@ function Number({ mv, number, height }) {
     return memo;
   });
   return (
-    <motion.span className="counter-number" style={{ y }}>
+    <motion.span className="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center" style={{ y }}>
       {number}
     </motion.span>
   );
@@ -27,7 +25,7 @@ function Digit({ place, value, height, digitStyle }) {
     animatedValue.set(valueRoundedToPlace);
   }, [animatedValue, valueRoundedToPlace]);
   return (
-    <div className="counter-digit" style={{ height, ...digitStyle }}>
+    <div className="relative w-4 tabular-nums" style={{ height, ...digitStyle }}>
       {Array.from({ length: 10 }, (_, i) => (
         <Number key={i} mv={animatedValue} number={i} height={height} />
       ))}
@@ -73,16 +71,16 @@ export default function Counter({
     background: `linear-gradient(to top, ${gradientFrom}, ${gradientTo})`
   };
   return (
-    <div className="counter-container" style={containerStyle}>
-      <div className="counter-counter" style={{ ...defaultCounterStyle, ...counterStyle }}>
+    <div className="relative inline-block" style={containerStyle}>
+      <div className="flex overflow-hidden leading-none" style={{ ...defaultCounterStyle, ...counterStyle }}>
         {places.map(place => (
           <Digit key={place} place={place} value={value} height={height} digitStyle={digitStyle} />
         ))}
       </div>
-      <div className="gradient-container">
-        <div className="top-gradient" style={topGradientStyle ? topGradientStyle : defaultTopGradientStyle}></div>
+      <div className="pointer-events-none absolute top-0 bottom-0 left-0 right-0">
+        <div className="absolute top-0 w-full" style={topGradientStyle ? topGradientStyle : defaultTopGradientStyle}></div>
         <div
-          className="bottom-gradient"
+          className="absolute bottom-0 w-full"
           style={bottomGradientStyle ? bottomGradientStyle : defaultBottomGradientStyle}
         ></div>
       </div>

@@ -1,6 +1,5 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView } from "motion/react";
-import "./AnimatedList.css";
 
 const AnimatedItem = ({
   children,
@@ -122,10 +121,10 @@ const AnimatedList = ({
   }, [selectedIndex, keyboardNav]);
 
   return (
-    <div className={`scroll-list-container ${className}`}>
+    <div className={`h-full ${className}`}>
       <div
         ref={listRef}
-        className={`scroll-list ${!displayScrollbar ? "no-scrollbar" : ""}`}
+        className={`max-h-96 overflow-y-auto rounded-2xl h-full ${!displayScrollbar ? "scrollbar-hide" : "scrollbar-custom"}`}
         onScroll={handleScroll}
       >
         {items.map((item, index) => {
@@ -151,11 +150,11 @@ const AnimatedList = ({
             >
               <label className="checkbox-wrapper" htmlFor={`cbx-${itemId}`}>
                 <div
-                  className={`item-list ${
-                    selectedIndex === index ? "selected" : ""
+                  className={`item-list p-4 bg-white rounded-2xl flex justify-between items-center cursor-pointer shadow-md ${
+                    selectedIndex === index ? "bg-gray-700" : ""
                   } ${itemClassName}`}
                 >
-                  <span className={item.checked ? "item-text" : "item-text-not-checked"}>
+                  <span className={item.checked ? "m-0 font-medium capitalize transition-colors duration-300 ease" : "m-0 font-medium capitalize transition-colors duration-300 ease text-gray-400 line-through"}>
                     {item.prenom} {item.nom}
                   </span>
                   <input
@@ -166,7 +165,7 @@ const AnimatedList = ({
                     onChange={() => isChecked(itemId)}
                   />
 
-                  <label htmlFor={`cbx-${itemId}`} className="check">
+                  <label htmlFor={`cbx-${itemId}`} className="custom-checkbox">
                     <svg width="18px" height="18px" viewBox="0 0 18 18">
                       <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z" />
                       <polyline points="1 9 7 14 15 4" />
@@ -181,11 +180,11 @@ const AnimatedList = ({
       {showGradients && (
         <>
           <div
-            className="top-gradient"
+            className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-gray-900 to-transparent pointer-events-none transition-opacity duration-300 ease"
             style={{ opacity: topGradientOpacity }}
           ></div>
           <div
-            className="bottom-gradient"
+            className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-gray-900 to-transparent pointer-events-none transition-opacity duration-300 ease"
             style={{ opacity: bottomGradientOpacity }}
           ></div>
         </>

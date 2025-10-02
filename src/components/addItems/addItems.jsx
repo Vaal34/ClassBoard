@@ -1,20 +1,22 @@
-import { CornerUpLeft, Paperclip, Timer, Users } from "lucide-react";
+import { TimerIcon } from "../ui/timer";
+import { HomeIcon } from "../ui/home";
+import { FilePenLineIcon } from "../ui/file-pen-line";
+import { UsersIcon } from "../ui/users";
 import { useNavigate } from "react-router-dom";
-import "./addItems.css";
 
 const tools = [
   {
-    icon: <Timer strokeWidth={1} />,
+    icon: <TimerIcon className="[&_svg]:stroke-1" />,
     label: "Minuteur",
     type: "minuteur",
   },
   {
-    icon: <Paperclip strokeWidth={1} />,
+    icon: <FilePenLineIcon className="[&_svg]:stroke-1" />,
     label: "Consigne",
     type: "consigne",
   },
   {
-    icon: <Users strokeWidth={1} />,
+    icon: <UsersIcon className="[&_svg]:stroke-1" />,
     label: "Groupe",
     type: "group",
   },
@@ -24,14 +26,14 @@ function AddItem({ onAdd }) {
   let navigate = useNavigate();
 
   return (
-    <div className="open-button">
-      <button className="add-button" onClick={() => navigate(-1)}>
-        <CornerUpLeft strokeWidth={1} />
+    <div className="absolute left-1/2 bottom-5 transform -translate-x-1/2 cursor-pointer p-3 rounded-lg flex gap-4">
+      <button className="flex items-center justify-center cursor-pointer border-0 rounded-2xl p-3 transition-all duration-300 linear hover:scale-110 hover:text-purple-600 hover:bg-purple-50" onClick={() => navigate(-1)}>
+        <HomeIcon className="[&_svg]:stroke-1" />
       </button>
       {tools.map((tool) => (
         <button
           key={tool.label}
-          className="add-button"
+          className="flex items-center justify-center cursor-pointer border-0 rounded-2xl p-3 transition-all duration-300 linear hover:scale-110 hover:text-purple-600 hover:bg-purple-50"
           onClick={() => onAdd(tool.type)}
         >
           {tool.icon}

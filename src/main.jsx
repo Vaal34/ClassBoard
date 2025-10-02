@@ -12,6 +12,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Tableau from "./tableau.jsx";
 import ClassSelector from "./pages/classSelector/classSelector.jsx";
 import SettingsData from "./pages/settingsData/settingsData.jsx";
+import "./main.css"
 
 function TableauPerClass() {
   // récupere :path de l'url /classe/:path

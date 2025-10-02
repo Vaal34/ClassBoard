@@ -1,7 +1,6 @@
 import { ChevronUp, ChevronDown, Play, RotateCcw, Square } from "lucide-react";
 import { useTimer } from "react-timer-hook";
 import { useState } from "react";
-import "./minuteur.css";
 import catDay from "../minuteur/catDay.png";
 import catNight from "../minuteur/catNight.jpg";
 
@@ -92,16 +91,16 @@ function Minuteur() {
   };
 
   return (
-    <div className={`minuteur ${isRunning ? "running" : ""}`}>
-      <img className="background day-image" src={catDay} alt="Day" />
-      <img className="background night-image" src={catNight} alt="Night" />
-      <div className="content-minuteur">
+    <div className={`w-80 h-96 shadow-lg cursor-pointer flex items-end relative overflow-hidden rounded-3xl ${isRunning ? "running" : ""}`}>
+      <img className={`absolute top-0 left-0 w-full h-full object-cover object-bottom z-0 ${isRunning ? "clip-path-[circle(100%_at_center)]" : "clip-path-[circle(100%_at_center)]"}`} src={catDay} alt="Day" />
+      <img className={`absolute top-0 left-0 w-full h-full object-cover object-bottom transition-[clip-path] duration-500 ease-in-out ${isRunning ? "z-0 clip-path-[circle(0%_at_center)]" : "z-[1] clip-path-[circle(100%_at_center)]"}`} src={catNight} alt="Night" />
+      <div className="relative z-10 w-full h-4/5 flex gap-5 items-center flex-col">
         <div
           onClick={handleEditTime}
-          className={`time-block ${isRunning ? "span-night" : "span-day"}`}
+          className={`gap-3 flex justify-between w-4/5 ${isRunning ? "text-gray-900" : "text-yellow-100"}`}
         >
           {textTimesDict.map((textTime, index) => (
-            <div key={textTime.label} className="time-text">
+            <div key={textTime.label} className="text-5xl w-full flex flex-col justify-between items-center transition-colors duration-500 ease-in-out select-none">
               {editTime && !isRunning && (
                 <ChevronUp
                   onClick={(e) => {
@@ -111,10 +110,10 @@ function Minuteur() {
                   style={{ width: "100%", backdropFilter: "blur(1px)" }}
                 />
               )}
-              <span className="span-time">
+              <span className="font-semibold text-right tabular-nums">
                 {textTime.value.toString().padStart(2, "0")}
               </span>
-              <span className="span-label">{textTime.label}</span>
+              <span className="mt-[-10px] text-base font-extralight text-center">{textTime.label}</span>
               {editTime && !isRunning && (
                 <ChevronDown
                   onClick={(e) => {
@@ -127,12 +126,12 @@ function Minuteur() {
             </div>
           ))}
         </div>
-        <div className="button-box">
+        <div className="flex justify-center items-center gap-3">
           {expire ? (
             <button
               type="button"
               onClick={handleRestart}
-              className={`button-action button-action-active`}
+              className="w-14 h-14 flex justify-center items-center p-4 rounded-full border-none cursor-pointer transition-all duration-200 ease-in-out shadow-lg bg-gray-900 hover:scale-105"
             >
               <RotateCcw size={16} color="#fff" />
             </button>
@@ -141,8 +140,8 @@ function Minuteur() {
               <button
                 type="button"
                 onClick={handleStart}
-                className={`button-action ${
-                  isRunning ? "button-action-inactive" : "button-action-active"
+                className={`w-14 h-14 flex justify-center items-center p-4 rounded-full border-none cursor-pointer transition-all duration-200 ease-in-out shadow-lg hover:scale-105 ${
+                  isRunning ? "bg-yellow-100" : "bg-gray-900"
                 }`}
               >
                 <Play
@@ -156,8 +155,8 @@ function Minuteur() {
                 onDoubleClick={handleRestart}
                 type="button"
                 onClick={pause}
-                className={`button-action ${
-                  isRunning ? "button-action-active" : "button-action-inactive"
+                className={`w-14 h-14 flex justify-center items-center p-4 rounded-full border-none cursor-pointer transition-all duration-200 ease-in-out shadow-lg hover:scale-105 ${
+                  isRunning ? "bg-gray-900" : "bg-yellow-100"
                 }`}
               >
                 <Square

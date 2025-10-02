@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useCreateEleve } from "../../hooks/useCreateEleve";
-import "./formEleve.css";
 import { useDeleteEleve } from "../../hooks/useDeleteEleve";
 
 function FormEleve({ selectClass, selectEleves }) {
@@ -31,9 +30,9 @@ function FormEleve({ selectClass, selectEleves }) {
   };
 
   return (
-    <div className="setting-data-eleve">
-      <form onSubmit={handleOnSubmit} className="form-data-eleve">
-        <div className="input-data-eleve">
+    <div className="p-4 bg-violet-600 h-full rounded-2xl">
+      <form onSubmit={handleOnSubmit} className="flex">
+        <div className="flex flex-col">
           <input
             placeholder="Prénom"
             value={prenom}
