@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
-import { useClasse } from "../../hooks/useClasse";
-import { useClasses } from "../../hooks/useClasses";
-import { useEleves } from "../../hooks/useEleves";
-import FormClass from "../../components/settingData/formClasse";
-import FormEleve from "../../components/settingData/formEleve";
+import { useClasse } from "@/hooks/useClasse";
+import { useClasses } from "@/hooks/useClasses";
+import { useEleves } from "@/hooks/useEleves";
+import FormClass from "@/components/settingData/formClass/formClasse";
+import FormEleve from "@/components/settingData/formEleve";
 import { myTheme } from "./agGridTheme";
-import SwapData from "../../components/settingData/swapData";
+import SwapData from "@/components/settingData/swapData";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -33,8 +33,9 @@ function SettingsData() {
     // floatingFilter: true,
   };
 
-  const handleSelectClass = (e) => {
-    const path = e.target.value;
+  const handleSelectClass = (pathOrEvent) => {
+    // Si c'est un événement (select HTML natif)
+    const path = pathOrEvent?.target ? pathOrEvent.target.value : pathOrEvent;
     const classe = Array.isArray(listClasses)
       ? listClasses.find((c) => c && c.path === path)
       : undefined;
@@ -71,7 +72,7 @@ function SettingsData() {
   }, [listClasses]);
 
   return (
-    <div className="p-5 h-screen  flex gap-4">
+    <div className="p-5 h-screen flex gap-4">
       <div className="flex flex-col h-full gap-4">
         <FormClass
           selectClass={selectClass}

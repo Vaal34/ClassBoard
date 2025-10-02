@@ -1,8 +1,8 @@
 import { ChevronUp, ChevronDown, Play, RotateCcw, Square } from "lucide-react";
 import { useTimer } from "react-timer-hook";
 import { useState } from "react";
-import catDay from "../minuteur/catDay.png";
-import catNight from "../minuteur/catNight.jpg";
+import catDay from "@/assets/images/catDay.png";
+import catNight from "@/assets/images/catNight.jpg";
 
 function Minuteur() {
   const [expire, setExpire] = useState(false);

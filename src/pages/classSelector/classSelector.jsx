@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { FileCogIcon } from "@/src/components/ui/file-cog";
-import { ArrowRightIcon } from "@/src/components/ui/arrow-right";
-import { useClasses } from "../../hooks/useClasses";
+import { FileCogIcon } from "@/components/ui/file-cog";
+import { ArrowRightIcon } from "@/components/ui/arrow-right";
+import { useClasses } from "@/hooks/useClasses";
 
 function ClassSelector() {
   const { listClasses, isLoading, error } = useClasses();

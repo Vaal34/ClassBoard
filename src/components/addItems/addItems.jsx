@@ -1,7 +1,7 @@
-import { TimerIcon } from "../ui/timer";
-import { HomeIcon } from "../ui/home";
-import { FilePenLineIcon } from "../ui/file-pen-line";
-import { UsersIcon } from "../ui/users";
+import { TimerIcon } from "@/components/ui/timer";
+import { HomeIcon } from "@/components/ui/home";
+import { FilePenLineIcon } from "@/components/ui/file-pen-line";
+import { UsersIcon } from "@/components/ui/users";
 import { useNavigate } from "react-router-dom";
 
 const tools = [

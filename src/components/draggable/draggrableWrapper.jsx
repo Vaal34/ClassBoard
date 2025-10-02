@@ -1,5 +1,5 @@
 import { useDraggable } from "@dnd-kit/core";
-import Magnet from "../ui/Magnet/Magnet";
+import Magnet from "@/components/ui/Magnet/Magnet";
 
 export function DraggableWrapper({ id, top, left, children }) {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({

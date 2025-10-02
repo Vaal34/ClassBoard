@@ -1,4 +1,4 @@
-import { useDeleteClasse } from "../../hooks/useDeleteClasse";
+import { useDeleteClasse } from "@/hooks/useDeleteClasse";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,9 +9,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "../ui/alert-dialog";
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 
-function BtnDeleteClasse({ selectClass }) {
+function BtnDeleteClasse({ selectClass, disabled }) {
   const deleteClass = useDeleteClasse();
 
   const handleDelete = () => {
@@ -22,9 +23,9 @@ function BtnDeleteClasse({ selectClass }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <button disabled={!selectClass}>
-          Supprimer la Classe
-        </button>
+      <Button className="rounded-2xl border-0 cursor-pointer" disabled={disabled}>
+        Supprimer la Classe
+      </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

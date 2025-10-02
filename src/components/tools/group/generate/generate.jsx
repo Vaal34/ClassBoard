@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import {
   grouperAleatoireParNEleves,
   grouperAleatoireParNGroupes,
-} from "../../../../scripts/randomiser";
+} from "@/scripts/randomiser";
 import { RotateCcw } from "lucide-react";
 
 export function Generate({ eleves, Elvalue, Gpvalue, method, handleIsGenerate }) {

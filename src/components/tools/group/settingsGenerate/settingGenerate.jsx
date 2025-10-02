@@ -1,7 +1,7 @@
-import Counter from "../../../ui/Counter/counter";
+import Counter from "@/components/ui/Counter/counter";
 import { Plus, Minus } from "lucide-react";
-import { RocketIcon } from "@/src/components/ui/rocket";
-import AnimatedList from "../../../ui/AnimatedList/AnimatedList";
+import { RocketIcon } from "@/components/ui/rocket";
+import AnimatedList from "@/components/ui/AnimatedList/AnimatedList";
 
 export function SettingGenerate({ eleves, Gpvalue, Elvalue, increment, decrement, handleIsChecked, handleIsGenerate }) {
   return (

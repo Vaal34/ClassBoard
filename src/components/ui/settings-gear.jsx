@@ -1,7 +1,7 @@
 'use client';;
 import { motion, useAnimation } from 'motion/react';
 import { forwardRef, useCallback, useImperativeHandle, useRef } from 'react';
-import { cn } from '@/src/lib/utils';
+import { cn } from '@/lib/utils';
 
 const SettingsGearIcon = forwardRef(({ onMouseEnter, onMouseLeave, className, size = 28, ...props }, ref) => {
   const controls = useAnimation();

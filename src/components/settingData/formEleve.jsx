@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useCreateEleve } from "../../hooks/useCreateEleve";
-import { useDeleteEleve } from "../../hooks/useDeleteEleve";
+import { useCreateEleve } from "@/hooks/useCreateEleve";
+import { useDeleteEleve } from "@/hooks/useDeleteEleve";
 
 function FormEleve({ selectClass, selectEleves }) {
   const createEleve = useCreateEleve(selectClass);
