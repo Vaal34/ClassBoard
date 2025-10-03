@@ -107,7 +107,7 @@ function AlertDialogAction({
   className,
   ...props
 }) {
-  return (<AlertDialogPrimitive.Action className={cn(buttonVariants(), className)} {...props} />);
+  return (<AlertDialogPrimitive.Action className={cn(buttonVariants(), className) + " cursor-pointer"} {...props} />);
 }
 
 function AlertDialogCancel({
@@ -116,7 +116,7 @@ function AlertDialogCancel({
 }) {
   return (
     <AlertDialogPrimitive.Cancel
-      className={cn(buttonVariants({ variant: "outline" }), className)}
+      className={cn(buttonVariants({ variant: "outline" }), className) + " cursor-pointer"}
       {...props} />
   );
 }
