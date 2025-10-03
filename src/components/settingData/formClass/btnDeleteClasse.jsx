@@ -11,6 +11,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { AnimateIcon } from "@/components/animate-ui/icons/icon";
+import { Trash2 } from "@/components/animate-ui/icons/trash-2";
 
 function BtnDeleteClasse({ selectClass, disabled }) {
   const deleteClass = useDeleteClasse();
@@ -23,11 +25,13 @@ function BtnDeleteClasse({ selectClass, disabled }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-      <Button className="rounded-2xl border-0 cursor-pointer" disabled={disabled}>
-        Supprimer la Classe
+      <Button variant="destructive" className="rounded-2xl border-0" disabled={disabled}>
+        <AnimateIcon animateOnHover>
+          <Trash2 className="size-4 stroke-1 text-red-500"/>
+        </AnimateIcon>
       </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent className="rounded-4xl border-0 p-8 bg-background text-foreground">
         <AlertDialogHeader>
           <AlertDialogTitle>Êtes-vous sûr ?</AlertDialogTitle>
           <AlertDialogDescription>
@@ -35,11 +39,11 @@ function BtnDeleteClasse({ selectClass, disabled }) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Annuler</AlertDialogCancel>
+          <AlertDialogCancel className="rounded-2xl bg-secondary text-secondary-foreground border-0">Annuler</AlertDialogCancel>
           <AlertDialogAction
             onClick={handleDelete}
             disabled={deleteClass.isPending}
-            className="bg-red-600 hover:bg-red-700"
+            className="rounded-2xl border-0"
           >
             {deleteClass.isPending ? "Suppression..." : "Supprimer"}
           </AlertDialogAction>

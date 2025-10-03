@@ -1,30 +1,45 @@
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/motion-tabs";
+import { Users } from "../animate-ui/icons/users";
+import { AnimateIcon } from "../animate-ui/icons/icon";
+import { User } from "../animate-ui/icons/user";
+
+const tabs = [
+  {
+    icon: <User className="stroke-1 text-primary"/>,
+    name: "ELEVES",
+    value: "byEleves",
+    content: "Affiche de la liste des élèves",
+  },
+  { 
+    icon: <Users className="stroke-1 text-primary"/>,
+    name: "CLASSES",
+    value: "byClass",
+    content: "Affiche de la liste des élèves par classe",
+  },
+];
+
 function SwapData({ handleSwapData, activeSwap }) {
   return (
-    <div className="p-4 bg-violet-600 flex flex-col items-center h-full rounded-2xl gap-4">
-      <div className="text-black text-xl font-extralight">Choix de l'affichage</div>
-      <div className="flex h-full w-full gap-4">
-        <button
-          className={`h-full w-full rounded-2xl cursor-pointer transition-all duration-300 border-4 ${
-            activeSwap === "byEleves" 
-              ? "bg-green-300 border-green-500" 
-              : "bg-red-300 border-red-400 hover:bg-green-300 hover:border-green-500 active:bg-green-300 active:scale-95"
-          }`}
-          onClick={() => handleSwapData("byEleves")}
-        >
-          <span className="text-black font-extralight">ELEVES</span>
-        </button>
-        <button
-          className={`h-full w-full rounded-2xl cursor-pointer transition-all duration-300 border-4 ${
-            activeSwap === "byClass" 
-              ? "bg-green-300 border-green-500" 
-              : "bg-red-300 border-red-400 hover:bg-green-300 hover:border-green-500 active:bg-green-300 active:scale-95"
-          }`}
-          onClick={() => handleSwapData("byClass")}
-        >
-          <span className="text-black font-extralight">CLASSES</span>
-        </button>
-      </div>
-    </div>
+    <Tabs
+      value={activeSwap}
+      onValueChange={handleSwapData}
+      className="h-full w-1/4"
+    >
+      <TabsList className="h-full w-full rounded-4xl p-3">
+        {tabs.map((tab) => (
+          <AnimateIcon
+            animate={activeSwap === tab.value}
+            animation="default"
+            className="h-full w-full"
+          >
+            <TabsTrigger key={tab.value} value={tab.value} className="flex flex-col text-2xl font-bold italic">
+              {tab.icon}
+              {tab.name}
+            </TabsTrigger>
+          </AnimateIcon>
+        ))}
+      </TabsList>
+    </Tabs>
   );
 }
 

@@ -20,11 +20,17 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
+import { AnimateIcon } from "@/components/animate-ui/icons/icon";
+import { Users } from "@/components/animate-ui/icons/users";
 
 // Schéma de validation
 const classeSchema = z.object({
-  name: z.string().min(2, { message: "Le nom doit contenir au moins 2 caractères" }),
-  path: z.string().min(2, { message: "Le chemin doit contenir au moins 2 caractères" }),
+  name: z
+    .string()
+    .min(3, { message: "Le nom doit contenir au moins 3 caractères" }),
+  path: z
+    .string()
+    .min(3, { message: "Le chemin doit contenir au moins 3 caractères" }),
 });
 
 function DialogClasse({ disabled }) {
@@ -58,12 +64,18 @@ function DialogClasse({ disabled }) {
   return (
     <Dialog open={formOpen} onOpenChange={setFormOpen}>
       <DialogTrigger asChild>
-        <Button className="rounded-2xl border-0" disabled={disabled}>
-          Ajouter une Classe
-        </Button>
+          <Button
+            className="rounded-3xl  gap-2 border-0 h-full w-full uppercase text-lg font-extrabold italic text-purple-200"
+            disabled={disabled}
+          >
+        <AnimateIcon animateOnHover className="flex gap-2 items-center">
+            Ajouter une Classe
+            <Users className="size-7 text-purple-800 stroke-1" />
+        </AnimateIcon>
+          </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="rounded-4xl border-0 p-8 bg-background text-foreground">
         <DialogHeader>
           <DialogTitle>Nouvelle Classe</DialogTitle>
         </DialogHeader>
@@ -77,7 +89,11 @@ function DialogClasse({ disabled }) {
                 <FormItem>
                   <FormLabel>Nom de la Classe</FormLabel>
                   <FormControl>
-                    <Input placeholder="Ex: CM2A" {...field} />
+                    <Input
+                      className="rounded-2xl bg-background text-foreground"
+                      placeholder="Ex: TleL"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -91,7 +107,11 @@ function DialogClasse({ disabled }) {
                 <FormItem>
                   <FormLabel>Chemin</FormLabel>
                   <FormControl>
-                    <Input placeholder="Ex: cm2a" {...field} />
+                    <Input
+                      className="rounded-2xl bg-background text-foreground"
+                      placeholder="Ex: tlel"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -100,13 +120,18 @@ function DialogClasse({ disabled }) {
 
             <div className="flex justify-end gap-2">
               <Button
+                variant="secondary"
                 type="button"
-                variant="outline"
                 onClick={() => setFormOpen(false)}
+                className="rounded-2xl border-0"
               >
                 Annuler
               </Button>
-              <Button type="submit" disabled={createClasse.isPending}>
+              <Button
+                className="rounded-2xl border-0"
+                type="submit"
+                disabled={createClasse.isPending}
+              >
                 {createClasse.isPending ? "Enregistrement..." : "Enregistrer"}
               </Button>
             </div>

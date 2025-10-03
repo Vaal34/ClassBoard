@@ -5,7 +5,7 @@ import { useClasse } from "@/hooks/useClasse";
 import { useClasses } from "@/hooks/useClasses";
 import { useEleves } from "@/hooks/useEleves";
 import FormClass from "@/components/settingData/formClass/formClasse";
-import FormEleve from "@/components/settingData/formEleve";
+import FormEleve from "@/components/settingData/formEleve/formEleve";
 import { myTheme } from "./agGridTheme";
 import SwapData from "@/components/settingData/swapData";
 
@@ -22,7 +22,7 @@ function SettingsData() {
   const { dataClasse } = useClasse(selectClass?.path);
 
   const [colDefs, setColDefs] = useState([
-    { field: "prenom", headerName: "Prenom" },
+    { field: "prenom", headerName: "Prénom" },
     { field: "nom", headerName: "Nom" },
   ]);
 
@@ -72,8 +72,8 @@ function SettingsData() {
   }, [listClasses]);
 
   return (
-    <div className="p-5 h-screen flex gap-4">
-      <div className="flex flex-col h-full gap-4">
+    <div className="p-5 h-screen flex-col flex gap-4 bg-background text-foreground">
+      <div className="flex gap-4 w-full">
         <FormClass
           selectClass={selectClass}
           listClasses={listClasses}
@@ -96,6 +96,7 @@ function SettingsData() {
         theme={myTheme}
         pagination={true} 
         rowSelection={rowSelection}
+        scrollbarWidth={0}
         onSelectionChanged={onSelectionChanged}
       />
     </div>
@@ -103,3 +104,8 @@ function SettingsData() {
 }
 
 export default SettingsData;
+
+
+// Quand j'ajoute un élève dans un classe il ne se met pas dans la liste de tout les élèves
+
+// Quand j'ajoutes un élève dans tous les éleves je devrais pouvoir le choisir une classe
