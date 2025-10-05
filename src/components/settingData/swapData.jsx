@@ -28,6 +28,7 @@ function SwapData({ handleSwapData, activeSwap }) {
       <TabsList className="h-full w-full rounded-4xl p-3">
         {tabs.map((tab) => (
           <AnimateIcon
+            key={tab.value}
             animate={activeSwap === tab.value}
             animation="default"
             className="h-full w-full"

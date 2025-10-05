@@ -83,6 +83,7 @@ function SettingsData() {
         <FormEleve
           selectClass={selectClass?.path}
           selectEleves={selectEleves}
+          activeSwap={swapData}
         />
         <SwapData handleSwapData={handleSwapData} activeSwap={swapData} />
       </div>
