@@ -21,38 +21,60 @@ import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { AnimateIcon } from "@/components/animate-ui/icons/icon";
-import { CirclePlus } from "@/components/animate-ui/icons/circle-plus";
 import { User } from "@/components/animate-ui/icons/user";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
+import { useClasses } from "@/hooks/useClasses";
 
 const eleveSchema = z.object({
   prenom: z.string().min(1, { message: "Le champ est requis" }),
   nom: z.string().min(1, { message: "Le champ est requis" }),
+  classe: z.string().optional(),
 });
 
-function DialogEleve({ selectClass }) {
+function DialogEleve({ selectClass, activeSwap }) {
   const [dialogOpen, setDialogOpen] = useState(false);
+  const { listClasses } = useClasses();
   const createEleve = useCreateEleve(selectClass);
-
+  
   const form = useForm({
     resolver: zodResolver(eleveSchema),
     defaultValues: {
       prenom: "",
       nom: "",
+      classe: "",
     },
   });
 
-  const onSubmit = (data) => {
-    if (!selectClass || !data.prenom.trim() || !data.nom.trim()) return;
-    createEleve.mutate(
-      { prenom: data.prenom.trim(), nom: data.nom.trim() },
-      {
-        onSuccess: () => {
-          form.reset();
-          setDialogOpen(false);
-        },
-      }
-    );
-  };
+const onSubmit = (data) => {
+  if (!data.prenom.trim() || !data.nom.trim()) return;
+  
+  let classeToUse;
+  if (activeSwap === "byEleves" && data.classe) {
+    classeToUse = data.classe;
+  } else {
+    classeToUse = selectClass;
+  }
+  
+  createEleve.mutate(
+    { 
+      prenom: data.prenom.trim(), 
+      nom: data.nom.trim(),
+      classe: classeToUse
+    },
+    {
+      onSuccess: () => {
+        form.reset();
+        setDialogOpen(false);
+      },
+    }
+  );
+};
 
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -114,6 +136,36 @@ function DialogEleve({ selectClass }) {
                 </FormItem>
               )}
             />
+
+            {activeSwap === "byEleves" && (
+              <FormField
+                control={form.control}
+                name="classe"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Sélectionner une classe</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.path}
+                    >
+                      <FormControl>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Sélectionner une classe" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {listClasses.map((classe) => (
+                          <SelectItem key={classe.id} value={classe.path}>
+                            {classe.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
 
             <div className="flex justify-end gap-2">
               <Button
