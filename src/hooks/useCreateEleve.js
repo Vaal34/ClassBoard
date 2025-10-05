@@ -12,8 +12,10 @@ export function useCreateEleve(path) {
     },
     onMutate: async (newEleve) => {
       await queryClient.cancelQueries({ queryKey: ["classe", path] });
+      await queryClient.cancelQueries({ queryKey: ["all-eleves"] });
 
       const previousClasse = queryClient.getQueryData(["classe", path]);
+      const previousAllEleves = queryClient.getQueryData(["all-eleves"]);
 
       queryClient.setQueryData(["classe", path], (oldClasse = {}) => {
         const tempId = Date.now();
@@ -24,13 +26,19 @@ export function useCreateEleve(path) {
         };
       });
 
-      return { previousClasse };
+      queryClient.setQueryData(["all-eleves"], (oldEleves = []) => {
+        return [...oldEleves, { ...newEleve, id: Date.now() }];
+      });
+
+      return { previousClasse, previousAllEleves };
     },
     onError: (_err, _newEleve, context) => {
       queryClient.setQueryData(["classe", path], context?.previousClasse);
+      queryClient.setQueryData(["all-eleves"], context?.previousAllEleves);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["classe", path] });
+      queryClient.invalidateQueries({ queryKey: ["all-eleves"] });
     },
   });
 }
