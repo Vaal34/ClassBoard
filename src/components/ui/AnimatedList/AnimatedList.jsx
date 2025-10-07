@@ -1,5 +1,5 @@
-import { useRef, useState, useEffect } from "react";
-import { motion, useInView } from "motion/react";
+import { useRef, useState, useEffect } from 'react'
+import { motion, useInView } from 'motion/react'
 
 const AnimatedItem = ({
   children,
@@ -8,8 +8,8 @@ const AnimatedItem = ({
   onMouseEnter,
   onClick,
 }) => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { amount: 0.5, triggerOnce: false });
+  const ref = useRef(null)
+  const inView = useInView(ref, { amount: 0.5, triggerOnce: false })
   return (
     <motion.div
       ref={ref}
@@ -19,118 +19,118 @@ const AnimatedItem = ({
       initial={{ scale: 0.7, opacity: 0 }}
       animate={inView ? { scale: 1, opacity: 1 } : { scale: 0.7, opacity: 0 }}
       transition={{ duration: 0.2, delay }}
-      style={{ marginBottom: "0.5rem", cursor: "pointer" }}
+      style={{ marginBottom: '0.5rem', cursor: 'pointer' }}
     >
       {children}
     </motion.div>
-  );
-};
+  )
+}
 
 const AnimatedList = ({
   items = [
-    "Item 1",
-    "Item 2",
-    "Item 3",
-    "Item 4",
-    "Item 5",
-    "Item 6",
-    "Item 7",
-    "Item 8",
-    "Item 9",
-    "Item 10",
-    "Item 11",
-    "Item 12",
-    "Item 13",
-    "Item 14",
-    "Item 15",
+    'Item 1',
+    'Item 2',
+    'Item 3',
+    'Item 4',
+    'Item 5',
+    'Item 6',
+    'Item 7',
+    'Item 8',
+    'Item 9',
+    'Item 10',
+    'Item 11',
+    'Item 12',
+    'Item 13',
+    'Item 14',
+    'Item 15',
   ],
   onItemSelect,
   showGradients = true,
   enableArrowNavigation = true,
-  className = "",
-  itemClassName = "",
+  className = '',
+  itemClassName = '',
   displayScrollbar = true,
   initialSelectedIndex = -1,
   isChecked,
 }) => {
-  const listRef = useRef(null);
-  const [selectedIndex, setSelectedIndex] = useState(initialSelectedIndex);
-  const [keyboardNav, setKeyboardNav] = useState(false);
-  const [topGradientOpacity, setTopGradientOpacity] = useState(0);
-  const [bottomGradientOpacity, setBottomGradientOpacity] = useState(1);
+  const listRef = useRef(null)
+  const [selectedIndex, setSelectedIndex] = useState(initialSelectedIndex)
+  const [keyboardNav, setKeyboardNav] = useState(false)
+  const [topGradientOpacity, setTopGradientOpacity] = useState(0)
+  const [bottomGradientOpacity, setBottomGradientOpacity] = useState(1)
 
   const handleScroll = (e) => {
-    const { scrollTop, scrollHeight, clientHeight } = e.target;
-    setTopGradientOpacity(Math.min(scrollTop / 50, 1));
-    const bottomDistance = scrollHeight - (scrollTop + clientHeight);
+    const { scrollTop, scrollHeight, clientHeight } = e.target
+    setTopGradientOpacity(Math.min(scrollTop / 50, 1))
+    const bottomDistance = scrollHeight - (scrollTop + clientHeight)
     setBottomGradientOpacity(
       scrollHeight <= clientHeight ? 0 : Math.min(bottomDistance / 50, 1)
-    );
-  };
+    )
+  }
 
   useEffect(() => {
-    if (!enableArrowNavigation) return;
+    if (!enableArrowNavigation) return
     const handleKeyDown = (e) => {
-      if (e.key === "ArrowDown" || (e.key === "Tab" && !e.shiftKey)) {
-        e.preventDefault();
-        setKeyboardNav(true);
-        setSelectedIndex((prev) => Math.min(prev + 1, items.length - 1));
-      } else if (e.key === "ArrowUp" || (e.key === "Tab" && e.shiftKey)) {
-        e.preventDefault();
-        setKeyboardNav(true);
-        setSelectedIndex((prev) => Math.max(prev - 1, 0));
-      } else if (e.key === "Enter") {
+      if (e.key === 'ArrowDown' || (e.key === 'Tab' && !e.shiftKey)) {
+        e.preventDefault()
+        setKeyboardNav(true)
+        setSelectedIndex((prev) => Math.min(prev + 1, items.length - 1))
+      } else if (e.key === 'ArrowUp' || (e.key === 'Tab' && e.shiftKey)) {
+        e.preventDefault()
+        setKeyboardNav(true)
+        setSelectedIndex((prev) => Math.max(prev - 1, 0))
+      } else if (e.key === 'Enter') {
         if (selectedIndex >= 0 && selectedIndex < items.length) {
-          e.preventDefault();
+          e.preventDefault()
           if (onItemSelect) {
-            onItemSelect(items[selectedIndex], selectedIndex);
+            onItemSelect(items[selectedIndex], selectedIndex)
           }
         }
       }
-    };
+    }
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [items, selectedIndex, onItemSelect, enableArrowNavigation]);
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [items, selectedIndex, onItemSelect, enableArrowNavigation])
 
   useEffect(() => {
-    if (!keyboardNav || selectedIndex < 0 || !listRef.current) return;
-    const container = listRef.current;
+    if (!keyboardNav || selectedIndex < 0 || !listRef.current) return
+    const container = listRef.current
     const selectedItem = container.querySelector(
       `[data-index="${selectedIndex}"]`
-    );
+    )
     if (selectedItem) {
-      const extraMargin = 50;
-      const containerScrollTop = container.scrollTop;
-      const containerHeight = container.clientHeight;
-      const itemTop = selectedItem.offsetTop;
-      const itemBottom = itemTop + selectedItem.offsetHeight;
+      const extraMargin = 50
+      const containerScrollTop = container.scrollTop
+      const containerHeight = container.clientHeight
+      const itemTop = selectedItem.offsetTop
+      const itemBottom = itemTop + selectedItem.offsetHeight
       if (itemTop < containerScrollTop + extraMargin) {
-        container.scrollTo({ top: itemTop - extraMargin, behavior: "smooth" });
+        container.scrollTo({ top: itemTop - extraMargin, behavior: 'smooth' })
       } else if (
         itemBottom >
         containerScrollTop + containerHeight - extraMargin
       ) {
         container.scrollTo({
           top: itemBottom - containerHeight + extraMargin,
-          behavior: "smooth",
-        });
+          behavior: 'smooth',
+        })
       }
     }
-    setKeyboardNav(false);
-  }, [selectedIndex, keyboardNav]);
+    setKeyboardNav(false)
+  }, [selectedIndex, keyboardNav])
 
   return (
     <div className={`h-full ${className}`}>
       <div
         ref={listRef}
-        className={`max-h-96 overflow-y-auto rounded-2xl h-full ${!displayScrollbar ? "scrollbar-hide" : "scrollbar-custom"}`}
+        className={`h-full max-h-96 overflow-y-auto rounded-2xl ${!displayScrollbar ? 'scrollbar-hide' : 'scrollbar-custom'}`}
         onScroll={handleScroll}
       >
         {items.map((item, index) => {
           // Utiliser uniqueId s'il existe, sinon utiliser id
-          const itemId = item.uniqueId || item.id;
-          
+          const itemId = item.uniqueId || item.id
+
           return (
             <AnimatedItem
               key={itemId}
@@ -139,28 +139,37 @@ const AnimatedList = ({
               onMouseEnter={() => setSelectedIndex(index)}
               onClick={(e) => {
                 // Empêcher la sélection si on clique sur la checkbox
-                if (e.target.closest(".check") || e.target.type === "checkbox") {
-                  return;
+                if (
+                  e.target.closest('.check') ||
+                  e.target.type === 'checkbox'
+                ) {
+                  return
                 }
-                setSelectedIndex(index);
+                setSelectedIndex(index)
                 if (onItemSelect) {
-                  onItemSelect(item, index);
+                  onItemSelect(item, index)
                 }
               }}
             >
               <label className="checkbox-wrapper" htmlFor={`cbx-${itemId}`}>
                 <div
-                  className={`item-list p-4 bg-white rounded-2xl flex justify-between items-center cursor-pointer shadow-md ${
-                    selectedIndex === index ? "bg-gray-700" : ""
+                  className={`item-list flex cursor-pointer items-center justify-between rounded-2xl bg-white p-4 shadow-md ${
+                    selectedIndex === index ? 'bg-gray-700' : ''
                   } ${itemClassName}`}
                 >
-                  <span className={item.checked ? "m-0 font-medium capitalize transition-colors duration-300 ease" : "m-0 font-medium capitalize transition-colors duration-300 ease text-gray-400 line-through"}>
+                  <span
+                    className={
+                      item.checked
+                        ? 'ease m-0 font-medium capitalize transition-colors duration-300'
+                        : 'ease m-0 font-medium text-gray-400 capitalize line-through transition-colors duration-300'
+                    }
+                  >
                     {item.prenom} {item.nom}
                   </span>
                   <input
                     type="checkbox"
                     id={`cbx-${itemId}`}
-                    style={{ display: "none" }}
+                    style={{ display: 'none' }}
                     checked={item.checked}
                     onChange={() => isChecked(itemId)}
                   />
@@ -174,23 +183,23 @@ const AnimatedList = ({
                 </div>
               </label>
             </AnimatedItem>
-          );
+          )
         })}
       </div>
       {showGradients && (
         <>
           <div
-            className="absolute top-0 left-0 right-0 h-12 bg-gradient-to-b from-gray-900 to-transparent pointer-events-none transition-opacity duration-300 ease"
+            className="ease pointer-events-none absolute top-0 right-0 left-0 h-12 bg-gradient-to-b from-gray-900 to-transparent transition-opacity duration-300"
             style={{ opacity: topGradientOpacity }}
           ></div>
           <div
-            className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-gray-900 to-transparent pointer-events-none transition-opacity duration-300 ease"
+            className="ease pointer-events-none absolute right-0 bottom-0 left-0 h-24 bg-gradient-to-t from-gray-900 to-transparent transition-opacity duration-300"
             style={{ opacity: bottomGradientOpacity }}
           ></div>
         </>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default AnimatedList;
+export default AnimatedList

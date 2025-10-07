@@ -1,6 +1,6 @@
 function Consigne() {
   return (
-    <div className="w-96 h-48 shadow-lg items-center justify-items-center cursor-pointer gap-8 flex rounded-3xl overflow-hidden  p-4 relative bg-white"></div>
+    <div className="relative flex h-48 w-96 cursor-pointer items-center justify-items-center gap-8 overflow-hidden rounded-3xl bg-white p-4 shadow-lg"></div>
   )
 }
 

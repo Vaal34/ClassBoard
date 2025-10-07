@@ -1,84 +1,107 @@
-import { useEffect, useRef, useState, useMemo, useCallback } from "react";
-import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
-import { AgGridReact } from "ag-grid-react";
-import { useClasse } from "@/hooks/useClasse";
-import { useClasses } from "@/hooks/useClasses";
-import { useEleves } from "@/hooks/useEleves";
-import FormClass from "@/components/settingData/formClass/formClasse";
-import FormEleve from "@/components/settingData/formEleve/formEleve";
-import { myTheme } from "./agGridTheme";
-import SwapData from "@/components/settingData/swapData";
+import { useEffect, useRef, useState, useMemo, useCallback } from 'react'
+import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community'
+import { AgGridReact } from 'ag-grid-react'
+import { useClasse } from '@/hooks/useClasse'
+import { useClasses } from '@/hooks/useClasses'
+import { useEleves } from '@/hooks/useEleves'
+import FormClass from '@/components/settingData/formClass/formClasse'
+import FormEleve from '@/components/settingData/formEleve/formEleve'
+import { myTheme } from './agGridTheme'
+import SwapData from '@/components/settingData/swapData'
+import { Badge } from '@/components/ui/badge'
 
-ModuleRegistry.registerModules([AllCommunityModule]);
+ModuleRegistry.registerModules([AllCommunityModule])
 
 function SettingsData() {
-  const { listClasses } = useClasses();
-  const { allEleves } = useEleves();
-  const [selectClass, setSelectClass] = useState();
-  const [selectEleves, setSelectEleves] = useState([]);
-  const gridRef = useRef(null);
-  const [swapData, setSwapData] = useState("byClass");
+  const { listClasses } = useClasses()
+  const { allEleves } = useEleves()
+  const [selectClass, setSelectClass] = useState()
+  const [selectEleves, setSelectEleves] = useState([])
+  const gridRef = useRef(null)
+  const [swapData, setSwapData] = useState('byClass')
 
-  const { dataClasse } = useClasse(selectClass?.path);
+  const { dataClasse } = useClasse(selectClass?.path)
 
   const [colDefs, setColDefs] = useState([
-    { field: "prenom", headerName: "Prénom" },
-    { field: "nom", headerName: "Nom" },
-  ]);
+    { field: 'prenom', headerName: 'Prénom' },
+    { field: 'nom', headerName: 'Nom' },
+  ])
 
   const defaultColDef = {
     flex: 1,
     minWidth: 120,
     resizable: false,
     // floatingFilter: true,
-  };
+  }
 
   const handleSelectClass = (pathOrEvent) => {
     // Si c'est un événement (select HTML natif)
-    const path = pathOrEvent?.target ? pathOrEvent.target.value : pathOrEvent;
+    const path = pathOrEvent?.target ? pathOrEvent.target.value : pathOrEvent
     const classe = Array.isArray(listClasses)
       ? listClasses.find((c) => c && c.path === path)
-      : undefined;
-    setSelectClass(classe);
-  };
+      : undefined
+    setSelectClass(classe)
+  }
 
   const handleSwapData = (data) => {
-    setSwapData(data);
-  };
+    setSwapData(data)
+    if (data === 'byEleves') {
+      // Ajouter la colonne classe aux colonnes existantes
+      setColDefs([
+        { field: 'prenom', headerName: 'Prénom' },
+        { field: 'nom', headerName: 'Nom' },
+        {
+          field: 'classe.name',
+          headerName: 'Classe',
+          cellRenderer: (params) => (
+            <Badge className="from-primary bg-gradient-to-r to-pink-400 [background-size:105%] bg-center font-normal text-white">
+              {params.value}
+            </Badge>
+          ),
+        },
+      ])
+    } else {
+      // Retirer la colonne classe
+      setColDefs([
+        { field: 'prenom', headerName: 'Prénom' },
+        { field: 'nom', headerName: 'Nom' },
+      ])
+    }
+  }
 
   const rowSelection = useMemo(() => {
     return {
-      mode: "multiRow",
-    };
-  }, []);
+      mode: 'multiRow',
+    }
+  }, [])
 
   const onSelectionChanged = useCallback(() => {
-    const selectedRows = gridRef.current.api.getSelectedRows();
-    setSelectEleves(selectedRows);
-  }, []);
+    const selectedRows = gridRef.current.api.getSelectedRows()
+    setSelectEleves(selectedRows)
+  }, [])
 
   useEffect(() => {
     if (listClasses.length === 0 && selectClass) {
-      setSelectClass(undefined);
+      setSelectClass(undefined)
     }
     if (!selectClass) {
-      setSelectClass(listClasses[0]);
-      return;
+      setSelectClass(listClasses[0])
+      return
     }
-    const stillExists = listClasses.some((c) => c && c.id === selectClass.id);
+    const stillExists = listClasses.some((c) => c && c.id === selectClass.id)
     if (!stillExists) {
-      setSelectClass(listClasses[0]);
+      setSelectClass(listClasses[0])
     }
-  }, [listClasses]);
+  }, [listClasses])
 
   return (
-    <div className="p-5 h-screen flex-col flex gap-4 bg-background text-foreground">
-      <div className="flex gap-4 w-full">
+    <div className="bg-background text-foreground flex h-screen flex-col gap-4 p-5">
+      <div className="flex w-full gap-4">
         <FormClass
           selectClass={selectClass}
           listClasses={listClasses}
           handleSelectClass={handleSelectClass}
-          disabled={swapData === "byEleves"}
+          disabled={swapData === 'byEleves'}
         />
         <FormEleve
           selectClass={selectClass?.path}
@@ -89,23 +112,22 @@ function SettingsData() {
       </div>
       <AgGridReact
         ref={gridRef}
-        rowData={swapData === "byClass" ? dataClasse?.eleves : allEleves}
+        rowData={swapData === 'byClass' ? dataClasse?.eleves : allEleves}
         columnDefs={colDefs}
         defaultColDef={defaultColDef}
         context={{ selectClass: selectClass?.path }}
         className="h-full w-full"
         theme={myTheme}
-        pagination={true} 
+        pagination={true}
         rowSelection={rowSelection}
         scrollbarWidth={0}
         onSelectionChanged={onSelectionChanged}
       />
     </div>
-  );
+  )
 }
 
-export default SettingsData;
-
+export default SettingsData
 
 // Quand j'ajoute un élève dans un classe il ne se met pas dans la liste de tout les élèves
 

@@ -10,29 +10,21 @@ import {
 
 const animations = {
   default: {
-    circle: {},
-
-    line1: {
+    group: {
       initial: {
         rotate: 0,
-        transition: { ease: 'easeInOut', duration: 0.4, delay: 0.1 },
+        transition: { duration: 0.6, ease: 'easeInOut' },
       },
       animate: {
-        rotate: 90,
-        transition: { ease: 'easeInOut', duration: 0.4, delay: 0.1 },
+        rotate: [0, -6, 6, 0],
+        transformOrigin: 'top right',
+        transition: { duration: 0.6, ease: 'easeInOut' },
       },
     },
 
-    line2: {
-      initial: {
-        rotate: 0,
-        transition: { ease: 'easeInOut', duration: 0.4 },
-      },
-      animate: {
-        rotate: 90,
-        transition: { ease: 'easeInOut', duration: 0.4 },
-      },
-    },
+    path1: {},
+    path2: {},
+    path3: {},
   },
 }
 
@@ -51,31 +43,26 @@ function IconComponent({ size, ...props }) {
       strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
+      variants={variants.group}
+      initial="initial"
+      animate={controls}
       {...props}
     >
-      <motion.circle
-        cx={12}
-        cy={12}
-        r={10}
-        variants={variants.circle}
+      <motion.path
+        d="m11 10 3 3"
+        variants={variants.path1}
         initial="initial"
         animate={controls}
       />
-      <motion.line
-        x1={8}
-        y1={12}
-        x2={16}
-        y2={12}
-        variants={variants.line1}
+      <motion.path
+        d="M6.5 21A3.5 3.5 0 1 0 3 17.5a2.62 2.62 0 0 1-.708 1.792A1 1 0 0 0 3 21z"
+        variants={variants.path2}
         initial="initial"
         animate={controls}
       />
-      <motion.line
-        x1={12}
-        y1={16}
-        x2={12}
-        y2={8}
-        variants={variants.line2}
+      <motion.path
+        d="M9.969 17.031 21.378 5.624a1 1 0 0 0-3.002-3.002L6.967 14.031"
+        variants={variants.path3}
         initial="initial"
         animate={controls}
       />
@@ -83,8 +70,8 @@ function IconComponent({ size, ...props }) {
   )
 }
 
-function CirclePlus(props) {
+function Brush(props) {
   return <IconWrapper icon={IconComponent} {...props} />
 }
 
-export { animations, CirclePlus, CirclePlus as CirclePlusIcon }
+export { animations, Brush, Brush as BrushIcon }

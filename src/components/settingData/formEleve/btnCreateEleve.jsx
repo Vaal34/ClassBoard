@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { useCreateEleve } from "@/hooks/useCreateEleve";
-import * as z from "zod";
+import { useState } from 'react'
+import { useCreateEleve } from '@/hooks/useCreateEleve'
+import * as z from 'zod'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog'
 import {
   Form,
   FormField,
@@ -15,86 +15,86 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { AnimateIcon } from "@/components/animate-ui/icons/icon";
-import { User } from "@/components/animate-ui/icons/user";
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { AnimateIcon } from '@/components/animate-ui/icons/icon'
+import { User } from '@/components/animate-ui/icons/user'
 import {
   Select,
   SelectTrigger,
   SelectValue,
   SelectContent,
   SelectItem,
-} from "@/components/ui/select";
-import { useClasses } from "@/hooks/useClasses";
+} from '@/components/ui/select'
+import { useClasses } from '@/hooks/useClasses'
 
 const eleveSchema = z.object({
-  prenom: z.string().min(1, { message: "Le champ est requis" }),
-  nom: z.string().min(1, { message: "Le champ est requis" }),
+  prenom: z.string().min(1, { message: 'Le champ est requis' }),
+  nom: z.string().min(1, { message: 'Le champ est requis' }),
   classe: z.string().optional(),
-});
+})
 
-function DialogEleve({ selectClass, activeSwap }) {
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const { listClasses } = useClasses();
-  const createEleve = useCreateEleve(selectClass);
-  
+function BtnCreateEleve({ selectClass, activeSwap }) {
+  const [dialogOpen, setDialogOpen] = useState(false)
+  const { listClasses } = useClasses()
+  const createEleve = useCreateEleve(selectClass)
+
   const form = useForm({
     resolver: zodResolver(eleveSchema),
     defaultValues: {
-      prenom: "",
-      nom: "",
-      classe: "",
+      prenom: '',
+      nom: '',
+      classe: '',
     },
-  });
+  })
 
-const onSubmit = (data) => {
-  if (!data.prenom.trim() || !data.nom.trim()) return;
-  
-  let classeToUse;
-  if (activeSwap === "byEleves" && data.classe) {
-    classeToUse = data.classe;
-  } else {
-    classeToUse = selectClass;
-  }
-  
-  createEleve.mutate(
-    { 
-      prenom: data.prenom.trim(), 
-      nom: data.nom.trim(),
-      classe: classeToUse
-    },
-    {
-      onSuccess: () => {
-        form.reset();
-        setDialogOpen(false);
-      },
+  const onSubmit = (data) => {
+    if (!data.prenom.trim() || !data.nom.trim()) return
+
+    let classeToUse
+    if (activeSwap === 'byEleves' && data.classe) {
+      classeToUse = data.classe
+    } else {
+      classeToUse = selectClass
     }
-  );
-};
+
+    createEleve.mutate(
+      {
+        prenom: data.prenom.trim(),
+        nom: data.nom.trim(),
+        classe: classeToUse,
+      },
+      {
+        onSuccess: () => {
+          form.reset()
+          setDialogOpen(false)
+        },
+      }
+    )
+  }
 
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
         <Button
           disabled={!selectClass}
-          className="uppercase text-xl h-full p-6 flex gap-0 flex-col rounded-3xl border-0 justify-center text-purple-200 font-extrabold italic"
+          className="flex h-full flex-col justify-center gap-0 rounded-3xl border-0 p-6 text-xl font-extrabold text-purple-200 uppercase"
         >
           <AnimateIcon
             animateOnHover
             animation="default"
             className="flex flex-col items-center"
           >
-            <User className="size-8 text-purple-900 stroke-1" />
+            <User className="size-8 stroke-1 text-purple-900" />
             Ajouter un eleve
           </AnimateIcon>
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="rounded-4xl border-0 p-8 bg-background text-foreground">
+      <DialogContent className="bg-background text-foreground rounded-4xl border-0 p-8">
         <DialogHeader>
           <DialogTitle>Nouvel élève</DialogTitle>
         </DialogHeader>
@@ -137,7 +137,7 @@ const onSubmit = (data) => {
               )}
             />
 
-            {activeSwap === "byEleves" && (
+            {activeSwap === 'byEleves' && (
               <FormField
                 control={form.control}
                 name="classe"
@@ -181,14 +181,14 @@ const onSubmit = (data) => {
                 disabled={createEleve.isPending}
                 className="rounded-2xl border-0"
               >
-                {createEleve.isPending ? "Ajout..." : "Ajouter l'élève"}
+                {createEleve.isPending ? 'Ajout...' : "Ajouter l'élève"}
               </Button>
             </div>
           </form>
         </Form>
       </DialogContent>
     </Dialog>
-  );
+  )
 }
 
-export default DialogEleve;
+export default BtnCreateEleve

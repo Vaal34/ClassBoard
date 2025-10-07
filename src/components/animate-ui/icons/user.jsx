@@ -1,8 +1,12 @@
-'use client';;
-import * as React from 'react';
-import { motion } from 'motion/react';
+'use client'
+import * as React from 'react'
+import { motion } from 'motion/react'
 
-import { getVariants, useAnimateIconContext, IconWrapper } from '@/components/animate-ui/icons/icon';
+import {
+  getVariants,
+  useAnimateIconContext,
+  IconWrapper,
+} from '@/components/animate-ui/icons/icon'
 
 const animations = {
   default: {
@@ -30,16 +34,13 @@ const animations = {
           ease: 'easeInOut',
         },
       },
-    }
-  }
-};
+    },
+  },
+}
 
-function IconComponent({
-  size,
-  ...props
-}) {
-  const { controls } = useAnimateIconContext();
-  const variants = getVariants(animations);
+function IconComponent({ size, ...props }) {
+  const { controls } = useAnimateIconContext()
+  const variants = getVariants(animations)
 
   return (
     <motion.svg
@@ -52,25 +53,28 @@ function IconComponent({
       strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
-      {...props}>
+      {...props}
+    >
       <motion.path
         d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"
         variants={variants.path}
         initial="initial"
-        animate={controls} />
+        animate={controls}
+      />
       <motion.circle
         cx={12}
         cy={7}
         r={4}
         variants={variants.circle}
         initial="initial"
-        animate={controls} />
+        animate={controls}
+      />
     </motion.svg>
-  );
+  )
 }
 
 function User(props) {
-  return <IconWrapper icon={IconComponent} {...props} />;
+  return <IconWrapper icon={IconComponent} {...props} />
 }
 
-export { animations, User, User as UserIcon };
+export { animations, User, User as UserIcon }

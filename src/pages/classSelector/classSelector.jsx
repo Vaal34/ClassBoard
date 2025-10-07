@@ -1,38 +1,38 @@
-import { Link } from "react-router-dom";
-import { FileCogIcon } from "@/components/ui/file-cog";
-import { ArrowRightIcon } from "@/components/ui/arrow-right";
-import { useClasses } from "@/hooks/useClasses";
+import { Link } from 'react-router-dom'
+import { FileCogIcon } from '@/components/ui/file-cog'
+import { ArrowRightIcon } from '@/components/ui/arrow-right'
+import { useClasses } from '@/hooks/useClasses'
 
 function ClassSelector() {
-  const { listClasses, isLoading, error } = useClasses();
+  const { listClasses, isLoading, error } = useClasses()
 
   return (
-    <div className="flex flex-col p-4 gap-4 h-dvh w-dvw">
+    <div className="flex h-dvh w-dvw flex-col gap-4 p-4">
       <div className="flex justify-between">
-        <span className="text-4xl text-left font-light">CLASSBOARD.</span>
+        <span className="text-left text-4xl font-light">CLASSBOARD.</span>
         <Link
-          className="flex items-center justify-center cursor-pointer border-0 rounded-2xl p-3 transition-all duration-300 linear bg-transparent no-underline text-inherit hover:text-purple-600 hover:bg-purple-50"
+          className="linear flex cursor-pointer items-center justify-center rounded-2xl border-0 bg-transparent p-3 text-inherit no-underline transition-all duration-300 hover:bg-purple-50 hover:text-purple-600"
           to={`/setting-class`}
         >
           <FileCogIcon className="[&_svg]:stroke-1" />
         </Link>
       </div>
-      <div className="grid grid-cols-4 gap-8 h-full ">
+      <div className="grid h-full grid-cols-4 gap-8">
         {Object.values(listClasses).map((classe) => (
           <div
-            className="flex flex-col items-center bg-gray-100 rounded-3xl p-2 no-underline transition-all duration-300 ease-in-out shadow-lg gap-2 hover:shadow-purple-200 hover:shadow-lg hover:bg-purple-50"
+            className="flex flex-col items-center gap-2 rounded-3xl bg-gray-100 p-2 no-underline shadow-lg transition-all duration-300 ease-in-out hover:bg-purple-50 hover:shadow-lg hover:shadow-purple-200"
             key={classe.id}
           >
-            <div className="w-full flex-grow rounded-3xl bg-linear-to-r from-cyan-500 to-blue-500 bg-cover bg-center flex items-end justify-center py-4 px-0 relative overflow-hidden before:content-[''] before:absolute before:inset-0 before:bg-[url('./background-selector.webp')] before:bg-cover before:bg-center before:blur-sm before:[mask-image:linear-gradient(to_top,rgba(0,0,0,1)_10%,rgba(0,0,0,0)_30%)] before:[-webkit-mask-image:linear-gradient(to_top,rgba(0,0,0,1)_10%,rgba(0,0,0,0)_30%)] before:pointer-events-none before:rounded-3xl before:z-0">
-              <div className="flex flex-col w-4/5 relative z-10">
-                <span className="italic text-gray-300 text-xs">classes</span>
-                <span className="text-white text-xl italic font-bold">
+            <div className="relative flex w-full flex-grow items-end justify-center overflow-hidden rounded-3xl bg-linear-to-r from-cyan-500 to-blue-500 bg-cover bg-center px-0 py-4 before:pointer-events-none before:absolute before:inset-0 before:z-0 before:rounded-3xl before:bg-[url('./background-selector.webp')] before:[mask-image:linear-gradient(to_top,rgba(0,0,0,1)_10%,rgba(0,0,0,0)_30%)] before:bg-cover before:bg-center before:blur-sm before:content-[''] before:[-webkit-mask-image:linear-gradient(to_top,rgba(0,0,0,1)_10%,rgba(0,0,0,0)_30%)]">
+              <div className="relative z-10 flex w-4/5 flex-col">
+                <span className="text-xs text-gray-300 italic">classes</span>
+                <span className="text-xl font-bold text-white italic">
                   {classe.name}
                 </span>
               </div>
             </div>
             <Link
-              className="w-4/5 h-8 rounded-full border-none bg-gray-300 text-gray-800 flex justify-center items-center cursor-pointer font-extralight italic transition-all duration-300 ease hover:scale-105 hover:text-purple-600 hover:bg-purple-100 active:bg-purple-200"
+              className="ease flex h-8 w-4/5 cursor-pointer items-center justify-center rounded-full border-none bg-gray-300 font-extralight text-gray-800 italic transition-all duration-300 hover:scale-105 hover:bg-purple-100 hover:text-purple-600 active:bg-purple-200"
               key={classe.id}
               to={`/classe/${classe.path}`}
             >
@@ -42,7 +42,7 @@ function ClassSelector() {
         ))}
       </div>
     </div>
-  );
+  )
 }
 
-export default ClassSelector;
+export default ClassSelector

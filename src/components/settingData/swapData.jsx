@@ -1,22 +1,22 @@
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/motion-tabs";
-import { Users } from "../animate-ui/icons/users";
-import { AnimateIcon } from "../animate-ui/icons/icon";
-import { User } from "../animate-ui/icons/user";
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/motion-tabs'
+import { Users } from '../animate-ui/icons/users'
+import { AnimateIcon } from '../animate-ui/icons/icon'
+import { User } from '../animate-ui/icons/user'
 
 const tabs = [
   {
-    icon: <User className="stroke-1 text-primary"/>,
-    name: "ELEVES",
-    value: "byEleves",
-    content: "Affiche de la liste des élèves",
+    icon: <User className="text-primary stroke-1" />,
+    name: 'ELEVES',
+    value: 'byEleves',
+    content: 'Affiche de la liste des élèves',
   },
-  { 
-    icon: <Users className="stroke-1 text-primary"/>,
-    name: "CLASSES",
-    value: "byClass",
-    content: "Affiche de la liste des élèves par classe",
+  {
+    icon: <Users className="text-primary stroke-1" />,
+    name: 'CLASSES',
+    value: 'byClass',
+    content: 'Affiche de la liste des élèves par classe',
   },
-];
+]
 
 function SwapData({ handleSwapData, activeSwap }) {
   return (
@@ -33,7 +33,11 @@ function SwapData({ handleSwapData, activeSwap }) {
             animation="default"
             className="h-full w-full"
           >
-            <TabsTrigger key={tab.value} value={tab.value} className="flex flex-col text-2xl font-bold italic">
+            <TabsTrigger
+              key={tab.value}
+              value={tab.value}
+              className="flex flex-col text-2xl font-bold"
+            >
               {tab.icon}
               {tab.name}
             </TabsTrigger>
@@ -41,7 +45,7 @@ function SwapData({ handleSwapData, activeSwap }) {
         ))}
       </TabsList>
     </Tabs>
-  );
+  )
 }
 
-export default SwapData;
+export default SwapData

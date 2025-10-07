@@ -1,8 +1,12 @@
-'use client';;
-import * as React from 'react';
-import { motion } from 'motion/react';
+'use client'
+import * as React from 'react'
+import { motion } from 'motion/react'
 
-import { getVariants, useAnimateIconContext, IconWrapper } from '@/components/animate-ui/icons/icon';
+import {
+  getVariants,
+  useAnimateIconContext,
+  IconWrapper,
+} from '@/components/animate-ui/icons/icon'
 
 const animations = {
   default: {
@@ -36,16 +40,13 @@ const animations = {
         y2: [14, 16, 11, 14],
         transition: { duration: 0.6, ease: 'linear' },
       },
-    }
-  }
-};
+    },
+  },
+}
 
-function IconComponent({
-  size,
-  ...props
-}) {
-  const { controls } = useAnimateIconContext();
-  const variants = getVariants(animations);
+function IconComponent({ size, ...props }) {
+  const { controls } = useAnimateIconContext()
+  const variants = getVariants(animations)
 
   return (
     <motion.svg
@@ -58,7 +59,8 @@ function IconComponent({
       strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
-      {...props}>
+      {...props}
+    >
       <motion.rect
         x={3}
         y={3}
@@ -68,7 +70,8 @@ function IconComponent({
         ry={2}
         variants={variants.rect}
         initial="initial"
-        animate={controls} />
+        animate={controls}
+      />
       <motion.line
         x1={16}
         y1={7}
@@ -76,7 +79,8 @@ function IconComponent({
         y2={16}
         variants={variants.line1}
         initial="initial"
-        animate={controls} />
+        animate={controls}
+      />
       <motion.line
         x1={12}
         y1={7}
@@ -84,7 +88,8 @@ function IconComponent({
         y2={11}
         variants={variants.line2}
         initial="initial"
-        animate={controls} />
+        animate={controls}
+      />
       <motion.line
         x1={8}
         y1={7}
@@ -92,13 +97,14 @@ function IconComponent({
         y2={14}
         variants={variants.line3}
         initial="initial"
-        animate={controls} />
+        animate={controls}
+      />
     </motion.svg>
-  );
+  )
 }
 
 function SquareKanban(props) {
-  return <IconWrapper icon={IconComponent} {...props} />;
+  return <IconWrapper icon={IconComponent} {...props} />
 }
 
-export { animations, SquareKanban, SquareKanban as SquareKanbanIcon };
+export { animations, SquareKanban, SquareKanban as SquareKanbanIcon }

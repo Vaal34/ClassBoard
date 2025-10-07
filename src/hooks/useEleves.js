@@ -1,20 +1,20 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query'
 
 export function useEleves() {
   const { data, isLoading, error } = useQuery({
-    queryKey: ["all-eleves"],
+    queryKey: ['all-eleves'],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:3001/api/eleves`);
+      const res = await fetch(`http://localhost:3001/api/eleves`)
       if (!res.ok) {
-        throw new Error("Erreur lors du fetch");
+        throw new Error('Erreur lors du fetch')
       }
-      return res.json();
+      return res.json()
     },
-  });
+  })
 
   return {
     allEleves: data || [],
     isLoading,
     error,
-  };
+  }
 }

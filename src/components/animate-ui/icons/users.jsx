@@ -1,8 +1,12 @@
-'use client';;
-import * as React from 'react';
-import { motion } from 'motion/react';
+'use client'
+import * as React from 'react'
+import { motion } from 'motion/react'
 
-import { getVariants, useAnimateIconContext, IconWrapper } from '@/components/animate-ui/icons/icon';
+import {
+  getVariants,
+  useAnimateIconContext,
+  IconWrapper,
+} from '@/components/animate-ui/icons/icon'
 
 const animations = {
   default: {
@@ -58,7 +62,7 @@ const animations = {
           delay: 0.1,
         },
       },
-    }
+    },
   },
 
   appear: {
@@ -96,16 +100,13 @@ const animations = {
       },
     },
 
-    circle: {}
-  }
-};
+    circle: {},
+  },
+}
 
-function IconComponent({
-  size,
-  ...props
-}) {
-  const { controls } = useAnimateIconContext();
-  const variants = getVariants(animations);
+function IconComponent({ size, ...props }) {
+  const { controls } = useAnimateIconContext()
+  const variants = getVariants(animations)
 
   return (
     <motion.svg
@@ -118,35 +119,40 @@ function IconComponent({
       strokeWidth={2}
       strokeLinecap="round"
       strokeLinejoin="round"
-      {...props}>
+      {...props}
+    >
       <motion.path
         d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
         variants={variants.path1}
         initial="initial"
-        animate={controls} />
+        animate={controls}
+      />
       <motion.path
         d="M16 3.128a4 4 0 0 1 0 7.744"
         variants={variants.path2}
         initial="initial"
-        animate={controls} />
+        animate={controls}
+      />
       <motion.path
         d="M22 21v-2a4 4 0 0 0-3-3.87"
         variants={variants.path3}
         initial="initial"
-        animate={controls} />
+        animate={controls}
+      />
       <motion.circle
         cx={9}
         cy={7}
         r={4}
         variants={variants.circle}
         initial="initial"
-        animate={controls} />
+        animate={controls}
+      />
     </motion.svg>
-  );
+  )
 }
 
 function Users(props) {
-  return <IconWrapper icon={IconComponent} {...props} />;
+  return <IconWrapper icon={IconComponent} {...props} />
 }
 
-export { animations, Users, Users as UsersIcon };
+export { animations, Users, Users as UsersIcon }
