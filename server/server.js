@@ -1,38 +1,43 @@
-import express from "express";
-import cors from "cors";
-import { PrismaClient } from "@prisma/client";
+import express from 'express'
+import cors from 'cors'
+import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient();
-const app = express();
-app.use(cors());
-app.use(express.json());
+const prisma = new PrismaClient()
+const app = express()
+app.use(cors())
+app.use(express.json())
 
 // GET
-app.get("/api/classes", async (req, res) => {
+app.get('/api/classes', async (req, res) => {
   const classes = await prisma.classe.findMany({
     include: { eleves: true },
-  });
-  res.json(classes);
-});
+  })
+  res.json(classes)
+})
 
-app.get("/api/classes/:path", async (req, res) => {
-  const { path } = req.params;
+app.get('/api/classes/:path', async (req, res) => {
+  const { path } = req.params
   const classe = await prisma.classe.findUnique({
     where: { path },
     include: { eleves: true },
-  });
-  res.json(classe);
-});
+  })
+  res.json(classe)
+})
 
-app.get("/api/eleves", async (req, res) => {
-  const eleves = await prisma.eleve.findMany();
-  res.status(201).json(eleves);
-});
+app.get('/api/eleves', async (req, res) => {
+  const eleves = await prisma.eleve.findMany({
+    include: { classe: true },
+    orderBy: {
+      classeId: 'asc',
+    },
+  })
+  res.status(201).json(eleves)
+})
 
 // POST
-app.post("/api/classes", async (req, res) => {
+app.post('/api/classes', async (req, res) => {
   if (req.body == undefined) {
-    return res.status(401).send({ error: "test" });
+    return res.status(401).send({ error: 'test' })
   }
 
   const newClasse = await prisma.classe.create({
@@ -40,17 +45,17 @@ app.post("/api/classes", async (req, res) => {
       name: req.body.name,
       path: req.body.path,
     },
-  });
+  })
 
-  return res.status(201).json(newClasse);
-});
+  return res.status(201).json(newClasse)
+})
 
-app.post("/api/classes/:path", async (req, res) => {
-  const { path } = req.params;
+app.post('/api/classes/:path', async (req, res) => {
+  const { path } = req.params
 
   const classe = await prisma.classe.findUnique({
     where: { path },
-  });
+  })
 
   const newEleve = await prisma.eleve.create({
     data: {
@@ -58,37 +63,36 @@ app.post("/api/classes/:path", async (req, res) => {
       nom: req.body.nom,
       classeId: parseInt(classe.id),
     },
-  });
+  })
 
-  return res.status(201).json(newEleve);
-});
+  return res.status(201).json(newEleve)
+})
 
 // DELETE
-app.delete("/api/classes/", async (req, res) => {
+app.delete('/api/classes/', async (req, res) => {
   const deleteClasse = await prisma.classe.delete({
     where: {
       id: req.body.id,
     },
-  });
+  })
 
-  return res.status(201).json(deleteClasse);
-});
+  return res.status(201).json(deleteClasse)
+})
 
-app.delete("/api/eleves", async (req, res) => {
-
+app.delete('/api/eleves', async (req, res) => {
   const deleteEleve = await prisma.eleve.deleteMany({
     where: {
       id: { in: req.body.ids },
     },
-  });
+  })
 
-  return res.status(201).json(deleteEleve);
-});
+  return res.status(201).json(deleteEleve)
+})
 
 // UPDATE
-app.put("/api/classes/:path", async (req, res) => {
-  const { path } = req.params;
-  const { name, newPath } = req.body;
+app.put('/api/classes/:path', async (req, res) => {
+  const { path } = req.params
+  const { name, newPath } = req.body
 
   const updatedClasse = await prisma.classe.update({
     where: { path },
@@ -96,36 +100,37 @@ app.put("/api/classes/:path", async (req, res) => {
       name,
       path: newPath,
     },
-  });
+  })
 
-  res.status(201).json(updatedClasse);
-});
+  res.status(201).json(updatedClasse)
+})
 
-app.put("/api/eleves/:id", async (req, res) => {
-  const { id } = req.params;
-  const { prenom, nom } = req.body;
+app.put('/api/eleves/:id', async (req, res) => {
+  const { id } = req.params
+  const { prenom, nom, classeId } = req.body
 
   const updatedEleve = await prisma.eleve.update({
     where: { id: Number(id) },
     data: {
       prenom,
       nom,
+      classeId: Number(classeId),
     },
-  });
+  })
 
-  res.status(201).json(updatedEleve);
-});
+  res.status(201).json(updatedEleve)
+})
 
-app.put("/api/classes/:path/eleves/:id", async (req, res) => {
-  const { id } = req.params;
-  const { prenom, nom } = req.body;
+app.put('/api/classes/:path/eleves/:id', async (req, res) => {
+  const { id } = req.params
+  const { prenom, nom } = req.body
 
   const updatedEleve = await prisma.eleve.update({
     where: { id: Number(id) },
     data: { prenom, nom },
-  });
+  })
 
-  res.status(201).json(updatedEleve);
-});
+  res.status(201).json(updatedEleve)
+})
 
-app.listen(3001, () => console.log("Server running on http://localhost:3001"));
+app.listen(3001, () => console.log('Server running on http://localhost:3001'))
