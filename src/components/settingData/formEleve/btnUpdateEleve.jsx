@@ -120,7 +120,7 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
           <SelectTrigger className="rounded-2xl">
             <SelectValue placeholder="Choisir un élève à modifier" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="border-0">
             {elevesToUse && elevesToUse.length > 0 ? (
               elevesToUse.map((eleve) => (
                 <SelectItem key={eleve.id} value={eleve.id}>
@@ -191,10 +191,10 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
                   <FormLabel>Classe</FormLabel>
                   <FormControl>
                     <Select onValueChange={field.onChange} value={field.value}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Choisir une classe" /> 
+                      <SelectTrigger >
+                        <SelectValue placeholder="Choisir une classe"  /> 
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="border-0">
                         {listClasses &&
                           listClasses.map((classe) => (
                             <SelectItem
