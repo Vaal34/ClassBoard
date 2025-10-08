@@ -9,6 +9,9 @@ import FormEleve from '@/components/settingData/formEleve/formEleve'
 import { myTheme } from './agGridTheme'
 import SwapData from '@/components/settingData/swapData'
 import { Badge } from '@/components/ui/badge'
+import { Input } from '@/components/ui/input'
+import { Search } from '@/components/animate-ui/icons/search'
+import { AnimateIcon } from '@/components/animate-ui/icons/icon'
 
 ModuleRegistry.registerModules([AllCommunityModule])
 
@@ -19,13 +22,37 @@ function SettingsData() {
   const [selectEleves, setSelectEleves] = useState([])
   const gridRef = useRef(null)
   const [swapData, setSwapData] = useState('byClass')
+  const [quickFilterText, setQuickFilterText] = useState('')
 
   const { dataClasse } = useClasse(selectClass?.path)
 
-  const [colDefs, setColDefs] = useState([
-    { field: 'prenom', headerName: 'Prénom' },
-    { field: 'nom', headerName: 'Nom' },
-  ])
+  // Colonnes de base réutilisables
+  const baseColumns = [
+    { 
+      field: 'prenom', 
+      headerName: 'PRENOM',
+      getQuickFilterText: (params) => params.value
+    },
+    { 
+      field: 'nom', 
+      headerName: 'NOM',
+      getQuickFilterText: (params) => params.value
+    },
+  ]
+
+  // Colonne classe
+  const classeColumn = {
+    field: 'classe.name',
+    headerName: 'CLASSE',
+    getQuickFilterText: () => '',
+    cellRenderer: (params) => (
+      <Badge className="from-chart-2 border-transparent bg-gradient-to-r to-blue-300 [background-size:105%] bg-center font-normal text-white">
+        {params.value}
+      </Badge>
+    ),
+  }
+
+  const [colDefs, setColDefs] = useState(baseColumns)
 
   const defaultColDef = {
     flex: 1,
@@ -45,28 +72,8 @@ function SettingsData() {
 
   const handleSwapData = (data) => {
     setSwapData(data)
-    if (data === 'byEleves') {
-      // Ajouter la colonne classe aux colonnes existantes
-      setColDefs([
-        { field: 'prenom', headerName: 'Prénom' },
-        { field: 'nom', headerName: 'Nom' },
-        {
-          field: 'classe.name',
-          headerName: 'Classe',
-          cellRenderer: (params) => (
-            <Badge className="from-primary bg-gradient-to-r to-pink-400 [background-size:105%] bg-center font-normal text-white">
-              {params.value}
-            </Badge>
-          ),
-        },
-      ])
-    } else {
-      // Retirer la colonne classe
-      setColDefs([
-        { field: 'prenom', headerName: 'Prénom' },
-        { field: 'nom', headerName: 'Nom' },
-      ])
-    }
+    // Utiliser les colonnes de base et ajouter conditionnellement la colonne classe
+    setColDefs(data === 'byEleves' ? [...baseColumns, classeColumn] : baseColumns)
   }
 
   const rowSelection = useMemo(() => {
@@ -75,10 +82,15 @@ function SettingsData() {
     }
   }, [])
 
-  const onSelectionChanged = useCallback(() => {
+  const onSelectionChanged = () => {
     const selectedRows = gridRef.current.api.getSelectedRows()
     setSelectEleves(selectedRows)
-  }, [])
+  }
+
+  const handleQuickFilterChange = (event) => {
+    const value = event.target.value
+    setQuickFilterText(value)
+  }
 
   useEffect(() => {
     if (listClasses.length === 0 && selectClass) {
@@ -93,6 +105,7 @@ function SettingsData() {
       setSelectClass(listClasses[0])
     }
   }, [listClasses])
+
 
   return (
     <div className="bg-background text-foreground flex h-screen flex-col gap-4 p-5">
@@ -110,25 +123,39 @@ function SettingsData() {
         />
         <SwapData handleSwapData={handleSwapData} activeSwap={swapData} />
       </div>
+      <div className="flex items-center">
+        <Input
+          className="w-1/4 p-4"
+          type="text"
+          placeholder="Recherche d'élève..."
+          value={quickFilterText}
+          onChange={handleQuickFilterChange}
+        />
+      </div>
       <AgGridReact
         ref={gridRef}
         rowData={swapData === 'byClass' ? dataClasse?.eleves : allEleves}
         columnDefs={colDefs}
         defaultColDef={defaultColDef}
         context={{ selectClass: selectClass?.path }}
-        className="h-full w-full"
+        className="h-full w-full ag-theme-quartz"
         theme={myTheme}
         pagination={true}
+        paginationPageSize={20}
+        paginationPageSizeSelector={[10, 20, 50, 100]}
         rowSelection={rowSelection}
-        scrollbarWidth={0}
         onSelectionChanged={onSelectionChanged}
+        quickFilterText={quickFilterText}
+        cacheQuickFilter={true}
+        headerHeight={45}
+        rowHeight={35}
+        scrollbarWidth={0}
+        suppressHorizontalScroll={true}
+        suppressColumnVirtualisation={false}
+        suppressRowVirtualisation={false}
       />
     </div>
   )
 }
 
 export default SettingsData
-
-// Quand j'ajoute un élève dans un classe il ne se met pas dans la liste de tout les élèves
-
-// Quand j'ajoutes un élève dans tous les éleves je devrais pouvoir le choisir une classe
