@@ -30,6 +30,7 @@ import {
   SelectItem,
 } from '@/components/ui/select'
 import { useClasses } from '@/hooks/useClasses'
+import { toast } from 'sonner'
 
 const eleveSchema = z.object({
   prenom: z.string().min(1, { message: 'Le champ est requis' }),
@@ -40,7 +41,7 @@ const eleveSchema = z.object({
 function BtnCreateEleve({ selectClass, activeSwap }) {
   const [dialogOpen, setDialogOpen] = useState(false)
   const { listClasses } = useClasses()
-  const createEleve = useCreateEleve(selectClass)
+  const createEleve = useCreateEleve()
 
   const form = useForm({
     resolver: zodResolver(eleveSchema),
@@ -63,14 +64,37 @@ function BtnCreateEleve({ selectClass, activeSwap }) {
 
     createEleve.mutate(
       {
-        prenom: data.prenom.trim(),
-        nom: data.nom.trim(),
-        classe: classeToUse,
+        newEleve: {
+          prenom: data.prenom.trim(),
+          nom: data.nom.trim(),
+        },
+        path: classeToUse,
       },
       {
         onSuccess: () => {
+          toast.success('Élève créé avec succès', {
+            className: 'rounded-4xl',
+            style: {
+              '--normal-bg':
+                'color-mix(in oklab, light-dark(var(--color-green-600), var(--color-green-400)) 10%, var(--background))',
+              '--normal-text': 'light-dark(var(--color-green-600), var(--color-green-400))',
+              '--normal-border': 'light-dark(var(--color-green-600), var(--color-green-400))'
+            }
+          })
           form.reset()
           setDialogOpen(false)
+        },
+        onError: (error) => {
+          toast.error('Erreur lors de la création de l\'élève', {
+            className: 'rounded-4xl',
+            style: {
+              '--normal-bg':
+                'color-mix(in oklab, light-dark(var(--color-red-600), var(--color-red-400)) 10%, var(--background))',
+              '--normal-text': 'light-dark(var(--color-red-600), var(--color-red-400))',
+              '--normal-border': 'light-dark(var(--color-red-600), var(--color-red-400))'
+            }
+          })
+          console.error('Erreur lors de la création:', error)
         },
       }
     )

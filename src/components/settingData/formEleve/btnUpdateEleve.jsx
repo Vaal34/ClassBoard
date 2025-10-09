@@ -35,6 +35,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { Badge } from '@/components/ui/badge'
 import { useUpdateEleve } from '@/hooks/useUpdateEleve'
+import { toast } from 'sonner'
 
 const eleveSchema = z.object({
   prenom: z.string().min(1, { message: 'Le champ est requis' }),
@@ -44,14 +45,14 @@ const eleveSchema = z.object({
 
 function BtnUpdateEleve({ selectClass, activeSwap }) {
   const [selectedEleve, setSelectedEleve] = useState('')
-
+  const [dialogOpen, setDialogOpen] = useState(false)
   const { allEleves } = useEleves()
   const { listClasses } = useClasses()
   const updateEleve = useUpdateEleve(selectClass)
 
   const elevesToUse = useMemo(() => {
     return activeSwap === 'byClass'
-      ? allEleves.filter((eleve) => eleve.classe.path === selectClass)
+      ? allEleves.filter((eleve) => eleve.classe?.path === selectClass)
       : allEleves
   }, [activeSwap, allEleves, selectClass])
 
@@ -85,10 +86,29 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
       },
       {
         onSuccess: () => {
+          toast.success('Élève modifié avec succès', {
+            className: 'rounded-4xl',
+            style: {
+              '--normal-bg':
+                'color-mix(in oklab, light-dark(var(--color-green-600), var(--color-green-400)) 10%, var(--background))',
+              '--normal-text': 'light-dark(var(--color-green-600), var(--color-green-400))',
+              '--normal-border': 'light-dark(var(--color-green-600), var(--color-green-400))'
+            }
+          })
           setSelectedEleve('')
           form.reset()
+          setDialogOpen(false)
         },
         onError: (error) => {
+          toast.error('Erreur lors de la modification de l\'élève', {
+            className: 'rounded-4xl',
+            style: {
+              '--normal-bg':
+                'color-mix(in oklab, light-dark(var(--color-red-600), var(--color-red-400)) 10%, var(--background))',
+              '--normal-text': 'light-dark(var(--color-red-600), var(--color-red-400))',
+              '--normal-border': 'light-dark(var(--color-red-600), var(--color-red-400))'
+            }
+          })
           console.error('Erreur lors de la modification:', error)
         },
       }
@@ -101,10 +121,10 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
   }
 
   return (
-    <Dialog>
+    <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
         <Button className="flex h-full flex-col gap-0 rounded-3xl border-0 bg-blue-400 p-6 text-xl font-extrabold text-blue-600 uppercase hover:bg-blue-400/90">
-          <AnimateIcon animateOnHover className="flex flex-col items-center">
+          <AnimateIcon animateOnHover className="flex flex-col items-center text-blue-200">
             <Brush className="size-8 stroke-1 text-blue-800" />
             Modifier
           </AnimateIcon>
@@ -132,7 +152,7 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
                     variant="secondary"
                     className="from-chart-2 border-transparent bg-gradient-to-r to-blue-300 [background-size:105%] bg-center text-xs font-light text-white italic"
                   >
-                    {eleve.classe.name}
+                    {eleve.classe?.name}
                   </Badge>
                 </SelectItem>
               ))
