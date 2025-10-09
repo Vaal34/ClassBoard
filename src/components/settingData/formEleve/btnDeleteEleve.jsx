@@ -24,26 +24,10 @@ function BtnDeleteEleve({ selectEleves, selectClass }) {
     const ids = selectEleves.map((eleve) => eleve.id)
     deleteEleve.mutate(ids, {
       onSuccess: () => {
-        toast.success('Élève(s) supprimé(s) avec succès', {
-          className: 'rounded-4xl',
-          style: {
-            '--normal-bg':
-              'color-mix(in oklab, light-dark(var(--color-green-600), var(--color-green-400)) 10%, var(--background))',
-            '--normal-text': 'light-dark(var(--color-green-600), var(--color-green-400))',
-            '--normal-border': 'light-dark(var(--color-green-600), var(--color-green-400))'
-          }
-        })
+        toast.success('Élève(s) supprimé(s) avec succès')
       },
       onError: (error) => {
-        toast.error('Erreur lors de la suppression de l\'élève', {
-          className: 'rounded-4xl',
-          style: {
-            '--normal-bg':
-              'color-mix(in oklab, light-dark(var(--color-red-600), var(--color-red-400)) 10%, var(--background))',
-            '--normal-text': 'light-dark(var(--color-red-600), var(--color-red-400))',
-            '--normal-border': 'light-dark(var(--color-red-600), var(--color-red-400))'
-          }
-        })
+        toast.error('Erreur lors de la suppression de l\'élève')
         console.error('Erreur lors de la suppression:', error)
       },
     })
@@ -55,7 +39,7 @@ function BtnDeleteEleve({ selectEleves, selectClass }) {
         <Button
           variant="destructive"
           disabled={selectEleves.length === 0}
-          className="flex h-full flex-col gap-0 rounded-3xl border-0 p-6 text-xl font-extrabold text-red-400 uppercase"
+          className="flex h-full flex-col gap-0 p-6 text-xl font-extrabold uppercase"
         >
           <AnimateIcon animateOnHover className="flex flex-col items-center text-red-100">
             <Trash2 className="size-8 stroke-1 text-red-800" />
@@ -63,7 +47,7 @@ function BtnDeleteEleve({ selectEleves, selectClass }) {
           </AnimateIcon>
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="bg-background text-foreground rounded-4xl border-0 p-8">
+      <AlertDialogContent className="p-8">
         <AlertDialogHeader>
           <AlertDialogTitle>Êtes-vous sûr ?</AlertDialogTitle>
           <AlertDialogDescription>
@@ -79,11 +63,10 @@ function BtnDeleteEleve({ selectEleves, selectClass }) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="bg-secondary text-secondary-foreground rounded-2xl border-0">
+          <AlertDialogCancel>
             Annuler
           </AlertDialogCancel>
           <AlertDialogAction
-            className="rounded-2xl border-0"
             onClick={handleDelete}
           >
             {deleteEleve.isPending ? 'Suppression...' : 'Supprimer les élèves'}

@@ -27,7 +27,6 @@ function BtnDeleteClasse({ selectClass, disabled }) {
       <AlertDialogTrigger asChild>
         <Button
           variant="destructive"
-          className="rounded-2xl border-0"
           disabled={disabled}
         >
           <AnimateIcon animateOnHover>
@@ -35,7 +34,7 @@ function BtnDeleteClasse({ selectClass, disabled }) {
           </AnimateIcon>
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="bg-background text-foreground rounded-4xl border-0 p-8">
+      <AlertDialogContent className="p-8">
         <AlertDialogHeader>
           <AlertDialogTitle>Êtes-vous sûr ?</AlertDialogTitle>
           <AlertDialogDescription>
@@ -44,13 +43,12 @@ function BtnDeleteClasse({ selectClass, disabled }) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="bg-secondary text-secondary-foreground rounded-2xl border-0">
+          <AlertDialogCancel>
             Annuler
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={handleDelete}
             disabled={deleteClass.isPending}
-            className="rounded-2xl border-0"
           >
             {deleteClass.isPending ? 'Suppression...' : 'Supprimer'}
           </AlertDialogAction>

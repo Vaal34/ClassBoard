@@ -11,7 +11,7 @@ import {
 function FormClass({ selectClass, listClasses, handleSelectClass, disabled }) {
   return (
     <div
-      className={`bg-card flex h-full w-1/2 flex-col gap-4 rounded-4xl p-4 ${
+      className={`rounded-xl bg-card flex h-full w-1/2 flex-col gap-4 p-4 ${
         disabled ? 'cursor-not-allowed opacity-50' : ''
       }`}
     >
@@ -21,15 +21,15 @@ function FormClass({ selectClass, listClasses, handleSelectClass, disabled }) {
           onValueChange={handleSelectClass}
           disabled={disabled}
         >
-          <SelectTrigger className="bg-background w-full cursor-pointer rounded-2xl font-extrabold uppercase">
+          <SelectTrigger className="w-full cursor-pointer font-extrabold uppercase">
             <SelectValue placeholder="Sélectionner une classe" />
           </SelectTrigger>
-          <SelectContent className="bg-background data-[state=open]:slide-in-from-bottom-8 data-[state=open]:zoom-in-100 rounded-2xl border-0 p-1 duration-400">
+          <SelectContent className="data-[state=open]:slide-in-from-bottom-8 data-[state=open]:zoom-in-100 p-1 duration-400">
             {listClasses.map((data) => (
               <SelectItem
                 key={data.id}
                 value={data.path}
-                className="cursor-pointer rounded-2xl border-0 font-light uppercase transition-all duration-300 hover:font-semibold"
+                className="cursor-pointer font-light uppercase transition-all duration-300 hover:font-semibold"
               >
                 {data.name}
               </SelectItem>

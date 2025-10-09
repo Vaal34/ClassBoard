@@ -45,7 +45,7 @@ function SettingsData() {
     headerName: 'CLASSE',
     getQuickFilterText: () => '',
     cellRenderer: (params) => (
-      <Badge className="from-chart-2 border-transparent bg-gradient-to-r to-blue-300 [background-size:105%] bg-center font-normal text-white">
+      <Badge className="font-normal">
         {params.value}
       </Badge>
     ),
@@ -109,7 +109,7 @@ function SettingsData() {
   }, [listClasses])
 
   return (
-    <div className="bg-background text-foreground flex h-screen flex-col gap-4 p-5">
+    <div className="flex h-screen flex-col gap-4 p-5">
       <div className="flex w-full gap-4">
         <FormClass
           selectClass={selectClass}

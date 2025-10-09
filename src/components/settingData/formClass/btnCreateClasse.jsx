@@ -75,17 +75,17 @@ function BtnCreateClasse({ disabled }) {
     <Dialog open={formOpen} onOpenChange={setFormOpen}>
       <DialogTrigger asChild>
         <Button
-          className="h-full w-full gap-2 rounded-3xl border-0 text-lg font-extrabold text-purple-200 uppercase"
+          className="h-full w-full gap-2 text-lg font-extrabold uppercase"
           disabled={disabled}
         >
           <AnimateIcon animateOnHover className="flex items-center gap-2">
             Ajouter une Classe
-            <Users className="size-7 stroke-1 text-purple-800" />
+            <Users className="size-7 stroke-1 text-green-800" />
           </AnimateIcon>
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="bg-background text-foreground rounded-4xl border-0 p-8">
+      <DialogContent className="p-8">
         <DialogHeader>
           <DialogTitle>Nouvelle Classe</DialogTitle>
         </DialogHeader>
@@ -100,7 +100,6 @@ function BtnCreateClasse({ disabled }) {
                   <FormLabel>Nom de la Classe</FormLabel>
                   <FormControl>
                     <Input
-                      className="bg-background text-foreground rounded-2xl"
                       placeholder="Ex: TleL"
                       {...field}
                     />
@@ -118,7 +117,6 @@ function BtnCreateClasse({ disabled }) {
                   <FormLabel>Chemin</FormLabel>
                   <FormControl>
                     <Input
-                      className="bg-background text-foreground rounded-2xl"
                       placeholder="Ex: tlel"
                       {...field}
                     />
@@ -133,12 +131,10 @@ function BtnCreateClasse({ disabled }) {
                 variant="secondary"
                 type="button"
                 onClick={() => setFormOpen(false)}
-                className="rounded-2xl border-0"
               >
                 Annuler
               </Button>
               <Button
-                className="rounded-2xl border-0"
                 type="submit"
                 disabled={createClasse.isPending}
               >

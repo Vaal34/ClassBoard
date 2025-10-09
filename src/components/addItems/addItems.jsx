@@ -26,9 +26,9 @@ function AddItem({ onAdd }) {
   let navigate = useNavigate()
 
   return (
-    <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 transform cursor-pointer gap-4 rounded-lg p-3">
+    <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 transform cursor-pointer gap-4 p-3">
       <button
-        className="linear flex cursor-pointer items-center justify-center rounded-2xl border-0 p-3 transition-all duration-300 hover:scale-110 hover:bg-purple-50 hover:text-purple-600"
+        className="linear flex cursor-pointer items-center justify-center p-3 transition-all duration-300 hover:scale-110"
         onClick={() => navigate(-1)}
       >
         <HomeIcon className="[&_svg]:stroke-1" />
@@ -36,7 +36,7 @@ function AddItem({ onAdd }) {
       {tools.map((tool) => (
         <button
           key={tool.label}
-          className="linear flex cursor-pointer items-center justify-center rounded-2xl border-0 p-3 transition-all duration-300 hover:scale-110 hover:bg-purple-50 hover:text-purple-600"
+          className="linear flex cursor-pointer items-center justify-center p-3 transition-all duration-300 hover:scale-110"
           onClick={() => onAdd(tool.type)}
         >
           {tool.icon}

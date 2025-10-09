@@ -123,24 +123,24 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
-        <Button className="flex h-full flex-col gap-0 rounded-3xl border-0 bg-blue-400 p-6 text-xl font-extrabold text-blue-600 uppercase hover:bg-blue-400/90">
+        <Button className="flex h-full flex-col gap-0 border-0 bg-blue-400 p-6 text-xl font-extrabold uppercase hover:bg-blue-400/90">
           <AnimateIcon animateOnHover className="flex flex-col items-center text-blue-200">
             <Brush className="size-8 stroke-1 text-blue-800" />
             Modifier
           </AnimateIcon>
         </Button>
       </DialogTrigger>
-      <DialogContent className="rounded-4xl border-0 p-8">
+      <DialogContent className="p-8">
         <DialogHeader>
           <DialogTitle>Modifier l'élève</DialogTitle>
           <DialogDescription>Sélectionnez et modifiez l'élève</DialogDescription>
         </DialogHeader>
 
         <Select onValueChange={handleEleveSelect} value={selectedEleve}>
-          <SelectTrigger className="rounded-2xl">
+          <SelectTrigger>
             <SelectValue placeholder="Choisir un élève à modifier" />
           </SelectTrigger>
-          <SelectContent className="border-0">
+          <SelectContent>
             {elevesToUse && elevesToUse.length > 0 ? (
               elevesToUse.map((eleve) => (
                 <SelectItem key={eleve.id} value={eleve.id}>
@@ -214,7 +214,7 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
                       <SelectTrigger >
                         <SelectValue placeholder="Choisir une classe"  /> 
                       </SelectTrigger>
-                      <SelectContent className="border-0">
+                      <SelectContent>
                         {listClasses &&
                           listClasses.map((classe) => (
                             <SelectItem
@@ -237,13 +237,12 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
                 <Button
                   type="button"
                   variant="secondary"
-                  className="rounded-2xl border-0"
                   onClick={handleCancel}
                 >
                   Annuler
                 </Button>
               </DialogClose>
-              <Button type="submit" className="rounded-2xl border-0">
+              <Button type="submit">
                 Modifier l'élève
               </Button>
             </div>

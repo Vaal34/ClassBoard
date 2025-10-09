@@ -72,28 +72,12 @@ function BtnCreateEleve({ selectClass, activeSwap }) {
       },
       {
         onSuccess: () => {
-          toast.success('Élève créé avec succès', {
-            className: 'rounded-4xl',
-            style: {
-              '--normal-bg':
-                'color-mix(in oklab, light-dark(var(--color-green-600), var(--color-green-400)) 10%, var(--background))',
-              '--normal-text': 'light-dark(var(--color-green-600), var(--color-green-400))',
-              '--normal-border': 'light-dark(var(--color-green-600), var(--color-green-400))'
-            }
-          })
+          toast.success('Élève créé avec succès')
           form.reset()
           setDialogOpen(false)
         },
         onError: (error) => {
-          toast.error('Erreur lors de la création de l\'élève', {
-            className: 'rounded-4xl',
-            style: {
-              '--normal-bg':
-                'color-mix(in oklab, light-dark(var(--color-red-600), var(--color-red-400)) 10%, var(--background))',
-              '--normal-text': 'light-dark(var(--color-red-600), var(--color-red-400))',
-              '--normal-border': 'light-dark(var(--color-red-600), var(--color-red-400))'
-            }
-          })
+          toast.error('Erreur lors de la création de l\'élève')
           console.error('Erreur lors de la création:', error)
         },
       }
@@ -105,20 +89,20 @@ function BtnCreateEleve({ selectClass, activeSwap }) {
       <DialogTrigger asChild>
         <Button
           disabled={!selectClass}
-          className="flex h-full flex-col justify-center gap-0 rounded-3xl border-0 p-6 text-xl font-extrabold text-purple-200 uppercase"
+          className="flex h-full flex-col justify-center gap-0 p-6 text-xl font-extrabold uppercase"
         >
           <AnimateIcon
             animateOnHover
             animation="default"
             className="flex flex-col items-center"
           >
-            <User className="size-8 stroke-1 text-purple-900" />
+            <User className="size-8 stroke-1 text-green-900" />
             Ajouter un eleve
           </AnimateIcon>
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="bg-background text-foreground rounded-4xl border-0 p-8">
+      <DialogContent className="p-8">
         <DialogHeader>
           <DialogTitle>Nouvel élève</DialogTitle>
         </DialogHeader>
@@ -133,7 +117,6 @@ function BtnCreateEleve({ selectClass, activeSwap }) {
                   <FormLabel>Prénom</FormLabel>
                   <FormControl>
                     <Input
-                      className="bg-background text-foreground rounded-2xl"
                       placeholder="Ex: Jean"
                       {...field}
                     />
@@ -151,7 +134,6 @@ function BtnCreateEleve({ selectClass, activeSwap }) {
                   <FormLabel>Nom</FormLabel>
                   <FormControl>
                     <Input
-                      className="bg-background text-foreground rounded-2xl"
                       placeholder="Ex: Dupont"
                       {...field}
                     />
@@ -196,14 +178,12 @@ function BtnCreateEleve({ selectClass, activeSwap }) {
                 type="button"
                 variant="secondary"
                 onClick={() => setDialogOpen(false)}
-                className="rounded-2xl border-0"
               >
                 Annuler
               </Button>
               <Button
                 type="submit"
                 disabled={createEleve.isPending}
-                className="rounded-2xl border-0"
               >
                 {createEleve.isPending ? 'Ajout...' : "Ajouter l'élève"}
               </Button>
