@@ -10,8 +10,7 @@ import { myTheme } from './agGridTheme'
 import SwapData from '@/components/settingData/swapData'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
-import { Search } from '@/components/animate-ui/icons/search'
-import { AnimateIcon } from '@/components/animate-ui/icons/icon'
+import { Search } from 'lucide-react'
 
 ModuleRegistry.registerModules([AllCommunityModule])
 
@@ -28,15 +27,15 @@ function SettingsData() {
 
   // Colonnes de base réutilisables
   const baseColumns = [
-    { 
-      field: 'prenom', 
+    {
+      field: 'prenom',
       headerName: 'PRENOM',
-      getQuickFilterText: (params) => params.value
+      getQuickFilterText: (params) => params.value,
     },
-    { 
-      field: 'nom', 
+    {
+      field: 'nom',
       headerName: 'NOM',
-      getQuickFilterText: (params) => params.value
+      getQuickFilterText: (params) => params.value,
     },
   ]
 
@@ -70,10 +69,13 @@ function SettingsData() {
     setSelectClass(classe)
   }
 
+
   const handleSwapData = (data) => {
     setSwapData(data)
     // Utiliser les colonnes de base et ajouter conditionnellement la colonne classe
-    setColDefs(data === 'byEleves' ? [...baseColumns, classeColumn] : baseColumns)
+    setColDefs(
+      data === 'byEleves' ? [...baseColumns, classeColumn] : baseColumns
+    )
   }
 
   const rowSelection = useMemo(() => {
@@ -106,7 +108,6 @@ function SettingsData() {
     }
   }, [listClasses])
 
-
   return (
     <div className="bg-background text-foreground flex h-screen flex-col gap-4 p-5">
       <div className="flex w-full gap-4">
@@ -124,13 +125,18 @@ function SettingsData() {
         <SwapData handleSwapData={handleSwapData} activeSwap={swapData} />
       </div>
       <div className="flex items-center">
-        <Input
-          className="w-1/4 p-4"
-          type="text"
-          placeholder="Recherche d'élève..."
-          value={quickFilterText}
-          onChange={handleQuickFilterChange}
-        />
+        <div className="relative">
+          <div className="text-muted-foreground pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center pl-3 peer-disabled:opacity-50">
+            <Search className="size-4" />
+          </div>
+          <Input
+            className="peer pl-9"
+            type="text"
+            placeholder="Recherche d'élève..."
+            value={quickFilterText}
+            onChange={handleQuickFilterChange}
+          />
+        </div>
       </div>
       <AgGridReact
         ref={gridRef}
@@ -138,7 +144,7 @@ function SettingsData() {
         columnDefs={colDefs}
         defaultColDef={defaultColDef}
         context={{ selectClass: selectClass?.path }}
-        className="h-full w-full ag-theme-quartz"
+        className="ag-theme-quartz h-full w-full"
         theme={myTheme}
         pagination={true}
         paginationPageSize={20}
@@ -148,7 +154,7 @@ function SettingsData() {
         quickFilterText={quickFilterText}
         cacheQuickFilter={true}
         headerHeight={45}
-        rowHeight={35}
+        rowHeight={40}
         scrollbarWidth={0}
         suppressHorizontalScroll={true}
         suppressColumnVirtualisation={false}
