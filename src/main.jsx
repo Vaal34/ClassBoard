@@ -9,6 +9,7 @@ import {
 import { createRoot } from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { Toaster } from '@/components/ui/sonner'
 import Tableau from './tableau.jsx'
 import ClassSelector from './pages/classSelector/classSelector.jsx'
 import SettingsData from './pages/settingsData/settingsData.jsx'
@@ -34,5 +35,6 @@ createRoot(document.getElementById('root')).render(
       </Routes>
     </BrowserRouter>
     <ReactQueryDevtools initialIsOpen={false} />
+    <Toaster />
   </QueryClientProvider>
 )
