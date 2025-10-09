@@ -1,5 +1,5 @@
 import BtnDeleteClasse from './btnDeleteClasse'
-import DialogClasse from './dialogClasse'
+import BtnCreateClasse from './btnCreateClasse'
 import {
   Select,
   SelectContent,
@@ -39,7 +39,7 @@ function FormClass({ selectClass, listClasses, handleSelectClass, disabled }) {
         <BtnDeleteClasse selectClass={selectClass} disabled={disabled} />
       </div>
       <div className="flex-1">
-        <DialogClasse disabled={disabled} />
+        <BtnCreateClasse disabled={disabled} />
       </div>
     </div>
   )
