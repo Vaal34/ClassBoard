@@ -1,19 +1,19 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
 
-export function useCreateEleve(path) {
+export function useCreateEleve() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationKey: ['create-eleve', path],
-    mutationFn: async (newEleve) => {
+    mutationKey: ['create-eleve'],
+    mutationFn: async ({ newEleve, path }) => {
       const { data } = await axios.post(
-        `http://localhost:3001/api/classes/${path}`,
+        `http://localhost:3001/api/eleves/${path}`,
         newEleve
       )
       return data
     },
-    onMutate: async (newEleve) => {
+    onMutate: async ({ newEleve, path }) => {
       await queryClient.cancelQueries({ queryKey: ['classe', path] })
       await queryClient.cancelQueries({ queryKey: ['all-eleves'] })
 
@@ -32,17 +32,27 @@ export function useCreateEleve(path) {
       })
 
       queryClient.setQueryData(['all-eleves'], (oldEleves = []) => {
-        return [...oldEleves, { ...newEleve, id: Date.now() }]
+        // Trouver la classe correspondante pour inclure la relation
+        const classe = queryClient.getQueryData(['classes'])?.find(c => c.path === path)
+        return [...oldEleves, { 
+          ...newEleve, 
+          id: Date.now(),
+          classe: classe ? { id: classe.id, name: classe.name, path: classe.path } : null
+        }]
       })
 
-      return { previousClasse, previousAllEleves }
+      return { previousClasse, previousAllEleves, path }
     },
     onError: (_err, _newEleve, context) => {
-      queryClient.setQueryData(['classe', path], context?.previousClasse)
+      if (context?.path) {
+        queryClient.setQueryData(['classe', context.path], context?.previousClasse)
+      }
       queryClient.setQueryData(['all-eleves'], context?.previousAllEleves)
     },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['classe', path] })
+    onSettled: (_data, _error, _variables, context) => {
+      if (context?.path) {
+        queryClient.invalidateQueries({ queryKey: ['classe', context.path] })
+      }
       queryClient.invalidateQueries({ queryKey: ['all-eleves'] })
     },
   })
