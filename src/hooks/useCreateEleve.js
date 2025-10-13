@@ -33,19 +33,29 @@ export function useCreateEleve() {
 
       queryClient.setQueryData(['all-eleves'], (oldEleves = []) => {
         // Trouver la classe correspondante pour inclure la relation
-        const classe = queryClient.getQueryData(['classes'])?.find(c => c.path === path)
-        return [...oldEleves, { 
-          ...newEleve, 
-          id: Date.now(),
-          classe: classe ? { id: classe.id, name: classe.name, path: classe.path } : null
-        }]
+        const classe = queryClient
+          .getQueryData(['classes'])
+          ?.find((c) => c.path === path)
+        return [
+          ...oldEleves,
+          {
+            ...newEleve,
+            id: Date.now(),
+            classe: classe
+              ? { id: classe.id, name: classe.name, path: classe.path }
+              : null,
+          },
+        ]
       })
 
       return { previousClasse, previousAllEleves, path }
     },
     onError: (_err, _newEleve, context) => {
       if (context?.path) {
-        queryClient.setQueryData(['classe', context.path], context?.previousClasse)
+        queryClient.setQueryData(
+          ['classe', context.path],
+          context?.previousClasse
+        )
       }
       queryClient.setQueryData(['all-eleves'], context?.previousAllEleves)
     },

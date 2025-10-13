@@ -25,12 +25,9 @@ function BtnDeleteClasse({ selectClass, disabled }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button
-          variant="destructive"
-          disabled={disabled}
-        >
+        <Button variant="destructive" disabled={disabled}>
           <AnimateIcon animateOnHover>
-            <Trash2 className="size-4 stroke-1 text-red-500" />
+            <Trash2 className="size-4 stroke-1 text-red-900" />
           </AnimateIcon>
         </Button>
       </AlertDialogTrigger>
@@ -43,9 +40,7 @@ function BtnDeleteClasse({ selectClass, disabled }) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>
-            Annuler
-          </AlertDialogCancel>
+          <AlertDialogCancel>Annuler</AlertDialogCancel>
           <AlertDialogAction
             onClick={handleDelete}
             disabled={deleteClass.isPending}

@@ -45,9 +45,7 @@ function SettingsData() {
     headerName: 'CLASSE',
     getQuickFilterText: () => '',
     cellRenderer: (params) => (
-      <Badge className="font-normal">
-        {params.value}
-      </Badge>
+      <Badge className="font-normal">{params.value}</Badge>
     ),
   }
 
@@ -68,7 +66,6 @@ function SettingsData() {
       : undefined
     setSelectClass(classe)
   }
-
 
   const handleSwapData = (data) => {
     setSwapData(data)

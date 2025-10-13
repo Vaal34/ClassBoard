@@ -49,7 +49,7 @@ export const createEleve = async (req, res) => {
 
     res.status(201).json(newEleve)
   } catch (error) {
-    res.status(500).json({ error: 'Erreur lors de la création de l\'élève' })
+    res.status(500).json({ error: "Erreur lors de la création de l'élève" })
   }
 }
 
@@ -79,11 +79,12 @@ export const updateEleve = async (req, res) => {
     } else if (error.code === 'P2003') {
       res.status(400).json({ error: 'Classe invalide' })
     } else {
-      res.status(500).json({ error: 'Erreur lors de la mise à jour de l\'élève' })
+      res
+        .status(500)
+        .json({ error: "Erreur lors de la mise à jour de l'élève" })
     }
   }
 }
-
 
 // Supprimer plusieurs élèves
 export const deleteEleves = async (req, res) => {
@@ -91,18 +92,18 @@ export const deleteEleves = async (req, res) => {
     const { ids } = req.body
 
     if (!ids || !Array.isArray(ids) || ids.length === 0) {
-      return res.status(400).json({ error: 'Liste d\'IDs d\'élèves requise' })
+      return res.status(400).json({ error: "Liste d'IDs d'élèves requise" })
     }
 
     const deleteResult = await prisma.eleve.deleteMany({
       where: {
-        id: { in: ids.map(id => parseInt(id)) },
+        id: { in: ids.map((id) => parseInt(id)) },
       },
     })
 
     res.status(200).json({
       message: `${deleteResult.count} élève(s) supprimé(s)`,
-      count: deleteResult.count
+      count: deleteResult.count,
     })
   } catch (error) {
     res.status(500).json({ error: 'Erreur lors de la suppression des élèves' })

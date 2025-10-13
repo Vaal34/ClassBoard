@@ -3,7 +3,7 @@ import {
   getAllEleves,
   createEleve,
   updateEleve,
-  deleteEleves
+  deleteEleves,
 } from '../controllers/eleveController.js'
 
 const router = express.Router()

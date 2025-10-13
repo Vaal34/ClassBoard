@@ -14,7 +14,9 @@ export const getAllClasses = async (req, res) => {
     })
     res.json(classes)
   } catch (error) {
-    res.status(500).json({ error: 'Erreur lors de la récupération des classes' })
+    res
+      .status(500)
+      .json({ error: 'Erreur lors de la récupération des classes' })
   }
 }
 
@@ -26,14 +28,16 @@ export const getClassByPath = async (req, res) => {
       where: { path },
       include: { eleves: true },
     })
-    
+
     if (!classe) {
       return res.status(404).json({ error: 'Classe non trouvée' })
     }
-    
+
     res.json(classe)
   } catch (error) {
-    res.status(500).json({ error: 'Erreur lors de la récupération de la classe' })
+    res
+      .status(500)
+      .json({ error: 'Erreur lors de la récupération de la classe' })
   }
 }
 
@@ -67,7 +71,6 @@ export const createClass = async (req, res) => {
   }
 }
 
-
 // Supprimer une classe
 export const deleteClass = async (req, res) => {
   try {
@@ -86,7 +89,9 @@ export const deleteClass = async (req, res) => {
     if (error.code === 'P2025') {
       res.status(404).json({ error: 'Classe non trouvée' })
     } else {
-      res.status(500).json({ error: 'Erreur lors de la suppression de la classe' })
+      res
+        .status(500)
+        .json({ error: 'Erreur lors de la suppression de la classe' })
     }
   }
 }

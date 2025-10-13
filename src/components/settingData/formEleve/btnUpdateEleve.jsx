@@ -91,23 +91,27 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
             style: {
               '--normal-bg':
                 'color-mix(in oklab, light-dark(var(--color-green-600), var(--color-green-400)) 10%, var(--background))',
-              '--normal-text': 'light-dark(var(--color-green-600), var(--color-green-400))',
-              '--normal-border': 'light-dark(var(--color-green-600), var(--color-green-400))'
-            }
+              '--normal-text':
+                'light-dark(var(--color-green-600), var(--color-green-400))',
+              '--normal-border':
+                'light-dark(var(--color-green-600), var(--color-green-400))',
+            },
           })
           setSelectedEleve('')
           form.reset()
           setDialogOpen(false)
         },
         onError: (error) => {
-          toast.error('Erreur lors de la modification de l\'élève', {
+          toast.error("Erreur lors de la modification de l'élève", {
             className: 'rounded-4xl',
             style: {
               '--normal-bg':
                 'color-mix(in oklab, light-dark(var(--color-red-600), var(--color-red-400)) 10%, var(--background))',
-              '--normal-text': 'light-dark(var(--color-red-600), var(--color-red-400))',
-              '--normal-border': 'light-dark(var(--color-red-600), var(--color-red-400))'
-            }
+              '--normal-text':
+                'light-dark(var(--color-red-600), var(--color-red-400))',
+              '--normal-border':
+                'light-dark(var(--color-red-600), var(--color-red-400))',
+            },
           })
           console.error('Erreur lors de la modification:', error)
         },
@@ -124,7 +128,10 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
         <Button className="flex h-full flex-col gap-0 border-0 bg-blue-400 p-6 text-xl font-extrabold uppercase hover:bg-blue-400/90">
-          <AnimateIcon animateOnHover className="flex flex-col items-center text-blue-200">
+          <AnimateIcon
+            animateOnHover
+            className="font-clash flex flex-col items-center font-extrabold text-blue-200"
+          >
             <Brush className="size-8 stroke-1 text-blue-800" />
             Modifier
           </AnimateIcon>
@@ -133,14 +140,16 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
       <DialogContent className="p-8">
         <DialogHeader>
           <DialogTitle>Modifier l'élève</DialogTitle>
-          <DialogDescription>Sélectionnez et modifiez l'élève</DialogDescription>
+          <DialogDescription>
+            Sélectionnez et modifiez l'élève
+          </DialogDescription>
         </DialogHeader>
 
         <Select onValueChange={handleEleveSelect} value={selectedEleve}>
           <SelectTrigger>
             <SelectValue placeholder="Choisir un élève à modifier" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="rounded-4xl border-0 p-1">
             {elevesToUse && elevesToUse.length > 0 ? (
               elevesToUse.map((eleve) => (
                 <SelectItem key={eleve.id} value={eleve.id}>
@@ -150,7 +159,7 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
                   </span>
                   <Badge
                     variant="secondary"
-                    className="from-chart-2 border-transparent bg-gradient-to-r to-blue-300 [background-size:105%] bg-center text-xs font-light text-white italic"
+                    className="border-transparent bg-gradient-to-r from-indigo-500 to-pink-500 [background-size:105%] bg-center text-xs font-light text-white italic"
                   >
                     {eleve.classe?.name}
                   </Badge>
@@ -211,10 +220,10 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
                   <FormLabel>Classe</FormLabel>
                   <FormControl>
                     <Select onValueChange={field.onChange} value={field.value}>
-                      <SelectTrigger >
-                        <SelectValue placeholder="Choisir une classe"  /> 
+                      <SelectTrigger>
+                        <SelectValue placeholder="Choisir une classe" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="rounded-4xl border-0 p-1">
                         {listClasses &&
                           listClasses.map((classe) => (
                             <SelectItem
@@ -242,9 +251,7 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
                   Annuler
                 </Button>
               </DialogClose>
-              <Button type="submit">
-                Modifier l'élève
-              </Button>
+              <Button type="submit">Modifier l'élève</Button>
             </div>
           </form>
         </Form>

@@ -215,7 +215,7 @@ function TabsContent({ children, value, className, ...props }) {
       data-slot="tabs-content"
       className={cn('overflow-hidden', className)}
       initial={{ filter: 'blur(0px)' }}
-      animate={{ filter: isActive ? 'blur(0px)' : 'blur(2px)' }}
+      animate={{ filter: isActive ? 'blur(0px)' : 'blur(1px)' }}
       exit={{ filter: 'blur(0px)' }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
       {...props}

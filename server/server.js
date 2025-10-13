@@ -19,10 +19,10 @@ app.use('/', routes)
 // ROUTE DE SANTÉ
 // ===========================================
 app.get('/health', (req, res) => {
-  res.status(200).json({ 
-    status: 'OK', 
+  res.status(200).json({
+    status: 'OK',
     message: 'Serveur ClassBoard opérationnel',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   })
 })
 

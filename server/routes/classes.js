@@ -3,7 +3,7 @@ import {
   getAllClasses,
   getClassByPath,
   createClass,
-  deleteClass
+  deleteClass,
 } from '../controllers/classController.js'
 
 const router = express.Router()

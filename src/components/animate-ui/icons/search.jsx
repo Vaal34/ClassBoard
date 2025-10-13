@@ -1,8 +1,12 @@
-'use client';;
-import * as React from 'react';
-import { motion } from 'motion/react';
+'use client'
+import * as React from 'react'
+import { motion } from 'motion/react'
 
-import { getVariants, useAnimateIconContext, IconWrapper } from '@/components/animate-ui/icons/icon';
+import {
+  getVariants,
+  useAnimateIconContext,
+  IconWrapper,
+} from '@/components/animate-ui/icons/icon'
 
 const animations = {
   default: {
@@ -18,7 +22,7 @@ const animations = {
     },
 
     path: {},
-    circle: {}
+    circle: {},
   },
 
   find: {
@@ -35,16 +39,13 @@ const animations = {
     },
 
     path: {},
-    circle: {}
-  }
-};
+    circle: {},
+  },
+}
 
-function IconComponent({
-  size,
-  ...props
-}) {
-  const { controls } = useAnimateIconContext();
-  const variants = getVariants(animations);
+function IconComponent({ size, ...props }) {
+  const { controls } = useAnimateIconContext()
+  const variants = getVariants(animations)
 
   return (
     <motion.svg
@@ -60,25 +61,28 @@ function IconComponent({
       variants={variants.group}
       initial="initial"
       animate={controls}
-      {...props}>
+      {...props}
+    >
       <motion.path
         d="m21 21-4.34-4.34"
         variants={variants.path}
         initial="initial"
-        animate={controls} />
+        animate={controls}
+      />
       <motion.circle
         cx={11}
         cy={11}
         r={8}
         variants={variants.circle}
         initial="initial"
-        animate={controls} />
+        animate={controls}
+      />
     </motion.svg>
-  );
+  )
 }
 
 function Search(props) {
-  return <IconWrapper icon={IconComponent} {...props} />;
+  return <IconWrapper icon={IconComponent} {...props} />
 }
 
-export { animations, Search, Search as SearchIcon };
+export { animations, Search, Search as SearchIcon }

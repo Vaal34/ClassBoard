@@ -27,7 +27,7 @@ function BtnDeleteEleve({ selectEleves, selectClass }) {
         toast.success('Élève(s) supprimé(s) avec succès')
       },
       onError: (error) => {
-        toast.error('Erreur lors de la suppression de l\'élève')
+        toast.error("Erreur lors de la suppression de l'élève")
         console.error('Erreur lors de la suppression:', error)
       },
     })
@@ -39,9 +39,12 @@ function BtnDeleteEleve({ selectEleves, selectClass }) {
         <Button
           variant="destructive"
           disabled={selectEleves.length === 0}
-          className="flex h-full flex-col gap-0 p-6 text-xl font-extrabold uppercase"
+          className="font-clash flex h-full flex-col gap-0 p-6 text-xl font-extrabold uppercase"
         >
-          <AnimateIcon animateOnHover className="flex flex-col items-center text-red-100">
+          <AnimateIcon
+            animateOnHover
+            className="flex flex-col items-center text-red-100"
+          >
             <Trash2 className="size-8 stroke-1 text-red-800" />
             Supprimer
           </AnimateIcon>
@@ -63,12 +66,8 @@ function BtnDeleteEleve({ selectEleves, selectClass }) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>
-            Annuler
-          </AlertDialogCancel>
-          <AlertDialogAction
-            onClick={handleDelete}
-          >
+          <AlertDialogCancel>Annuler</AlertDialogCancel>
+          <AlertDialogAction onClick={handleDelete}>
             {deleteEleve.isPending ? 'Suppression...' : 'Supprimer les élèves'}
           </AlertDialogAction>
         </AlertDialogFooter>

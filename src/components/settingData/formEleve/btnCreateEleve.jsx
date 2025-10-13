@@ -7,6 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogDescription,
 } from '@/components/ui/dialog'
 import {
   Form,
@@ -77,7 +78,7 @@ function BtnCreateEleve({ selectClass, activeSwap }) {
           setDialogOpen(false)
         },
         onError: (error) => {
-          toast.error('Erreur lors de la création de l\'élève')
+          toast.error("Erreur lors de la création de l'élève")
           console.error('Erreur lors de la création:', error)
         },
       }
@@ -89,7 +90,7 @@ function BtnCreateEleve({ selectClass, activeSwap }) {
       <DialogTrigger asChild>
         <Button
           disabled={!selectClass}
-          className="flex h-full flex-col justify-center gap-0 p-6 text-xl font-extrabold uppercase"
+          className="font-clash flex h-full flex-col justify-center gap-0 p-6 text-xl font-extrabold uppercase"
         >
           <AnimateIcon
             animateOnHover
@@ -97,7 +98,7 @@ function BtnCreateEleve({ selectClass, activeSwap }) {
             className="flex flex-col items-center"
           >
             <User className="size-8 stroke-1 text-green-900" />
-            Ajouter un eleve
+            Ajouter un élève
           </AnimateIcon>
         </Button>
       </DialogTrigger>
@@ -105,6 +106,9 @@ function BtnCreateEleve({ selectClass, activeSwap }) {
       <DialogContent className="p-8">
         <DialogHeader>
           <DialogTitle>Nouvel élève</DialogTitle>
+          <DialogDescription>
+            Remplissez les champs ci-dessous pour ajouter un nouvel élève
+          </DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
@@ -116,10 +120,7 @@ function BtnCreateEleve({ selectClass, activeSwap }) {
                 <FormItem>
                   <FormLabel>Prénom</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Ex: Jean"
-                      {...field}
-                    />
+                    <Input placeholder="Ex: Jean" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -133,10 +134,7 @@ function BtnCreateEleve({ selectClass, activeSwap }) {
                 <FormItem>
                   <FormLabel>Nom</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Ex: Dupont"
-                      {...field}
-                    />
+                    <Input placeholder="Ex: Dupont" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -159,7 +157,7 @@ function BtnCreateEleve({ selectClass, activeSwap }) {
                           <SelectValue placeholder="Sélectionner une classe" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent>
+                      <SelectContent className="rounded-4xl border-0 p-1">
                         {listClasses.map((classe) => (
                           <SelectItem key={classe.id} value={classe.path}>
                             {classe.name}
@@ -181,10 +179,7 @@ function BtnCreateEleve({ selectClass, activeSwap }) {
               >
                 Annuler
               </Button>
-              <Button
-                type="submit"
-                disabled={createEleve.isPending}
-              >
+              <Button type="submit" disabled={createEleve.isPending}>
                 {createEleve.isPending ? 'Ajout...' : "Ajouter l'élève"}
               </Button>
             </div>

@@ -6,6 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogDescription,
 } from '@/components/ui/dialog'
 import { Input } from '@/components/ui/input'
 import {
@@ -75,10 +76,13 @@ function BtnCreateClasse({ disabled }) {
     <Dialog open={formOpen} onOpenChange={setFormOpen}>
       <DialogTrigger asChild>
         <Button
-          className="h-full w-full gap-2 text-lg font-extrabold uppercase"
+          className="h-full w-full gap-2 py-0 text-lg font-extrabold uppercase"
           disabled={disabled}
         >
-          <AnimateIcon animateOnHover className="flex items-center gap-2">
+          <AnimateIcon
+            animateOnHover
+            className="font-clash flex items-center gap-2 font-extrabold uppercase"
+          >
             Ajouter une Classe
             <Users className="size-7 stroke-1 text-green-800" />
           </AnimateIcon>
@@ -88,6 +92,9 @@ function BtnCreateClasse({ disabled }) {
       <DialogContent className="p-8">
         <DialogHeader>
           <DialogTitle>Nouvelle Classe</DialogTitle>
+          <DialogDescription>
+            Remplissez les champs ci-dessous pour ajouter une nouvelle classe
+          </DialogDescription>
         </DialogHeader>
 
         <Form {...form}>
@@ -99,10 +106,7 @@ function BtnCreateClasse({ disabled }) {
                 <FormItem>
                   <FormLabel>Nom de la Classe</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Ex: TleL"
-                      {...field}
-                    />
+                    <Input placeholder="Ex: TleL" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -116,10 +120,7 @@ function BtnCreateClasse({ disabled }) {
                 <FormItem>
                   <FormLabel>Chemin</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Ex: tlel"
-                      {...field}
-                    />
+                    <Input placeholder="Ex: tlel" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -134,10 +135,7 @@ function BtnCreateClasse({ disabled }) {
               >
                 Annuler
               </Button>
-              <Button
-                type="submit"
-                disabled={createClasse.isPending}
-              >
+              <Button type="submit" disabled={createClasse.isPending}>
                 {createClasse.isPending ? 'Enregistrement...' : 'Enregistrer'}
               </Button>
             </div>
