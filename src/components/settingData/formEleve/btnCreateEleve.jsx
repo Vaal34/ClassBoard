@@ -32,6 +32,7 @@ import {
 } from '@/components/ui/select'
 import { useClasses } from '@/hooks/useClasses'
 import { toast } from 'sonner'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
 const eleveSchema = z.object({
   prenom: z.string().min(1, { message: 'Le champ est requis' }),
@@ -87,22 +88,29 @@ function BtnCreateEleve({ selectClass, activeSwap }) {
 
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-      <DialogTrigger asChild>
-        <Button
-          size="icon"
-          disabled={!selectClass}
-          className="w-full font-clash flex h-full flex-col p-6 justify-center text-lg font-extrabold uppercase"
-        >
-          <AnimateIcon
-            animateOnHover
-            animation="default"
-            className="flex flex-col items-center"
-          >
-            <User className="size-8 stroke-1 text-green-900" />
-            
-          </AnimateIcon>
-        </Button>
-      </DialogTrigger>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <DialogTrigger asChild>
+            <Button
+              size="icon"
+              disabled={!selectClass}
+              className="w-full font-clash flex h-full flex-col p-6 justify-center text-lg font-extrabold uppercase"
+            >
+              <AnimateIcon
+                animateOnHover
+                animation="default"
+                className="flex flex-col items-center"
+              >
+                <User className="size-8 stroke-1 text-green-900" />
+                
+              </AnimateIcon>
+            </Button>
+          </DialogTrigger>
+        </TooltipTrigger>
+        <TooltipContent className="[&_svg]:bg-green-200 [&_svg]:fill-green-200 bg-green-200 text-green-800 font-clash text-lg font-extrabold uppercase">
+          Créer un élève
+        </TooltipContent>
+      </Tooltip>
 
       <DialogContent className="p-8">
         <DialogHeader>

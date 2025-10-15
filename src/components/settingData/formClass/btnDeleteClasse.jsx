@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button'
 import { AnimateIcon } from '@/components/animate-ui/icons/icon'
 import { Trash2 } from '@/components/animate-ui/icons/trash-2'
 import { toast } from 'sonner'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
 function BtnDeleteClasse({ selectClass, disabled }) {
   const deleteClass = useDeleteClasse()
@@ -37,20 +38,27 @@ function BtnDeleteClasse({ selectClass, disabled }) {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild className="w-full">
-        <Button
-          variant="destructive"
-          disabled={disabled || !selectClass}
-          className="disabled:blur-[0.5px] font-clash flex h-full w-full flex-col p-6 text-lg font-extrabold uppercase"
-        >
-          <AnimateIcon
-            animateOnHover
-            className="flex flex-col items-center text-red-100"
-          >
-            <Trash2 className="size-8 stroke-1 text-red-800" />
-          </AnimateIcon>
-        </Button>
-      </AlertDialogTrigger>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <AlertDialogTrigger asChild className="w-full">
+            <Button
+              variant="destructive"
+              disabled={disabled || !selectClass}
+              className="disabled:blur-[0.5px] font-clash flex h-full w-full flex-col p-6 text-lg font-extrabold uppercase"
+            >
+              <AnimateIcon
+                animateOnHover
+                className="flex flex-col items-center text-red-100"
+              >
+                <Trash2 className="size-8 stroke-1 text-red-800" />
+              </AnimateIcon>
+            </Button>
+          </AlertDialogTrigger>
+        </TooltipTrigger>
+        <TooltipContent className=" [&_svg]:bg-red-200 [&_svg]:fill-red-200 bg-red-200 text-red-800 font-clash text-lg font-extrabold uppercase">
+          Supprimer la classe
+        </TooltipContent>
+      </Tooltip>
       <AlertDialogContent className="p-8">
         <AlertDialogHeader>
           <AlertDialogTitle>Êtes-vous sûr ?</AlertDialogTitle>
@@ -64,6 +72,7 @@ function BtnDeleteClasse({ selectClass, disabled }) {
           <AlertDialogAction
             onClick={handleDelete}
             disabled={deleteClass.isPending}
+            variant="destructive"
           >
             {deleteClass.isPending ? 'Suppression...' : 'Supprimer la classe'}
           </AlertDialogAction>

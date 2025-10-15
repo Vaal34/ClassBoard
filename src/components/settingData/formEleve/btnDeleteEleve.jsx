@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button'
 import { Trash2 } from '@/components/animate-ui/icons/trash-2'
 import { AnimateIcon } from '@/components/animate-ui/icons/icon'
 import { toast } from 'sonner'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
 function BtnDeleteEleve({ selectEleves, selectClass }) {
   const deleteEleve = useDeleteEleve(selectClass)
@@ -35,21 +36,28 @@ function BtnDeleteEleve({ selectEleves, selectClass }) {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button
-          size="icon"
-          variant="destructive"
-          disabled={selectEleves.length === 0}
-          className="disabled:blur-[0.5px] font-clash flex h-full w-full flex-col gap-0 p-6 text-lg font-extrabold uppercase"
-        >
-          <AnimateIcon
-            animateOnHover
-            className="flex flex-col items-center text-red-100"
-          >
-            <Trash2 className="size-8 stroke-1 text-red-800" />
-          </AnimateIcon>
-        </Button>
-      </AlertDialogTrigger>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <AlertDialogTrigger asChild>
+            <Button
+              size="icon"
+              variant="destructive"
+              disabled={selectEleves.length === 0}
+              className="disabled:blur-[0.5px] font-clash flex h-full w-full flex-col gap-0 p-6 text-lg font-extrabold uppercase"
+            >
+              <AnimateIcon
+                animateOnHover
+                className="flex flex-col items-center text-red-100"
+              >
+                <Trash2 className="size-8 stroke-1 text-red-800" />
+              </AnimateIcon>
+            </Button>
+          </AlertDialogTrigger>
+        </TooltipTrigger>
+        <TooltipContent className="[&_svg]:bg-red-200 [&_svg]:fill-red-200 bg-red-200 text-red-800 font-clash text-lg font-extrabold uppercase">
+          Supprimer l'élève
+        </TooltipContent>
+      </Tooltip>
       <AlertDialogContent className="p-8">
         <AlertDialogHeader>
           <AlertDialogTitle>Êtes-vous sûr ?</AlertDialogTitle>
@@ -67,7 +75,7 @@ function BtnDeleteEleve({ selectEleves, selectClass }) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Annuler</AlertDialogCancel>
-          <AlertDialogAction onClick={handleDelete}>
+          <AlertDialogAction onClick={handleDelete} variant="destructive">
             {deleteEleve.isPending ? 'Suppression...' : 'Supprimer les élèves'}
           </AlertDialogAction>
         </AlertDialogFooter>

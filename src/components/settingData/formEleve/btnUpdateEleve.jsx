@@ -36,6 +36,7 @@ import * as z from 'zod'
 import { Badge } from '@/components/ui/badge'
 import { useUpdateEleve } from '@/hooks/useUpdateEleve'
 import { toast } from 'sonner'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
 const eleveSchema = z.object({
   prenom: z.string().min(1, { message: 'Le champ est requis' }),
@@ -126,19 +127,26 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
 
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-      <DialogTrigger asChild>
-        <Button
-          size="icon"
-          className="flex h-full w-full flex-col gap-0 border-0 bg-blue-400 p-6 text-lg font-extrabold uppercase hover:bg-blue-400/90"
-        >
-          <AnimateIcon
-            animateOnHover
-            className="font-clash flex flex-col items-center font-extrabold text-blue-200"
-          >
-            <Brush className="size-8 stroke-1 text-blue-800" />
-          </AnimateIcon>
-        </Button>
-      </DialogTrigger>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <DialogTrigger asChild>
+            <Button
+              size="icon"
+              className="flex h-full w-full flex-col gap-0 border-0 bg-blue-400 p-6 text-lg font-extrabold uppercase hover:bg-blue-400/90"
+            >
+              <AnimateIcon
+                animateOnHover
+                className="font-clash flex flex-col items-center font-extrabold text-blue-200"
+              >
+                <Brush className="size-8 stroke-1 text-blue-800" />
+              </AnimateIcon>
+            </Button>
+          </DialogTrigger>
+        </TooltipTrigger>
+        <TooltipContent className=" [&_svg]:bg-blue-200 [&_svg]:fill-blue-200 bg-blue-200 text-blue-800 font-clash text-lg font-extrabold uppercase">
+          Modifier un élève
+        </TooltipContent>
+      </Tooltip>
       <DialogContent className="p-8">
         <DialogHeader>
           <DialogTitle>Modifier l'élève</DialogTitle>

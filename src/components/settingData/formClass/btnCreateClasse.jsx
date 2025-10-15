@@ -24,6 +24,7 @@ import { Button } from '@/components/ui/button'
 import { AnimateIcon } from '@/components/animate-ui/icons/icon'
 import { Users } from '@/components/animate-ui/icons/users'
 import { showToast } from '@/lib/toast-styles'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 // Schéma de validation
 const classeSchema = z.object({
   name: z
@@ -74,20 +75,27 @@ function BtnCreateClasse({ disabled }) {
 
   return (
     <Dialog open={formOpen} onOpenChange={setFormOpen}> 
-      <DialogTrigger asChild>
-        <Button
-          disabled={disabled}
-          className="disabled:blur-[0.5px] rounded-full w-full font-clash flex h-full flex-col justify-center gap-0 text-lg font-extrabold uppercase"
-        >
-          <AnimateIcon
-            animateOnHover
-            animation="default"
-            className="flex flex-col items-center"
-          >
-            <Users className="size-8 stroke-1 text-green-900" />
-          </AnimateIcon>
-        </Button>
-      </DialogTrigger>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <DialogTrigger asChild>
+            <Button
+              disabled={disabled}
+              className="disabled:blur-[0.5px] rounded-full w-full font-clash flex h-full flex-col justify-center gap-0 text-lg font-extrabold uppercase"
+            >
+              <AnimateIcon
+                animateOnHover
+                animation="default"
+                className="flex flex-col items-center"
+              >
+                <Users className="size-8 stroke-1 text-green-900" />
+              </AnimateIcon>
+            </Button>
+          </DialogTrigger>
+        </TooltipTrigger>
+        <TooltipContent className=" [&_svg]:bg-green-200 [&_svg]:fill-green-200 bg-green-200 text-green-800 font-clash text-lg font-extrabold uppercase">
+          Créer une classe
+        </TooltipContent>
+      </Tooltip>
 
       <DialogContent className="p-8">
         <DialogHeader>
