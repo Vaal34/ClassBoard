@@ -39,14 +39,13 @@ function BtnDeleteEleve({ selectEleves, selectClass }) {
         <Button
           variant="destructive"
           disabled={selectEleves.length === 0}
-          className="font-clash flex h-full flex-col gap-0 p-6 text-xl font-extrabold uppercase"
+          className="disabled:blur-[0.5px] font-clash flex h-full w-full flex-col gap-0 p-6 text-lg font-extrabold uppercase"
         >
           <AnimateIcon
             animateOnHover
             className="flex flex-col items-center text-red-100"
           >
             <Trash2 className="size-8 stroke-1 text-red-800" />
-            Supprimer
           </AnimateIcon>
         </Button>
       </AlertDialogTrigger>

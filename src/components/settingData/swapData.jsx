@@ -28,7 +28,7 @@ function SwapData({ handleSwapData, activeSwap }) {
     <Tabs
       value={activeSwap}
       onValueChange={handleSwapData}
-      className="h-full w-1/4"
+      className="w-full h-full"
     >
       <TabsList className="h-full w-full p-3">
         {tabs.map((tab) => (
@@ -38,7 +38,7 @@ function SwapData({ handleSwapData, activeSwap }) {
             animation="default"
             className="h-full w-full"
           >
-            <TabsTrigger key={tab.value} value={tab.value}>
+            <TabsTrigger key={tab.value} value={tab.value} >
               <TabsContent
                 value={tab.value}
                 className="font-clash flex w-full flex-col items-center justify-center text-xl font-extrabold text-green-950 uppercase italic"

@@ -4,10 +4,16 @@ import BtnUpdateEleve from './btnUpdateEleve'
 
 function FormEleve({ selectClass, selectEleves, activeSwap }) {
   return (
-    <div className="bg-card text-accent-foreground flex h-full justify-center gap-4 rounded-xl p-2">
-      <BtnCreateEleve selectClass={selectClass} activeSwap={activeSwap} />
-      <BtnUpdateEleve selectClass={selectClass} activeSwap={activeSwap} />
-      <BtnDeleteEleve selectEleves={selectEleves} selectClass={selectClass} />
+    <div className="bg-card text-accent-foreground flex w-full justify-center gap-4 rounded-xl p-2">
+      <div className="w-1/3">
+        <BtnCreateEleve selectClass={selectClass} activeSwap={activeSwap} />
+      </div>
+      <div className="w-1/3">
+        <BtnUpdateEleve selectClass={selectClass} activeSwap={activeSwap} />
+      </div>
+      <div className="w-1/3">
+        <BtnDeleteEleve selectEleves={selectEleves} selectClass={selectClass} />
+      </div>
     </div>
   )
 }

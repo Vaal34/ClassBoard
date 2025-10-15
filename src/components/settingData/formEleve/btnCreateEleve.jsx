@@ -90,7 +90,7 @@ function BtnCreateEleve({ selectClass, activeSwap }) {
       <DialogTrigger asChild>
         <Button
           disabled={!selectClass}
-          className="font-clash flex h-full flex-col justify-center gap-0 p-6 text-xl font-extrabold uppercase"
+          className="w-full font-clash flex h-full flex-col p-6 justify-center text-lg font-extrabold uppercase"
         >
           <AnimateIcon
             animateOnHover
@@ -98,7 +98,7 @@ function BtnCreateEleve({ selectClass, activeSwap }) {
             className="flex flex-col items-center"
           >
             <User className="size-8 stroke-1 text-green-900" />
-            Ajouter un élève
+            
           </AnimateIcon>
         </Button>
       </DialogTrigger>

@@ -73,18 +73,18 @@ function BtnCreateClasse({ disabled }) {
   }
 
   return (
-    <Dialog open={formOpen} onOpenChange={setFormOpen}>
+    <Dialog open={formOpen} onOpenChange={setFormOpen}> 
       <DialogTrigger asChild>
         <Button
-          className="h-full w-full gap-2 py-0 text-lg font-extrabold uppercase"
           disabled={disabled}
+          className="disabled:blur-[0.5px] rounded-full w-full font-clash flex h-full flex-col justify-center gap-0 text-lg font-extrabold uppercase"
         >
           <AnimateIcon
             animateOnHover
-            className="font-clash flex items-center gap-2 font-extrabold uppercase"
+            animation="default"
+            className="flex flex-col items-center"
           >
-            Ajouter une Classe
-            <Users className="size-7 stroke-1 text-green-800" />
+            <Users className="size-8 stroke-1 text-green-900" />
           </AnimateIcon>
         </Button>
       </DialogTrigger>

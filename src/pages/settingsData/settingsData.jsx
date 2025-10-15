@@ -10,7 +10,16 @@ import { myTheme } from './agGridTheme'
 import SwapData from '@/components/settingData/swapData'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
-import { Search } from 'lucide-react'
+import { ArrowLeft, Search } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { Button } from '@/components/ui/button'
 
 ModuleRegistry.registerModules([AllCommunityModule])
 
@@ -106,57 +115,99 @@ function SettingsData() {
   }, [listClasses])
 
   return (
-    <div className="flex h-screen flex-col gap-4 p-5">
-      <div className="flex w-full gap-4">
-        <FormClass
-          selectClass={selectClass}
-          listClasses={listClasses}
-          handleSelectClass={handleSelectClass}
-          disabled={swapData === 'byEleves'}
-        />
-        <FormEleve
-          selectClass={selectClass?.path}
-          selectEleves={selectEleves}
-          activeSwap={swapData}
-        />
-        <SwapData handleSwapData={handleSwapData} activeSwap={swapData} />
+    <div className="flex h-screen w-screen flex-col gap-4 p-5">
+      <div className="flex flex-col">
+        <h1 className="text-foreground font-clash text-4xl font-bold uppercase">
+          Gestion des données
+        </h1>
+        <p className="text-muted-foreground">
+          Gérez les données de vos classes et élèves
+        </p>
       </div>
-      <div className="flex items-center">
-        <div className="relative">
-          <div className="text-muted-foreground pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center pl-3 peer-disabled:opacity-50">
-            <Search className="size-4" />
+      <div className="flex h-full w-full gap-3">
+        {/* Gestion classe et les élèves */}
+        <div className="flex h-full flex-col gap-4">
+          <FormClass
+            selectClass={selectClass}
+            disabled={swapData === 'byEleves'}
+          />
+          <FormEleve
+            selectClass={selectClass?.path}
+            selectEleves={selectEleves}
+            activeSwap={swapData}
+          />
+          <SwapData handleSwapData={handleSwapData} activeSwap={swapData} />
+          <div className="h-3/4 w-full">
+            <Link to="/classes">
+              <Button
+                type="button"
+                className="w-full h-full font-clash font-normal uppercase text-green-900"
+              >
+                <ArrowLeft className="size-20 stroke-1" />
+              </Button>
+            </Link>
           </div>
-          <Input
-            className="peer pl-9"
-            type="text"
-            placeholder="Recherche d'élève..."
-            value={quickFilterText}
-            onChange={handleQuickFilterChange}
+        </div>
+        {/* Grille des élèves */}
+        <div className="flex h-full w-full flex-col items-center gap-4">
+          <div className="flex w-full gap-3">
+            <Select
+              value={selectClass?.path || ''}
+              onValueChange={handleSelectClass}
+              disabled={swapData === 'byEleves'}
+            >
+              <SelectTrigger className="disabled:blur-[0.5px] bg-card text-card-foreground w-1/3 cursor-pointer font-medium italic shadow-none">
+                <SelectValue placeholder="Sélectionner une classe" />
+              </SelectTrigger>
+              <SelectContent className="data-[state=open]:slide-in-from-bottom-8 data-[state=open]:zoom-in-100 rounded-4xl border-0 p-1 italic duration-400">
+                {listClasses.map((data) => (
+                  <SelectItem
+                    key={data.id}
+                    value={data.path}
+                    className="focus:bg-accent/20 cursor-pointer transition-all duration-500 hover:font-medium"
+                  >
+                    {data.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <div className="relative flex-1">
+              <div className="text-muted-foreground pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center pl-3 peer-disabled:opacity-50">
+                <Search className="size-4" />
+              </div>
+              <Input
+                className="peer bg-card text-card-foreground pl-9 shadow-none"
+                type="text"
+                placeholder="Recherche d'élève..."
+                value={quickFilterText}
+                onChange={handleQuickFilterChange}
+              />
+            </div>
+          </div>
+          <AgGridReact
+            ref={gridRef}
+            rowData={swapData === 'byClass' ? dataClasse?.eleves : allEleves}
+            columnDefs={colDefs}
+            defaultColDef={defaultColDef}
+            context={{ selectClass: selectClass?.path }}
+            className="ag-theme-quartz h-full w-full"
+            theme={myTheme}
+            pagination={true}
+            paginationPageSize={20}
+            paginationPageSizeSelector={[10, 20, 50, 100]}
+            rowSelection={rowSelection}
+            onSelectionChanged={onSelectionChanged}
+            quickFilterText={quickFilterText}
+            cacheQuickFilter={true}
+            headerHeight={45}
+            rowHeight={40}
+            scrollbarWidth={0}
+            suppressHorizontalScroll={true}
+            suppressColumnVirtualisation={false}
+            suppressRowVirtualisation={false}
           />
         </div>
       </div>
-      <AgGridReact
-        ref={gridRef}
-        rowData={swapData === 'byClass' ? dataClasse?.eleves : allEleves}
-        columnDefs={colDefs}
-        defaultColDef={defaultColDef}
-        context={{ selectClass: selectClass?.path }}
-        className="ag-theme-quartz h-full w-full"
-        theme={myTheme}
-        pagination={true}
-        paginationPageSize={20}
-        paginationPageSizeSelector={[10, 20, 50, 100]}
-        rowSelection={rowSelection}
-        onSelectionChanged={onSelectionChanged}
-        quickFilterText={quickFilterText}
-        cacheQuickFilter={true}
-        headerHeight={45}
-        rowHeight={40}
-        scrollbarWidth={0}
-        suppressHorizontalScroll={true}
-        suppressColumnVirtualisation={false}
-        suppressRowVirtualisation={false}
-      />
     </div>
   )
 }
