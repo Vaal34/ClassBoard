@@ -37,6 +37,7 @@ function BtnDeleteEleve({ selectEleves, selectClass }) {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
+          size="icon"
           variant="destructive"
           disabled={selectEleves.length === 0}
           className="disabled:blur-[0.5px] font-clash flex h-full w-full flex-col gap-0 p-6 text-lg font-extrabold uppercase"

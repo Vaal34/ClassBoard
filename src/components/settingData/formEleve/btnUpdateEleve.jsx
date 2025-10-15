@@ -127,7 +127,10 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
-        <Button className="flex h-full w-full flex-col gap-0 border-0 bg-blue-400 p-6 text-lg font-extrabold uppercase hover:bg-blue-400/90">
+        <Button
+          size="icon"
+          className="flex h-full w-full flex-col gap-0 border-0 bg-blue-400 p-6 text-lg font-extrabold uppercase hover:bg-blue-400/90"
+        >
           <AnimateIcon
             animateOnHover
             className="font-clash flex flex-col items-center font-extrabold text-blue-200"

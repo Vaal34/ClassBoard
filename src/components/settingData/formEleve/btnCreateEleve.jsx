@@ -89,6 +89,7 @@ function BtnCreateEleve({ selectClass, activeSwap }) {
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
         <Button
+          size="icon"
           disabled={!selectClass}
           className="w-full font-clash flex h-full flex-col p-6 justify-center text-lg font-extrabold uppercase"
         >

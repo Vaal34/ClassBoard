@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
+import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
 
 ModuleRegistry.registerModules([AllCommunityModule])
 
@@ -171,18 +172,16 @@ function SettingsData() {
                 ))}
               </SelectContent>
             </Select>
-            <div className="relative flex-1">
-              <div className="text-muted-foreground pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center pl-3 peer-disabled:opacity-50">
-                <Search className="size-4" />
-              </div>
-              <Input
-                className="peer bg-card text-card-foreground pl-9 shadow-none"
-                type="text"
+            <InputGroup className="w-full">
+              <InputGroupInput
                 placeholder="Recherche d'élève..."
                 value={quickFilterText}
                 onChange={handleQuickFilterChange}
               />
-            </div>
+              <InputGroupAddon>
+                <Search />
+              </InputGroupAddon>
+            </InputGroup>
           </div>
           <AgGridReact
             ref={gridRef}
