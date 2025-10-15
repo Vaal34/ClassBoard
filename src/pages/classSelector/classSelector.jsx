@@ -1,45 +1,70 @@
-import { Link } from 'react-router-dom'
-import { FileCogIcon } from '@/components/ui/file-cog'
-import { ArrowRightIcon } from '@/components/ui/arrow-right'
 import { useClasses } from '@/hooks/useClasses'
+import { Input } from '@/components/ui/input'
+import { Search } from 'lucide-react'
+import { useState } from 'react'
+import ClassCard from '@/components/classSelector/classCard'
 
 function ClassSelector() {
-  const { listClasses, isLoading, error } = useClasses()
+  const { listClasses } = useClasses()
+  const [searchText, setSearchText] = useState('')
+
+  const filteredClasses = listClasses.filter((classe) =>
+    classe.name?.toLowerCase().includes(searchText.toLowerCase())
+  )
 
   return (
-    <div className="flex h-dvh w-dvw flex-col gap-4 p-4">
-      <div className="flex justify-between">
-        <span className="text-left text-4xl font-light">CLASSBOARD.</span>
-        <Link
-          className="linear flex cursor-pointer items-center justify-center rounded-2xl border-0 bg-transparent p-3 text-inherit no-underline transition-all duration-300 hover:bg-purple-50 hover:text-purple-600"
-          to={`/setting-class`}
-        >
-          <FileCogIcon className="[&_svg]:stroke-1" />
-        </Link>
-      </div>
-      <div className="grid h-full grid-cols-4 gap-8">
-        {Object.values(listClasses).map((classe) => (
-          <div
-            className="flex flex-col items-center gap-2 rounded-3xl bg-gray-100 p-2 no-underline shadow-lg transition-all duration-300 ease-in-out hover:bg-purple-50 hover:shadow-lg hover:shadow-purple-200"
-            key={classe.id}
-          >
-            <div className="relative flex w-full flex-grow items-end justify-center overflow-hidden rounded-3xl bg-linear-to-r from-cyan-500 to-blue-500 bg-cover bg-center px-0 py-4 before:pointer-events-none before:absolute before:inset-0 before:z-0 before:rounded-3xl before:bg-[url('./background-selector.webp')] before:[mask-image:linear-gradient(to_top,rgba(0,0,0,1)_10%,rgba(0,0,0,0)_30%)] before:bg-cover before:bg-center before:blur-sm before:content-[''] before:[-webkit-mask-image:linear-gradient(to_top,rgba(0,0,0,1)_10%,rgba(0,0,0,0)_30%)]">
-              <div className="relative z-10 flex w-4/5 flex-col">
-                <span className="text-xs text-gray-300 italic">classes</span>
-                <span className="text-xl font-bold text-white italic">
-                  {classe.name}
-                </span>
-              </div>
-            </div>
-            <Link
-              className="ease flex h-8 w-4/5 cursor-pointer items-center justify-center rounded-full border-none bg-gray-300 font-extralight text-gray-800 italic transition-all duration-300 hover:scale-105 hover:bg-purple-100 hover:text-purple-600 active:bg-purple-200"
-              key={classe.id}
-              to={`/classe/${classe.path}`}
-            >
-              <ArrowRightIcon size={15} className="[&_svg]:stroke-1" />
-            </Link>
+    <div className="flex h-screen flex-col gap-4 p-5">
+      {/* En-tête avec recherche */}
+      <div className="flex w-full items-center justify-between gap-4">
+        <div>
+          <h1 className="text-4xl font-bold text-foreground font-clash uppercase">
+            Sélectionnez une classe
+          </h1>
+          <p className="text-muted-foreground">
+            Choisissez la classe vers laquelle vous souhaitez naviguer
+          </p>
+        </div>
+        
+        {/* Barre de recherche */}
+        <div className="relative w-80">
+          <div className="text-muted-foreground pointer-events-none absolute inset-y-0 left-0 flex items-center justify-center pl-3 peer-disabled:opacity-50">
+            <Search className="size-4" />
           </div>
-        ))}
+          <Input
+            className="peer pl-9"
+            type="text"
+            placeholder="Rechercher une classe..."
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+        </div>
+      </div>
+
+      {/* Grille des classes */}
+      <div className="flex-1 overflow-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {filteredClasses.map((classe) => (
+            <ClassCard key={classe.id} classe={classe} />
+          ))}
+        </div>
+
+        {/* Message si aucune classe trouvée */}
+        {filteredClasses.length === 0 && listClasses.length > 0 && (
+          <div className="text-center py-12">
+            <div className="text-muted-foreground text-6xl mb-4">🔍</div>
+            <p className="text-foreground text-xl mb-2">Aucune classe trouvée</p>
+            <p className="text-muted-foreground">Essayez de modifier votre recherche</p>
+          </div>
+        )}
+
+        {/* Message si aucune classe disponible */}
+        {listClasses.length === 0 && (
+          <div className="text-center py-12">
+            <div className="text-muted-foreground text-6xl mb-4">📚</div>
+            <p className="text-foreground text-xl mb-2">Aucune classe disponible</p>
+            <p className="text-muted-foreground">Contactez votre administrateur pour ajouter des classes</p>
+          </div>
+        )}
       </div>
     </div>
   )
