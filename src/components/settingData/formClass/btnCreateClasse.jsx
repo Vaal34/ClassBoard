@@ -87,7 +87,7 @@ function BtnCreateClasse({ disabled }) {
                 animation="default"
                 className="flex flex-col items-center"
               >
-                <Users className="size-8 stroke-1 text-purple-900" />
+                <Users className="size-8 stroke-1 text-purple-500" />
               </AnimateIcon>
             </Button>
           </DialogTrigger>

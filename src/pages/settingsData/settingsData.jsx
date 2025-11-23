@@ -142,7 +142,7 @@ function SettingsData() {
             <Link to="/classes">
               <Button
                 type="button"
-                className="w-full h-full font-clash font-normal uppercase text-purple-900"
+                className="w-full h-full font-clash font-normal uppercase text-purple-500"
               >
                 <ArrowLeft className="size-20 stroke-1" />
               </Button>

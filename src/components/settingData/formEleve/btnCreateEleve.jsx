@@ -101,7 +101,7 @@ function BtnCreateEleve({ selectClass, activeSwap }) {
                 animation="default"
                 className="flex flex-col items-center"
               >
-                <User className="size-8 stroke-1 text-purple-900" />
+                <User className="size-8 stroke-1 text-purple-500" />
                 
               </AnimateIcon>
             </Button>
