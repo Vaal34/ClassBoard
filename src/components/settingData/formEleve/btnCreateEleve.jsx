@@ -101,13 +101,13 @@ function BtnCreateEleve({ selectClass, activeSwap }) {
                 animation="default"
                 className="flex flex-col items-center"
               >
-                <User className="size-8 stroke-1 text-green-900" />
+                <User className="size-8 stroke-1 text-purple-900" />
                 
               </AnimateIcon>
             </Button>
           </DialogTrigger>
         </TooltipTrigger>
-        <TooltipContent className="[&_svg]:bg-green-200 [&_svg]:fill-green-200 bg-green-200 text-green-800 font-clash text-lg font-extrabold uppercase">
+        <TooltipContent className="[&_svg]:bg-purple-200 [&_svg]:fill-purple-200 bg-purple-200 text-purple-800 font-clash text-lg font-extrabold uppercase">
           Créer un élève
         </TooltipContent>
       </Tooltip>

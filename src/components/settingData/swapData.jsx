@@ -41,7 +41,7 @@ function SwapData({ handleSwapData, activeSwap }) {
             <TabsTrigger key={tab.value} value={tab.value} >
               <TabsContent
                 value={tab.value}
-                className="font-clash flex w-full flex-col items-center justify-center text-xl font-extrabold text-green-950 uppercase italic"
+                className="font-clash flex w-full flex-col items-center justify-center text-xl font-extrabold text-purple-950 uppercase italic"
               >
                 {tab.icon}
                 {tab.name}

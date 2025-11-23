@@ -91,11 +91,11 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
             className: 'rounded-4xl',
             style: {
               '--normal-bg':
-                'color-mix(in oklab, light-dark(var(--color-green-600), var(--color-green-400)) 10%, var(--background))',
+                'color-mix(in oklab, light-dark(var(--color-purple-600), var(--color-purple-400)) 10%, var(--background))',
               '--normal-text':
-                'light-dark(var(--color-green-600), var(--color-green-400))',
+                'light-dark(var(--color-purple-600), var(--color-purple-400))',
               '--normal-border':
-                'light-dark(var(--color-green-600), var(--color-green-400))',
+                'light-dark(var(--color-purple-600), var(--color-purple-400))',
             },
           })
           setSelectedEleve('')
