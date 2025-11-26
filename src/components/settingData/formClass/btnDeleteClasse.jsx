@@ -44,7 +44,7 @@ function BtnDeleteClasse({ selectClass, disabled }) {
             <Button
               variant="destructive"
               disabled={disabled || !selectClass}
-              className="disabled:blur-[0.5px] font-clash flex h-full w-full flex-col p-6 text-lg font-extrabold uppercase"
+              className="corner-superellipse/1.5 disabled:blur-[0.5px] font-clash flex h-full w-full flex-col p-6 text-lg font-extrabold uppercase"
             >
               <AnimateIcon
                 animateOnHover
@@ -59,7 +59,7 @@ function BtnDeleteClasse({ selectClass, disabled }) {
           Supprimer la classe
         </TooltipContent>
       </Tooltip>
-      <AlertDialogContent className="p-8">
+      <AlertDialogContent className="p-8 corner-squircle">
         <AlertDialogHeader>
           <AlertDialogTitle>Êtes-vous sûr ?</AlertDialogTitle>
           <AlertDialogDescription>
@@ -68,11 +68,12 @@ function BtnDeleteClasse({ selectClass, disabled }) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Annuler</AlertDialogCancel>
+          <AlertDialogCancel className="corner-superellipse/1.5">Annuler</AlertDialogCancel>
           <AlertDialogAction
             onClick={handleDelete}
             disabled={deleteClass.isPending}
             variant="destructive"
+            className="corner-superellipse/1.5"
           >
             {deleteClass.isPending ? 'Suppression...' : 'Supprimer la classe'}
           </AlertDialogAction>

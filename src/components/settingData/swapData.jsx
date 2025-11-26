@@ -30,7 +30,7 @@ function SwapData({ handleSwapData, activeSwap }) {
       onValueChange={handleSwapData}
       className="w-full h-full"
     >
-      <TabsList className="h-full w-full p-3">
+      <TabsList className="h-full w-full p-3 corner-squircle">
         {tabs.map((tab) => (
           <AnimateIcon
             key={tab.value}
@@ -38,7 +38,7 @@ function SwapData({ handleSwapData, activeSwap }) {
             animation="default"
             className="h-full w-full"
           >
-            <TabsTrigger key={tab.value} value={tab.value} >
+            <TabsTrigger key={tab.value} value={tab.value}>
               <TabsContent
                 value={tab.value}
                 className="font-clash flex w-full flex-col items-center justify-center text-xl font-extrabold text-purple-950 uppercase italic"

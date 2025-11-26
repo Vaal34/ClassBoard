@@ -43,7 +43,7 @@ function BtnDeleteEleve({ selectEleves, selectClass }) {
               size="icon"
               variant="destructive"
               disabled={selectEleves.length === 0}
-              className="disabled:blur-[0.5px] font-clash flex h-full w-full flex-col gap-0 p-6 text-lg font-extrabold uppercase"
+              className="corner-superellipse/1.5 disabled:blur-[0.5px] font-clash flex h-full w-full flex-col gap-0 p-6 text-lg font-extrabold uppercase"
             >
               <AnimateIcon
                 animateOnHover
@@ -58,7 +58,7 @@ function BtnDeleteEleve({ selectEleves, selectClass }) {
           Supprimer l'élève
         </TooltipContent>
       </Tooltip>
-      <AlertDialogContent className="p-8">
+      <AlertDialogContent className="p-8 corner-squircle">
         <AlertDialogHeader>
           <AlertDialogTitle>Êtes-vous sûr ?</AlertDialogTitle>
           <AlertDialogDescription>
@@ -74,8 +74,8 @@ function BtnDeleteEleve({ selectEleves, selectClass }) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Annuler</AlertDialogCancel>
-          <AlertDialogAction onClick={handleDelete} variant="destructive">
+          <AlertDialogCancel className="corner-superellipse/1.5">Annuler</AlertDialogCancel>
+          <AlertDialogAction className="corner-superellipse/1.5" onClick={handleDelete} variant="destructive">
             {deleteEleve.isPending ? 'Suppression...' : 'Supprimer les élèves'}
           </AlertDialogAction>
         </AlertDialogFooter>

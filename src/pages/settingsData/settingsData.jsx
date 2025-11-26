@@ -55,7 +55,7 @@ function SettingsData() {
     headerName: 'CLASSE',
     getQuickFilterText: () => '',
     cellRenderer: (params) => (
-      <Badge className="font-normal">{params.value}</Badge>
+      <Badge className="font-normal corner-superellipse/1.5">{params.value}</Badge>
     ),
   }
 
@@ -142,7 +142,7 @@ function SettingsData() {
             <Link to="/classes">
               <Button
                 type="button"
-                className="w-full h-full font-clash font-normal uppercase text-purple-500"
+                className="corner-squircle w-full h-full font-clash font-normal uppercase text-purple-500"
               >
                 <ArrowLeft className="size-20 stroke-1" />
               </Button>
@@ -157,22 +157,22 @@ function SettingsData() {
               onValueChange={handleSelectClass}
               disabled={swapData === 'byEleves'}
             >
-              <SelectTrigger className="disabled:blur-[0.5px] bg-card text-card-foreground w-1/3 cursor-pointer font-medium italic shadow-none">
+              <SelectTrigger className="corner-squircle disabled:blur-[0.5px] bg-card text-card-foreground w-1/3 cursor-pointer font-medium italic shadow-none">
                 <SelectValue placeholder="Sélectionner une classe" />
               </SelectTrigger>
-              <SelectContent className="data-[state=open]:slide-in-from-bottom-8 data-[state=open]:zoom-in-100 rounded-4xl border-0 p-1 italic duration-400">
+              <SelectContent className="corner-squircle data-[state=open]:slide-in-from-bottom-8 data-[state=open]:zoom-in-100 rounded-4xl border-0 p-1 italic duration-400">
                 {listClasses.map((data) => (
                   <SelectItem
                     key={data.id}
                     value={data.path}
-                    className="focus:bg-accent/20 cursor-pointer transition-all duration-500 hover:font-medium"
+                    className="corner-superellipse/1.5 focus:bg-accent/20 cursor-pointer transition-all duration-500 hover:font-medium"
                   >
                     {data.name}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
-            <InputGroup className="w-full">
+            <InputGroup className="w-full corner-squircle">
               <InputGroupInput
                 placeholder="Recherche d'élève..."
                 value={quickFilterText}

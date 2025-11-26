@@ -1,5 +1,4 @@
 import { useClasses } from '@/hooks/useClasses'
-import { Input } from '@/components/ui/input'
 import { Search } from 'lucide-react'
 import { useState } from 'react'
 import {
@@ -8,6 +7,10 @@ import {
   InputGroupInput,
 } from '@/components/ui/input-group'
 import ClassCard from '@/components/classSelector/classCard'
+import { Button } from '@/components/ui/button'
+import { Cog } from '@/components/animate-ui/icons/cog'
+import { AnimateIcon } from '@/components/animate-ui/icons/icon'
+import { Link } from 'react-router-dom'
 
 function ClassSelector() {
   const { listClasses } = useClasses()
@@ -20,7 +23,7 @@ function ClassSelector() {
   return (
     <div className="flex h-screen flex-col gap-4 p-5">
       {/* En-tête avec recherche */}
-      <div className="flex w-full items-center justify-between gap-4">
+      <div className="flex w-full items-start justify-between gap-4">
         <div>
           <h1 className="text-foreground font-clash text-4xl font-bold uppercase">
             Sélectionnez une classe
@@ -30,20 +33,33 @@ function ClassSelector() {
           </p>
         </div>
 
-        {/* Barre de recherche */}
-        <InputGroup className="w-80">
-          <InputGroupInput
-            placeholder="Rechercher une classe..."
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-          />
-          <InputGroupAddon>
-            <Search />
-          </InputGroupAddon>
-          <InputGroupAddon align="inline-end">
-            {filteredClasses.length} résultats
-          </InputGroupAddon>
-        </InputGroup>
+        <div className="flex gap-2">
+          {/* Barre de recherche */}
+          <InputGroup className="w-80">
+            <InputGroupInput
+              placeholder="Rechercher une classe..."
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+            <InputGroupAddon>
+              <Search />
+            </InputGroupAddon>
+            <InputGroupAddon align="inline-end">
+              {filteredClasses.length} résultats
+            </InputGroupAddon>
+          </InputGroup>
+          <Link to="/setting-class">
+            <AnimateIcon
+              animateOnHover
+              animation="default"
+              className="flex flex-col items-center"
+            >
+              <Button>
+                <Cog className="text-purple-200" />
+              </Button>
+            </AnimateIcon>
+          </Link>
+        </div>
       </div>
 
       {/* Grille des classes */}

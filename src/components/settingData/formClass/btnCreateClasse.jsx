@@ -80,7 +80,7 @@ function BtnCreateClasse({ disabled }) {
           <DialogTrigger asChild>
             <Button
               disabled={disabled}
-              className="disabled:blur-[0.5px] rounded-full w-full font-clash flex h-full flex-col justify-center gap-0 text-lg font-extrabold uppercase"
+              className="corner-superellipse/1.5 disabled:blur-[0.5px] rounded-full w-full font-clash flex h-full flex-col justify-center gap-0 text-lg font-extrabold uppercase"
             >
               <AnimateIcon
                 animateOnHover
@@ -97,7 +97,7 @@ function BtnCreateClasse({ disabled }) {
         </TooltipContent>
       </Tooltip>
 
-      <DialogContent className="p-8">
+      <DialogContent className="p-8 corner-squircle">
         <DialogHeader>
           <DialogTitle>Nouvelle Classe</DialogTitle>
           <DialogDescription>
@@ -114,7 +114,7 @@ function BtnCreateClasse({ disabled }) {
                 <FormItem>
                   <FormLabel>Nom de la Classe</FormLabel>
                   <FormControl>
-                    <Input placeholder="Ex: TleL" {...field} />
+                    <Input className="corner-superellipse/1.5" placeholder="Ex: TleL" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -128,7 +128,7 @@ function BtnCreateClasse({ disabled }) {
                 <FormItem>
                   <FormLabel>Chemin</FormLabel>
                   <FormControl>
-                    <Input placeholder="Ex: tlel" {...field} />
+                    <Input className="corner-superellipse/1.5" placeholder="Ex: tlel" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -137,13 +137,14 @@ function BtnCreateClasse({ disabled }) {
 
             <div className="flex justify-end gap-2">
               <Button
+                className="corner-superellipse/1.5"
                 variant="secondary"
                 type="button"
                 onClick={() => setFormOpen(false)}
               >
                 Annuler
               </Button>
-              <Button type="submit" disabled={createClasse.isPending}>
+              <Button className="corner-superellipse/1.5" type="submit" disabled={createClasse.isPending}>
                 {createClasse.isPending ? 'Enregistrement...' : 'Enregistrer'}
               </Button>
             </div>

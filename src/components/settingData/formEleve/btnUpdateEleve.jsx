@@ -130,24 +130,24 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
       <Tooltip>
         <TooltipTrigger asChild>
           <DialogTrigger asChild>
-            <Button
-              size="icon"
-              className="flex h-full w-full flex-col gap-0 border-0 bg-blue-400 p-6 text-lg font-extrabold uppercase hover:bg-blue-400/90"
+            <AnimateIcon
+              animateOnHover
+              className="font-clash flex flex-col items-center font-extrabold text-blue-200"
             >
-              <AnimateIcon
-                animateOnHover
-                className="font-clash flex flex-col items-center font-extrabold text-blue-200"
+              <Button
+                size="icon"
+                className="corner-superellipse/1.5 flex h-full w-full flex-col gap-0 border-0 bg-blue-400 p-6 text-lg font-extrabold uppercase hover:bg-blue-400/90"
               >
                 <Brush className="size-8 stroke-1 text-blue-800" />
-              </AnimateIcon>
-            </Button>
+              </Button>
+            </AnimateIcon>
           </DialogTrigger>
         </TooltipTrigger>
         <TooltipContent className=" [&_svg]:bg-blue-200 [&_svg]:fill-blue-200 bg-blue-200 text-blue-800 font-clash text-lg font-extrabold uppercase">
           Modifier un élève
         </TooltipContent>
       </Tooltip>
-      <DialogContent className="p-8">
+      <DialogContent className="p-8 corner-squircle">
         <DialogHeader>
           <DialogTitle>Modifier l'élève</DialogTitle>
           <DialogDescription>
@@ -156,13 +156,13 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
         </DialogHeader>
 
         <Select onValueChange={handleEleveSelect} value={selectedEleve}>
-          <SelectTrigger>
+          <SelectTrigger className="corner-superellipse/1.5">
             <SelectValue placeholder="Choisir un élève à modifier" />
           </SelectTrigger>
-          <SelectContent className="rounded-4xl border-0 p-1">
+          <SelectContent className="rounded-4xl border-0 p-1 corner-superellipse/1.5">
             {elevesToUse && elevesToUse.length > 0 ? (
               elevesToUse.map((eleve) => (
-                <SelectItem key={eleve.id} value={eleve.id}>
+                <SelectItem key={eleve.id} value={eleve.id} className="corner-superellipse/1.5">
                   <span className="font-semibold">
                     {eleve.prenom}{' '}
                     <span className="font-light uppercase">{eleve.nom}</span>
@@ -196,6 +196,7 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
                   <FormLabel>Prénom</FormLabel>
                   <FormControl>
                     <Input
+                      className="corner-superellipse/1.5"
                       placeholder="Ex: Jean"
                       {...field}
                       value={field.value}
@@ -213,6 +214,7 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
                   <FormLabel>Nom</FormLabel>
                   <FormControl>
                     <Input
+                      className="corner-superellipse/1.5"
                       placeholder="Ex: Dupont"
                       {...field}
                       value={field.value}
@@ -230,13 +232,14 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
                   <FormLabel>Classe</FormLabel>
                   <FormControl>
                     <Select onValueChange={field.onChange} value={field.value}>
-                      <SelectTrigger>
+                      <SelectTrigger className="corner-superellipse/1.5">
                         <SelectValue placeholder="Choisir une classe" />
                       </SelectTrigger>
-                      <SelectContent className="rounded-4xl border-0 p-1">
+                      <SelectContent className="rounded-4xl border-0 p-1 corner-superellipse/1.5">
                         {listClasses &&
                           listClasses.map((classe) => (
                             <SelectItem
+                              className="corner-superellipse/1.5"
                               key={classe.id}
                               value={classe.id.toString()}
                             >
@@ -257,11 +260,12 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
                   type="button"
                   variant="secondary"
                   onClick={handleCancel}
+                  className="corner-superellipse/1.5"
                 >
                   Annuler
                 </Button>
               </DialogClose>
-              <Button type="submit">Modifier l'élève</Button>
+              <Button className="corner-superellipse/1.5" type="submit">Modifier l'élève</Button>
             </div>
           </form>
         </Form>
