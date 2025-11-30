@@ -8,10 +8,10 @@ function ClassCard({ classe }) {
       to={`/classe/${classe.id}`}
       className="group block"
     >
-      <div className="bg-card border border-border rounded-xl p-6 hover:bg-accent hover:text-accent-foreground transition-all duration-300 hover:shadow-lg">
+      <div className="corner-superellipse/1.5 bg-card border border-border rounded-xl p-6 hover:bg-accent hover:text-accent-foreground transition-all duration-300 hover:shadow-lg">
         {/* Badge avec nom de classe */}
         <div className="text-center mb-4">
-          <Badge className="font-clash text-lg px-4 py-2 mb-3">
+          <Badge className="corner-superellipse/1.5 font-clash text-lg px-4 py-2 mb-3">
             {classe.name || 'Classe sans nom'}
           </Badge>
         </div>

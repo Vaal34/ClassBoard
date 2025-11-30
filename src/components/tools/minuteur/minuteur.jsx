@@ -1,8 +1,10 @@
-import { ChevronUp, ChevronDown, Play, RotateCcw, Square } from 'lucide-react'
+import { ChevronUp, ChevronDown, Play, RotateCcw, Square, SquareArrowLeft, Pause } from 'lucide-react'
 import { useTimer } from 'react-timer-hook'
 import { useState } from 'react'
 import catDay from '@/assets/images/catDay.png'
 import catNight from '@/assets/images/catNight.jpg'
+import { Card } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 
 function Minuteur() {
   const [expire, setExpire] = useState(false)
@@ -26,6 +28,15 @@ function Minuteur() {
     })
 
   const handleRestart = () => {
+    restart(getExpiryTime(), false)
+    setExpire(false)
+    setEditTime(false)
+  }
+
+  const handleReset = () => {
+    setCustomHours(0)
+    setCustomMinutes(0)
+    setCustomSeconds(0)
     restart(getExpiryTime(), false)
     setExpire(false)
     setEditTime(false)
@@ -80,6 +91,15 @@ function Minuteur() {
     }
   }
 
+  const handleWheel = (e, type) => {
+    if (editTime && !isRunning) {
+      e.preventDefault()
+      e.stopPropagation()
+      const direction = e.deltaY > 0 ? 'down' : 'up'
+      adjustTime(type, direction)
+    }
+  }
+
   const handleStart = () => {
     if (editTime) {
       restart(getExpiryTime(), true)
@@ -90,100 +110,88 @@ function Minuteur() {
   }
 
   return (
-    <div
-      className={`relative flex h-96 w-80 cursor-pointer items-end overflow-hidden rounded-3xl shadow-lg ${isRunning ? 'running' : ''}`}
+    <Card
+      className={`corner-superellipse/1.5 bg-card p-4 rounded-4xl relative flex cursor-pointer overflow-hidden shadow-lg ${isRunning ? 'running' : ''}`}
     >
-      <img
-        className={`absolute top-0 left-0 z-0 h-full w-full object-cover object-bottom ${isRunning ? 'clip-path-[circle(100%_at_center)]' : 'clip-path-[circle(100%_at_center)]'}`}
-        src={catDay}
-        alt="Day"
-      />
-      <img
-        className={`absolute top-0 left-0 h-full w-full object-cover object-bottom transition-[clip-path] duration-500 ease-in-out ${isRunning ? 'clip-path-[circle(0%_at_center)] z-0' : 'clip-path-[circle(100%_at_center)] z-[1]'}`}
-        src={catNight}
-        alt="Night"
-      />
-      <div className="relative z-10 flex h-4/5 w-full flex-col items-center gap-5">
-        <div
-          onClick={handleEditTime}
-          className={`flex w-4/5 justify-between gap-3 ${isRunning ? 'text-gray-900' : 'text-yellow-100'}`}
-        >
-          {textTimesDict.map((textTime, index) => (
-            <div
-              key={textTime.label}
-              className="flex w-full flex-col items-center justify-between text-5xl transition-colors duration-500 ease-in-out select-none"
-            >
-              {editTime && !isRunning && (
-                <ChevronUp
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    adjustTime(textTime.type, 'up')
-                  }}
-                  style={{ width: '100%', backdropFilter: 'blur(1px)' }}
-                />
-              )}
-              <span className="text-right font-semibold tabular-nums">
-                {textTime.value.toString().padStart(2, '0')}
-              </span>
-              <span className="mt-[-10px] text-center text-base font-extralight">
-                {textTime.label}
-              </span>
-              {editTime && !isRunning && (
-                <ChevronDown
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    adjustTime(textTime.type, 'down')
-                  }}
-                  style={{ width: '100%', backdropFilter: 'blur(1px)' }}
-                />
-              )}
-            </div>
-          ))}
-        </div>
-        <div className="flex items-center justify-center gap-3">
-          {expire ? (
-            <button
-              type="button"
-              onClick={handleRestart}
-              className="flex h-14 w-14 cursor-pointer items-center justify-center rounded-full border-none bg-gray-900 p-4 shadow-lg transition-all duration-200 ease-in-out hover:scale-105"
-            >
-              <RotateCcw size={16} color="#fff" />
-            </button>
-          ) : (
-            <>
-              <button
-                type="button"
-                onClick={handleStart}
-                className={`flex h-14 w-14 cursor-pointer items-center justify-center rounded-full border-none p-4 shadow-lg transition-all duration-200 ease-in-out hover:scale-105 ${
-                  isRunning ? 'bg-yellow-100' : 'bg-gray-900'
-                }`}
-              >
-                <Play
-                  size={16}
-                  color={isRunning ? '#07040B' : '#fffcdd'}
-                  fill={isRunning ? '#07040B' : '#fffcdd'}
-                />
-              </button>
 
-              <button
-                onDoubleClick={handleRestart}
-                type="button"
-                onClick={pause}
-                className={`flex h-14 w-14 cursor-pointer items-center justify-center rounded-full border-none p-4 shadow-lg transition-all duration-200 ease-in-out hover:scale-105 ${
-                  isRunning ? 'bg-gray-900' : 'bg-yellow-100'
-                }`}
-              >
-                <Square
-                  size={16}
-                  color={isRunning ? '#fffcdd' : '#07040B'}
-                  fill={isRunning ? '#fffcdd' : '#07040B'}
-                />
-              </button>
-            </>
-          )}
-        </div>
+      <div
+        onClick={handleEditTime}
+        className={`flex w-4/5 justify-between gap-3`}
+      >
+        {textTimesDict.map((textTime, index) => (
+          <div
+            key={textTime.label}
+            onWheel={(e) => handleWheel(e, textTime.type)}
+            className="flex w-full flex-col items-center justify-between text-5xl transition-colors duration-500 ease-in-out select-none"
+          >
+            {editTime && !isRunning && (
+              <ChevronUp
+                onClick={(e) => {
+                  e.stopPropagation()
+                  adjustTime(textTime.type, 'up')
+                }}
+                color='var(--primary)'
+              />
+            )}
+            <span className="font-semibold tabular-nums">
+              {textTime.value.toString().padStart(2, '0')}
+            </span>
+            <span className="text-primary mt-[-8px] text-base font-extralight">
+              {textTime.label}
+            </span>
+            {editTime && !isRunning && (
+              <ChevronDown
+                onClick={(e) => {
+                  e.stopPropagation()
+                  adjustTime(textTime.type, 'down')
+                }}
+                color='var(--primary)'
+              />
+            )}
+          </div>
+        ))}
       </div>
-    </div>
+      <div className="flex items-center justify-center gap-3">
+        {expire ? (
+          <Button
+            type="button"
+            onClick={handleRestart}
+            variant="black"
+            className="h-14 w-14 cursor-pointer"
+          >
+            <RotateCcw size={16} color="#fff" />
+          </Button>
+        ) : (
+          <>
+            <Button
+              type="button"
+              onDoubleClick={handleRestart}
+              onClick={handleStart}
+              variant={isRunning ? "black" : "white"}
+              className="h-14 w-14 cursor-pointer"
+            >
+              <Play
+                fill={isRunning ? "#fff" : "#000"}
+                color={isRunning ? "#fff" : "#000"}
+              />
+            </Button>
+
+            <Button
+              onDoubleClick={handleReset}
+              onClick={pause}
+              variant={isRunning ? "white" : "black"}
+              className="h-14 w-14 cursor-pointer"
+            >
+              <Pause
+                fill={isRunning ? "#000" : "#fff"}
+                color={isRunning ? "#000" : "#fff"}
+                size={16}
+              />
+            </Button>
+          </>
+        )}
+      </div>
+    </Card>
   )
 }
 

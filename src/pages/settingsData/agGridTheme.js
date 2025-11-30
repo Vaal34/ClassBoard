@@ -28,7 +28,7 @@ export const myTheme = themeQuartz.withParams({
   // Bordures et contours - très arrondis
   columnBorder: false,
   pinnedColumnBorder: false,
-  wrapperBorderRadius: '2rem',
+  wrapperBorderRadius: '1rem',
   wrapperBorder: "0.5px solid var(--primary)",
 
   // Sélection - couleur douce

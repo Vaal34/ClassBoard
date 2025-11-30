@@ -58,24 +58,25 @@ function Tableau({ classePath }) {
   }
 
   return (
-    <DndContext
-      sensors={sensors}
-      modifiers={[restrictToWindowEdges]}
-      onDragEnd={handleDragEnd}
-      className="h-screen w-screen"
-    >
-      {toolsList.map((tool) => (
-        <DraggableWrapper
-          key={tool.id}
-          id={tool.id}
-          top={tool.top}
-          left={tool.left}
-        >
-          {renderTool(tool)}
-        </DraggableWrapper>
-      ))}
-      <AddItem onAdd={onAdd} />
-    </DndContext>
+    <div className="bg-neutral-900 h-screen w-screen">
+      <DndContext
+        sensors={sensors}
+        modifiers={[restrictToWindowEdges]}
+        onDragEnd={handleDragEnd}
+      >
+        {toolsList.map((tool) => (
+          <DraggableWrapper
+            key={tool.id}
+            id={tool.id}
+            top={tool.top}
+            left={tool.left}
+          >
+            {renderTool(tool)}
+          </DraggableWrapper>
+        ))}
+        <AddItem onAdd={onAdd} />
+      </DndContext>
+    </div>
   )
 }
 

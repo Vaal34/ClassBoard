@@ -200,10 +200,6 @@
   --shadow-2xl: var(--shadow-2xl);
 }
 
-/* Mappings rounded-* vers corner-squircle-* pour shadcn et tous les composants */
-@utility rounded-* {
-  @apply corner-squircle;
-}
 
 @keyframes rotateHover {
   from {

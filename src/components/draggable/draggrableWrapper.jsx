@@ -18,14 +18,7 @@ export function DraggableWrapper({ id, top, left, children }) {
       {...listeners}
       {...attributes}
     >
-      <Magnet
-        disabled={!!transform}
-        freeze={!!transform}
-        magnetStrength={8}
-        padding={50}
-      >
-        {children}
-      </Magnet>
+      {children}
     </div>
   )
 }
