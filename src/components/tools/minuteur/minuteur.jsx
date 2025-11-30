@@ -111,7 +111,7 @@ function Minuteur() {
 
   return (
     <Card
-      className={`corner-superellipse/1.5 bg-card p-4 rounded-4xl relative flex cursor-pointer overflow-hidden shadow-lg ${isRunning ? 'running' : ''}`}
+      className={`corner-superellipse/1.5 bg-white p-6 rounded-4xl relative flex cursor-pointer overflow-hidden shadow-lg ${isRunning ? 'running' : ''}`}
     >
 
       <div
@@ -133,10 +133,15 @@ function Minuteur() {
                 color='var(--primary)'
               />
             )}
-            <span className="font-semibold tabular-nums">
+            <span className={`font-semibold tabular-nums ${(textTime.type === 'hours' && hours > 0) ||
+              (textTime.type === 'minutes' && (hours > 0 || minutes > 0)) ||
+              (textTime.type === 'seconds' && (hours > 0 || minutes > 0 || seconds > 0))
+              ? 'text-primary'
+              : 'text-muted-foreground'
+              }`}>
               {textTime.value.toString().padStart(2, '0')}
             </span>
-            <span className="text-primary mt-[-8px] text-base font-extralight">
+            <span className="mt-[-8px] text-base font-extralight">
               {textTime.label}
             </span>
             {editTime && !isRunning && (
@@ -151,13 +156,13 @@ function Minuteur() {
           </div>
         ))}
       </div>
-      <div className="flex items-center justify-center gap-3">
+      <div className="corner-superellipse/1.5 rounded-2xl flex w-full h-20 bg-card p-2 items-center justify-center gap-3">
         {expire ? (
           <Button
             type="button"
             onClick={handleRestart}
-            variant="black"
-            className="h-14 w-14 cursor-pointer"
+            variant="default"
+            className="h-full w-1/2 corner-squircle cursor-pointer"
           >
             <RotateCcw size={16} color="#fff" />
           </Button>
@@ -167,24 +172,24 @@ function Minuteur() {
               type="button"
               onDoubleClick={handleRestart}
               onClick={handleStart}
-              variant={isRunning ? "black" : "white"}
-              className="h-14 w-14 cursor-pointer"
+              variant={isRunning ? "default" : "white"}
+              className="corner-squircle h-full flex-1 cursor-pointer"
             >
               <Play
-                fill={isRunning ? "#fff" : "#000"}
-                color={isRunning ? "#fff" : "#000"}
+                fill={isRunning ? "#fff" : "var(--primary)"}
+                color={isRunning ? "#fff" : "var(--primary)"}
               />
             </Button>
 
             <Button
               onDoubleClick={handleReset}
               onClick={pause}
-              variant={isRunning ? "white" : "black"}
-              className="h-14 w-14 cursor-pointer"
+              variant={isRunning ? "white" : "default"}
+              className="corner-squircle h-full flex-1 cursor-pointer"
             >
               <Pause
-                fill={isRunning ? "#000" : "#fff"}
-                color={isRunning ? "#000" : "#fff"}
+                fill={isRunning ? "var(--primary)" : "#fff"}
+                color={isRunning ? "var(--primary)" : "#fff"}
                 size={16}
               />
             </Button>
