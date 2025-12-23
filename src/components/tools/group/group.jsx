@@ -30,22 +30,6 @@ function Group({ dataClasse }) {
     setIsGenerate(!isGenerate)
   }
 
-  const increment = (e) => {
-    if (e.currentTarget.id === 'gp') {
-      setGpValue((prev) => prev + 1)
-    } else if (e.currentTarget.id === 'el') {
-      setElvalue((prev) => prev + 1)
-    }
-  }
-
-  const decrement = (e) => {
-    if (e.currentTarget.id === 'gp') {
-      setGpValue((prev) => (prev > 0 ? prev - 1 : 0))
-    } else if (e.currentTarget.id === 'el') {
-      setElvalue((prev) => (prev > 0 ? prev - 1 : 0))
-    }
-  }
-
   return (
     <>
       {isGenerate ? (
@@ -61,8 +45,8 @@ function Group({ dataClasse }) {
           eleves={eleves}
           Gpvalue={Gpvalue}
           Elvalue={Elvalue}
-          increment={increment}
-          decrement={decrement}
+          setGpValue={setGpValue}
+          setElvalue={setElvalue}
           handleIsChecked={handleIsChecked}
           handleIsGenerate={handleIsGenerate}
         />

@@ -1,102 +1,86 @@
 import Counter from '@/components/ui/Counter/counter'
-import { Plus, Minus } from 'lucide-react'
 import { RocketIcon } from '@/components/ui/rocket'
 import AnimatedList from '@/components/ui/AnimatedList/AnimatedList'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Label } from '@/components/ui/label'
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 export function SettingGenerate({
   eleves,
   Gpvalue,
   Elvalue,
-  increment,
-  decrement,
+  setGpValue,
+  setElvalue,
   handleIsChecked,
   handleIsGenerate,
 }) {
   return (
-    <div className="relative flex h-96 w-96 cursor-pointer items-center justify-items-center gap-8 overflow-hidden rounded-3xl bg-white p-4 shadow-lg">
-      <div className="h-full flex-grow overflow-hidden rounded-2xl bg-gray-100 p-4">
-        <AnimatedList
-          items={eleves}
-          showGradients={false}
-          enableArrowNavigation={false}
-          displayScrollbar={false}
-          isChecked={handleIsChecked}
+    <Card className="corner-squircle relative grid h-96 w-full grid-cols-2 grid-rows-[2fr_2fr_1fr] gap-4 p-6">
+      {/* Liste des élèves - une seule cellule pour toute la hauteur */}
+      <div className="row-span-full">
+        <ScrollArea className="h-full">
+          <div className="flex flex-col gap-2">
+            <Label className="mb-2 text-sm font-medium">Élèves</Label>
+            <AnimatedList showGradients={false} enableArrowNavigation={false}>
+              {eleves?.map((eleve) => (
+                <div key={eleve.id} className="flex items-center gap-2 py-1">
+                  <Checkbox
+                    id={`eleve-${eleve.id}`}
+                    checked={eleve.isChecked}
+                    onCheckedChange={() => handleIsChecked(eleve.id)}
+                  />
+                  <Label
+                    htmlFor={`eleve-${eleve.id}`}
+                    className="flex-1 cursor-pointer text-sm"
+                  >
+                    {eleve.nom} {eleve.prenom}
+                  </Label>
+                </div>
+              ))}
+            </AnimatedList>
+          </div>
+        </ScrollArea>
+      </div>
+
+      {/* Nombre de groupes - ligne 1, colonne 2 */}
+      <div className="corner-superellipse/1.5 col-start-2 row-start-1 flex flex-col items-center justify-center gap-2 rounded-3xl bg-gray-100">
+        <Label className="text-primary text-sm font-light">
+          Nombre de groupes
+        </Label>
+        <Counter
+          className={'w-full justify-around bg-transparent'}
+          number={Gpvalue}
+          setNumber={setGpValue}
+          slidingNumberProps={{ className: 'text-5xl font-bold' }}
         />
       </div>
-      <div className="flex h-full w-64 flex-col gap-4">
-        <div className="flex flex-1 flex-col justify-center gap-2 rounded-2xl bg-gray-100 p-4 shadow-md">
-          <span className="text-center text-base text-purple-600 capitalize">
-            nb. groupes
-          </span>
-          <div className="flex items-center justify-between">
-            <button
-              className="ease flex h-6 w-6 cursor-pointer items-center justify-center rounded-2xl border-none bg-gray-300 p-0 transition-transform duration-300 active:scale-95 active:bg-purple-200 active:text-purple-600"
-              id="gp"
-              onClick={decrement}
-            >
-              <Minus size={15} color="#681EEA" strokeWidth={1} />
-            </button>
-            <Counter
-              value={Gpvalue}
-              gradientHeight={0}
-              places={[10, 1]}
-              fontSize={60}
-              padding={0}
-              gap={0}
-              textColor="#000"
-            />
-            <button
-              className="ease flex h-6 w-6 cursor-pointer items-center justify-center rounded-2xl border-none bg-gray-300 p-0 transition-transform duration-300 active:scale-95 active:bg-purple-200 active:text-purple-600"
-              id="gp"
-              onClick={increment}
-            >
-              <Plus size={15} color="#681EEA" strokeWidth={1} />
-            </button>
-          </div>
-          <button
-            className="ease flex cursor-pointer items-center justify-center rounded-xl border-none bg-gray-300 px-0 py-2 font-extralight text-gray-800 italic transition-all duration-500 hover:scale-105 hover:text-purple-600 active:bg-purple-200 active:text-white"
-            onClick={() => handleIsGenerate('gp')}
-          >
-            <RocketIcon size={15} className="[&_svg]:stroke-1" />
-          </button>
-        </div>
-        <div className="flex flex-1 flex-col justify-center gap-2 rounded-2xl bg-gray-100 p-4 shadow-md">
-          <span className="text-center text-base text-purple-600 capitalize">
-            nb. élèves
-          </span>
-          <div className="flex items-center justify-between">
-            <button
-              className="ease flex h-6 w-6 cursor-pointer items-center justify-center rounded-2xl border-none bg-gray-300 p-0 transition-transform duration-300 active:scale-95 active:bg-purple-200 active:text-purple-600"
-              id="el"
-              onClick={decrement}
-            >
-              <Minus size={15} color="#681EEA" strokeWidth={1} />
-            </button>
-            <Counter
-              value={Elvalue}
-              gradientHeight={0}
-              places={[10, 1]}
-              fontSize={60}
-              padding={0}
-              gap={0}
-              textColor="#000"
-            />
-            <button
-              className="ease flex h-6 w-6 cursor-pointer items-center justify-center rounded-2xl border-none bg-gray-300 p-0 transition-transform duration-300 active:scale-95 active:bg-purple-200 active:text-purple-600"
-              id="el"
-              onClick={increment}
-            >
-              <Plus size={15} color="#681EEA" strokeWidth={1} />
-            </button>
-          </div>
-          <button
-            className="ease flex cursor-pointer items-center justify-center rounded-xl border-none bg-gray-300 px-0 py-2 font-extralight text-gray-800 italic transition-all duration-500 hover:scale-105 hover:text-purple-600 active:bg-purple-200 active:text-white"
-            onClick={() => handleIsGenerate('el')}
-          >
-            <RocketIcon size={15} className="[&_svg]:stroke-1" />
-          </button>
-        </div>
+
+      {/* Élèves par groupe - ligne 2, colonne 2 */}
+      <div className="corner-superellipse/1.5 col-start-2 row-start-2 flex flex-col items-center justify-center gap-2 rounded-3xl bg-gray-100">
+        <Label className="text-primary text-sm font-light">
+          Élèves par groupe
+        </Label>
+        <Counter
+          className={'w-full justify-around bg-transparent'}
+          number={Elvalue}
+          setNumber={setElvalue}
+          slidingNumberProps={{ className: 'text-5xl font-bold' }}
+        />
       </div>
-    </div>
+
+      {/* Bouton de génération - ligne 3, colonne 2 */}
+      <div className="col-start-2 row-start-3 flex items-end">
+        <Button
+          onClick={handleIsGenerate}
+          className="h-full w-full bg-purple-600 text-white hover:bg-purple-700"
+          size="lg"
+        >
+          <RocketIcon className="mr-2 h-5 w-5" />
+          Générer les groupes
+        </Button>
+      </div>
+    </Card>
   )
 }
