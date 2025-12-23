@@ -111,7 +111,7 @@ function Minuteur() {
 
   return (
     <Card
-      className={`border-2 border-primary corner-superellipse/1.5 bg-white p-6 rounded-4xl relative flex cursor-pointer overflow-hidden shadow-lg ${isRunning ? 'running' : ''}`}
+      className={`corner-squircle p-6 relative flex cursor-pointer overflow-hidden shadow-lg ${isRunning ? 'running' : ''}`}
     >
 
       <div

@@ -1,10 +1,7 @@
 import Counter from '@/components/ui/Counter/counter'
-import { RocketIcon } from '@/components/ui/rocket'
-import AnimatedList from '@/components/ui/AnimatedList/AnimatedList'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Label } from '@/components/ui/label'
 import { ScrollArea } from '@/components/ui/scroll-area'
 
 export function SettingGenerate({
@@ -17,68 +14,76 @@ export function SettingGenerate({
   handleIsGenerate,
 }) {
   return (
-    <Card className="corner-squircle relative grid h-96 w-full grid-cols-2 grid-rows-[2fr_2fr_1fr] gap-4 p-6">
+    <Card className="corner-squircle cursor-pointer relative grid h-96 w-full grid-cols-2 grid-rows-2 p-6">
       {/* Liste des élèves - une seule cellule pour toute la hauteur */}
-      <div className="row-span-full">
-        <ScrollArea className="h-full">
+      <div className="col-start-1 row-span-2 row-start-1 flex flex-col">
+        <ScrollArea
+          hideScrollbar={true}
+          className="corner-superellipse/1.5 h-full rounded-2xl"
+        >
           <div className="flex flex-col gap-2">
-            <Label className="mb-2 text-sm font-medium">Élèves</Label>
-            <AnimatedList showGradients={false} enableArrowNavigation={false}>
-              {eleves?.map((eleve) => (
-                <div key={eleve.id} className="flex items-center gap-2 py-1">
+            {(eleves || []).map((eleve) => {
+              const itemId = eleve.uniqueId || eleve.id
+              return (
+                <div
+                  key={itemId}
+                  className="corner-superellipse/1.1 flex cursor-pointer items-center gap-5 rounded-2xl bg-neutral-100 p-2 pr-10 pl-3"
+                >
                   <Checkbox
-                    id={`eleve-${eleve.id}`}
-                    checked={eleve.isChecked}
-                    onCheckedChange={() => handleIsChecked(eleve.id)}
+                    id={`cbx-${itemId}`}
+                    checked={eleve.checked}
+                    onCheckedChange={() => handleIsChecked(itemId)}
+                    className="corner-superellipse/1.5 cursor-pointer rounded-2xl"
                   />
-                  <Label
-                    htmlFor={`eleve-${eleve.id}`}
-                    className="flex-1 cursor-pointer text-sm"
+                  <p
+                    htmlFor={`cbx-${itemId}`}
+                    className={`flex-1 cursor-pointer capitalize ${!eleve.checked && 'text-muted-foreground'}`}
                   >
-                    {eleve.nom} {eleve.prenom}
-                  </Label>
+                    <span className="font-bold">{eleve.prenom}</span>{' '}
+                    <span className="text-xs font-light uppercase italic">
+                      {eleve.nom}
+                    </span>
+                  </p>
                 </div>
-              ))}
-            </AnimatedList>
+              )
+            })}
           </div>
         </ScrollArea>
       </div>
 
       {/* Nombre de groupes - ligne 1, colonne 2 */}
-      <div className="corner-superellipse/1.5 col-start-2 row-start-1 flex flex-col items-center justify-center gap-2 rounded-3xl bg-gray-100">
-        <Label className="text-primary text-sm font-light">
-          Nombre de groupes
-        </Label>
+      <div className="corner-superellipse/1.5 bg-neutral-100 col-start-2 row-start-1 flex flex-col items-center justify-between rounded-3xl p-4">
+        <span className="text-primary text-sm font-light">Groupes</span>
         <Counter
-          className={'w-full justify-around bg-transparent'}
+          className={'w-full justify-between bg-transparent'}
           number={Gpvalue}
           setNumber={setGpValue}
           slidingNumberProps={{ className: 'text-5xl font-bold' }}
+          buttonProps={{ className: 'shadow-sm' }}
         />
+        <Button
+          onClick={() => handleIsGenerate('gp')}
+          className="corner-superellipse/1.5 flex w-full rounded-4xl text-white"
+        >
+          Générer
+        </Button>
       </div>
 
       {/* Élèves par groupe - ligne 2, colonne 2 */}
-      <div className="corner-superellipse/1.5 col-start-2 row-start-2 flex flex-col items-center justify-center gap-2 rounded-3xl bg-gray-100">
-        <Label className="text-primary text-sm font-light">
-          Élèves par groupe
-        </Label>
+      <div className="corner-superellipse/1.5 bg-neutral-100 col-start-2 row-start-2 flex flex-col items-center justify-between rounded-3xl p-4">
+        <span className="text-primary text-sm font-light">Élèves</span>
         <Counter
-          className={'w-full justify-around bg-transparent'}
+          className={'w-full justify-between bg-transparent'}
           number={Elvalue}
           setNumber={setElvalue}
           slidingNumberProps={{ className: 'text-5xl font-bold' }}
+          buttonProps={{ className: 'shadow-sm' }}
         />
-      </div>
-
-      {/* Bouton de génération - ligne 3, colonne 2 */}
-      <div className="col-start-2 row-start-3 flex items-end">
         <Button
-          onClick={handleIsGenerate}
-          className="h-full w-full bg-purple-600 text-white hover:bg-purple-700"
-          size="lg"
+          onClick={() => handleIsGenerate('el')}
+          className="corner-superellipse/1.5 flex w-full rounded-4xl text-white"
         >
-          <RocketIcon className="mr-2 h-5 w-5" />
-          Générer les groupes
+          Générer
         </Button>
       </div>
     </Card>

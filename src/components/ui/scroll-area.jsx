@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils"
 function ScrollArea({
   className,
   children,
+  hideScrollbar = false,
   ...props
 }) {
   return (
@@ -15,7 +16,7 @@ function ScrollArea({
         className="focus-visible:ring-ring/50 size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:outline-1">
         {children}
       </ScrollAreaPrimitive.Viewport>
-      <ScrollBar />
+      <ScrollBar className={hideScrollbar ? "opacity-0" : ""} />
       <ScrollAreaPrimitive.Corner />
     </ScrollAreaPrimitive.Root>
   );

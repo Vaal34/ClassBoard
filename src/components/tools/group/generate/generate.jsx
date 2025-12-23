@@ -3,11 +3,11 @@ import {
   grouperAleatoireParNEleves,
   grouperAleatoireParNGroupes,
 } from '@/scripts/randomiser'
-import { RotateCcw } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
+import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { cn } from '@/lib/utils'
+import { RotateCcw } from '@/components/animate-ui/icons/rotate-ccw'
+import { AnimateIcon } from '@/components/animate-ui/icons/icon'
 
 export function Generate({
   eleves,
@@ -31,6 +31,8 @@ export function Generate({
     }
   }, [method])
 
+  console.log('Generate component method:', method)
+
   // Calculer le nombre de colonnes en fonction du nombre de groupes
   const getGridColumns = () => {
     const groupCount = groupeList.length
@@ -43,53 +45,39 @@ export function Generate({
     if (groupCount > 10) return 'repeat(4, 1fr)'
     return 'repeat(auto-fit, minmax(250px, 1fr))'
   }
+  console.log('Generate component eleves:', groupeList)
 
   return (
-    <Card className="relative flex cursor-pointer flex-col gap-4 overflow-hidden rounded-3xl p-4">
-      <CardContent className="p-0 space-y-4">
-        <div
-          className="grid gap-4"
-          style={{ gridTemplateColumns: getGridColumns() }}
-        >
-          {groupeList.map((groupe, index) => (
-            <Card key={index} className="flex h-full w-full gap-4 rounded-2xl shadow-sm">
-              <CardContent className="p-4 w-full">
-                <ul className="m-0 flex w-full list-none flex-col gap-2 p-0">
-                  {groupe.map((eleve) => (
-                    <li key={eleve.id}>
-                      <Badge
-                        variant="secondary"
-                        className={cn(
-                          "ease rounded-xl p-2 shadow-sm w-full justify-start",
-                          "transition-colors duration-200",
-                          "font-medium text-ellipsis overflow-hidden whitespace-nowrap block"
-                        )}
-                      >
-                        {eleve.prenom} {eleve.nom}
-                      </Badge>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+    <Card className="corner-squircle relative flex cursor-pointer flex-col gap-4 overflow-hidden p-4">
+      <div
+        className="grid gap-4"
+        style={{ gridTemplateColumns: getGridColumns() }}
+      >
+        {groupeList.map((groupe, index) => (
+          <ul
+            key={index}
+            className="corner-superellipse/1.5 flex h-full w-full flex-col gap-2 rounded-2xl p-4 shadow-sm"
+          >
+            {groupe.map((eleve) => (
+              <li
+                key={eleve.id}
+                className="corner-superellipse/1.5 w-full rounded-2xl bg-neutral-100 p-2 pr-6 pl-4 font-medium text-ellipsis whitespace-nowrap text-black"
+              >
+                <span className="font-bold">{eleve.prenom}</span>{' '}
+                <span className="font-light">{eleve.nom}</span>
+              </li>
+            ))}
+          </ul>
+        ))}
+      </div>
+      <AnimateIcon animateOnHover="rotate">
         <Button
-          variant="ghost"
-          className={cn(
-            "mb-1 rounded-2xl p-4",
-            "bg-accent/50 hover:bg-muted",
-            "font-extralight text-primary italic",
-            "hover:text-foreground",
-            "active:bg-accent active:text-white",
-            "transition-all duration-500",
-            "hover:[&_svg]:animate-spin"
-          )}
-          onClick={handleIsGenerate}
+          className="corner-squircle bg-accent text-primary active:bg-accent w-full transition-colors duration-500 hover:bg-gray-200 hover:text-black"
+          onClick={() => handleIsGenerate(method)}
         >
-          <RotateCcw size={15} strokeWidth={1} />
+          <RotateCcw strokeWidth={1.5} />
         </Button>
-      </CardContent>
+      </AnimateIcon>
     </Card>
   )
 }

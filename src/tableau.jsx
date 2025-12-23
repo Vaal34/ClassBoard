@@ -58,7 +58,7 @@ function Tableau({ classePath }) {
   }
 
   return (
-    <div className="h-screen w-screen bg-neutral-900">
+    <div className="h-screen w-screen bg-background">
       <DndContext
         sensors={sensors}
         modifiers={[restrictToWindowEdges]}

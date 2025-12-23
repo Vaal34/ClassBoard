@@ -2,6 +2,7 @@ import { useState, useId } from 'react'
 import { SettingGenerate } from './settingsGenerate/settingGenerate'
 import { Generate } from './generate/generate'
 
+
 function Group({ dataClasse }) {
   const [Gpvalue, setGpValue] = useState(0)
   const [Elvalue, setElvalue] = useState(0)
