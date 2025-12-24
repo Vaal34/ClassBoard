@@ -1,17 +1,25 @@
 import AddItem from './components/addItems/addItems'
-import { DraggableWrapper } from './components/draggable/draggrableWrapper'
+import { DraggableWrapper } from './components/draggable/draggableWrapper'
 import { DndContext, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { restrictToWindowEdges } from '@dnd-kit/modifiers'
-import { useState } from 'react'
 import Minuteur from './components/tools/minuteur/minuteur'
 import Consigne from './components/tools/consigne/consigne'
 import Group from './components/tools/group/group'
-import { v4 as uuidv4 } from 'uuid'
 import { useClasse } from './hooks/useClasse'
+import { useDraggableTools } from './hooks/useDraggableTools'
+import { useMemo } from 'react'
 
 function Tableau({ classePath }) {
-  const [toolsList, setToolsList] = useState([])
   const { dataClasse, isLoading, error } = useClasse(classePath)
+  const {
+    toolsList,
+    activeId,
+    addTool,
+    removeTool,
+    focusTool,
+    handleDragStart,
+    handleDragEnd,
+  } = useDraggableTools(classePath)
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -21,36 +29,14 @@ function Tableau({ classePath }) {
     })
   )
 
-  const TOOLS = {
-    MINUTEUR: 'minuteur',
-    CONSIGNE: 'consigne',
-    GROUP: 'group',
-  }
-  const TOOL_COMPONENTS = {
-    [TOOLS.MINUTEUR]: Minuteur,
-    [TOOLS.CONSIGNE]: Consigne,
-    [TOOLS.GROUP]: Group,
-  }
-
-  const handleDragEnd = (event) => {
-    setToolsList((toolsList) =>
-      toolsList.map((tool) => {
-        if (tool.id === event.active.id) {
-          return {
-            ...tool,
-            top: tool.top + event.delta.y,
-            left: tool.left + event.delta.x,
-          }
-        }
-        return tool
-      })
-    )
-  }
-
-  const onAdd = (type) => {
-    const newItems = { id: uuidv4(), top: 200, left: 200, type: type }
-    setToolsList((toolsList) => [...toolsList, newItems])
-  }
+  const TOOL_COMPONENTS = useMemo(
+    () => ({
+      minuteur: Minuteur,
+      consigne: Consigne,
+      group: Group,
+    }),
+    []
+  )
 
   const renderTool = (tool) => {
     const ToolComponent = TOOL_COMPONENTS[tool.type]
@@ -62,6 +48,7 @@ function Tableau({ classePath }) {
       <DndContext
         sensors={sensors}
         modifiers={[restrictToWindowEdges]}
+        onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
       >
         {toolsList.map((tool) => (
@@ -70,11 +57,15 @@ function Tableau({ classePath }) {
             id={tool.id}
             top={tool.top}
             left={tool.left}
+            zIndex={tool.zIndex || 1}
+            isDragging={activeId === tool.id}
+            onRemove={removeTool}
+            onFocus={focusTool}
           >
             {renderTool(tool)}
           </DraggableWrapper>
         ))}
-        <AddItem onAdd={onAdd} />
+        <AddItem onAdd={addTool} />
       </DndContext>
     </div>
   )
