@@ -1,6 +1,7 @@
 import { TimerIcon } from '@/components/ui/timer'
 import { HomeIcon } from '@/components/ui/home'
 import { FilePenLineIcon } from '@/components/ui/file-pen-line'
+import { FileCogIcon } from '@/components/ui/file-cog'
 import { UsersIcon } from '@/components/ui/users'
 import { useNavigate } from 'react-router-dom'
 
@@ -11,9 +12,9 @@ const tools = [
     type: 'minuteur',
   },
   {
-    icon: <FilePenLineIcon className="[&_svg]:stroke-1" />,
-    label: 'Consigne',
-    type: 'consigne',
+    icon: <FileCogIcon className="[&_svg]:stroke-1" />,
+    label: 'Consigne Riche',
+    type: 'consigne-riche',
   },
   {
     icon: <UsersIcon className="[&_svg]:stroke-1" />,

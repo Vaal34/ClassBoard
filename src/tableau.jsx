@@ -3,8 +3,8 @@ import { DraggableWrapper } from './components/draggable/draggableWrapper'
 import { DndContext, PointerSensor, useSensor, useSensors } from '@dnd-kit/core'
 import { restrictToWindowEdges } from '@dnd-kit/modifiers'
 import Minuteur from './components/tools/minuteur/minuteur'
-import Consigne from './components/tools/consigne/consigne'
 import Group from './components/tools/group/group'
+import Consigne from './components/tools/consigne/consigne'
 import { useClasse } from './hooks/useClasse'
 import { useDraggableTools } from './hooks/useDraggableTools'
 import { useMemo } from 'react'
@@ -32,8 +32,8 @@ function Tableau({ classePath }) {
   const TOOL_COMPONENTS = useMemo(
     () => ({
       minuteur: Minuteur,
-      consigne: Consigne,
       group: Group,
+      'consigne-riche': Consigne,
     }),
     []
   )
