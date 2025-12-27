@@ -29,3 +29,6 @@ dist-ssr
 package-lock.json
 test.server.md
 prisma/migrations
+classboard-tool-creator.zip
+*.pyc
+__pycache__/
