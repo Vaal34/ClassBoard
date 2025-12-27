@@ -20,7 +20,11 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
-import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group'
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from '@/components/ui/input-group'
 
 ModuleRegistry.registerModules([AllCommunityModule])
 
@@ -55,7 +59,9 @@ function SettingsData() {
     headerName: 'CLASSE',
     getQuickFilterText: () => '',
     cellRenderer: (params) => (
-      <Badge className="font-normal corner-superellipse/1.5">{params.value}</Badge>
+      <Badge className="corner-superellipse/1.5 font-normal">
+        {params.value}
+      </Badge>
     ),
   }
 
@@ -142,7 +148,7 @@ function SettingsData() {
             <Link to="/classes">
               <Button
                 type="button"
-                className="corner-squircle w-full h-full font-clash font-normal uppercase text-purple-500"
+                className="corner-squircle font-clash h-full w-full font-normal text-purple-500 uppercase"
               >
                 <ArrowLeft className="size-20 stroke-1" />
               </Button>
@@ -157,7 +163,7 @@ function SettingsData() {
               onValueChange={handleSelectClass}
               disabled={swapData === 'byEleves'}
             >
-              <SelectTrigger className="corner-squircle disabled:blur-[0.5px] bg-card text-card-foreground w-1/3 cursor-pointer font-medium italic shadow-none">
+              <SelectTrigger className="corner-squircle bg-card text-card-foreground w-1/3 cursor-pointer font-medium italic shadow-none disabled:blur-[0.5px]">
                 <SelectValue placeholder="Sélectionner une classe" />
               </SelectTrigger>
               <SelectContent className="corner-squircle data-[state=open]:slide-in-from-bottom-8 data-[state=open]:zoom-in-100 rounded-4xl border-0 p-1 italic duration-400">
@@ -172,7 +178,7 @@ function SettingsData() {
                 ))}
               </SelectContent>
             </Select>
-            <InputGroup className="w-full corner-squircle">
+            <InputGroup className="corner-squircle w-full">
               <InputGroupInput
                 placeholder="Recherche d'élève..."
                 value={quickFilterText}

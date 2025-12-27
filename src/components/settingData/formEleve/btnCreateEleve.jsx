@@ -32,7 +32,11 @@ import {
 } from '@/components/ui/select'
 import { useClasses } from '@/hooks/useClasses'
 import { toast } from 'sonner'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 
 const eleveSchema = z.object({
   prenom: z.string().min(1, { message: 'Le champ est requis' }),
@@ -99,20 +103,19 @@ function BtnCreateEleve({ selectClass, activeSwap }) {
               <Button
                 size="icon"
                 disabled={!selectClass}
-                className="corner-superellipse/1.5 font-clash flex h-full w-full flex-col p-6 justify-center text-lg font-extrabold uppercase"
+                className="corner-superellipse/1.5 font-clash flex h-full w-full flex-col justify-center p-6 text-lg font-extrabold uppercase"
               >
                 <User className="size-8 stroke-1 text-purple-500" />
-
               </Button>
             </AnimateIcon>
           </DialogTrigger>
         </TooltipTrigger>
-        <TooltipContent className="[&_svg]:bg-purple-200 [&_svg]:fill-purple-200 bg-purple-200 text-purple-800 font-clash text-lg font-extrabold uppercase">
+        <TooltipContent className="font-clash bg-purple-200 text-lg font-extrabold text-purple-800 uppercase [&_svg]:bg-purple-200 [&_svg]:fill-purple-200">
           Créer un élève
         </TooltipContent>
       </Tooltip>
 
-      <DialogContent className="p-8 corner-squircle">
+      <DialogContent className="corner-squircle p-8">
         <DialogHeader>
           <DialogTitle>Nouvel élève</DialogTitle>
           <DialogDescription>
@@ -129,7 +132,11 @@ function BtnCreateEleve({ selectClass, activeSwap }) {
                 <FormItem>
                   <FormLabel>Prénom</FormLabel>
                   <FormControl>
-                    <Input className="corner-superellipse/1.5" placeholder="Ex: Jean" {...field} />
+                    <Input
+                      className="corner-superellipse/1.5"
+                      placeholder="Ex: Jean"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -143,7 +150,11 @@ function BtnCreateEleve({ selectClass, activeSwap }) {
                 <FormItem>
                   <FormLabel>Nom</FormLabel>
                   <FormControl>
-                    <Input className="corner-superellipse/1.5" placeholder="Ex: Dupont" {...field} />
+                    <Input
+                      className="corner-superellipse/1.5"
+                      placeholder="Ex: Dupont"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -162,13 +173,17 @@ function BtnCreateEleve({ selectClass, activeSwap }) {
                       defaultValue={field.path}
                     >
                       <FormControl>
-                        <SelectTrigger className="w-full corner-superellipse/1.5">
+                        <SelectTrigger className="corner-superellipse/1.5 w-full">
                           <SelectValue placeholder="Sélectionner une classe" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent className="rounded-4xl border-0 p-1 corner-superellipse/1.5">
+                      <SelectContent className="corner-superellipse/1.5 rounded-4xl border-0 p-1">
                         {listClasses.map((classe) => (
-                          <SelectItem className="corner-superellipse/1.5" key={classe.id} value={classe.path}>
+                          <SelectItem
+                            className="corner-superellipse/1.5"
+                            key={classe.id}
+                            value={classe.path}
+                          >
                             {classe.name}
                           </SelectItem>
                         ))}
@@ -189,7 +204,11 @@ function BtnCreateEleve({ selectClass, activeSwap }) {
               >
                 Annuler
               </Button>
-              <Button type="submit" disabled={createEleve.isPending} className="corner-superellipse/1.5">
+              <Button
+                type="submit"
+                disabled={createEleve.isPending}
+                className="corner-superellipse/1.5"
+              >
                 {createEleve.isPending ? 'Ajout...' : "Ajouter l'élève"}
               </Button>
             </div>

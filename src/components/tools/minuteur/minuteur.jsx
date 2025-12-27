@@ -1,4 +1,12 @@
-import { ChevronUp, ChevronDown, Play, RotateCcw, Square, SquareArrowLeft, Pause } from 'lucide-react'
+import {
+  ChevronUp,
+  ChevronDown,
+  Play,
+  RotateCcw,
+  Square,
+  SquareArrowLeft,
+  Pause,
+} from 'lucide-react'
 import { useTimer } from 'react-timer-hook'
 import { useState } from 'react'
 import catDay from '@/assets/images/catDay.png'
@@ -111,9 +119,8 @@ function Minuteur() {
 
   return (
     <Card
-      className={`corner-squircle p-6 relative flex cursor-pointer overflow-hidden shadow-lg ${isRunning ? 'running' : ''}`}
+      className={`corner-squircle relative flex cursor-pointer overflow-hidden p-6 shadow-lg ${isRunning ? 'running' : ''}`}
     >
-
       <div
         onClick={handleEditTime}
         className={`flex w-4/5 justify-between gap-3`}
@@ -130,15 +137,19 @@ function Minuteur() {
                   e.stopPropagation()
                   adjustTime(textTime.type, 'up')
                 }}
-                color='var(--primary)'
+                color="var(--primary)"
               />
             )}
-            <span className={`font-semibold tabular-nums ${(textTime.type === 'hours' && hours > 0) ||
-              (textTime.type === 'minutes' && (hours > 0 || minutes > 0)) ||
-              (textTime.type === 'seconds' && (hours > 0 || minutes > 0 || seconds > 0))
-              ? 'text-primary'
-              : 'text-muted-foreground'
-              }`}>
+            <span
+              className={`font-semibold tabular-nums ${
+                (textTime.type === 'hours' && hours > 0) ||
+                (textTime.type === 'minutes' && (hours > 0 || minutes > 0)) ||
+                (textTime.type === 'seconds' &&
+                  (hours > 0 || minutes > 0 || seconds > 0))
+                  ? 'text-primary'
+                  : 'text-muted-foreground'
+              }`}
+            >
               {textTime.value.toString().padStart(2, '0')}
             </span>
             <span className="mt-[-8px] text-base font-extralight">
@@ -150,19 +161,19 @@ function Minuteur() {
                   e.stopPropagation()
                   adjustTime(textTime.type, 'down')
                 }}
-                color='var(--primary)'
+                color="var(--primary)"
               />
             )}
           </div>
         ))}
       </div>
-      <div className="corner-superellipse/1.5 rounded-2xl flex w-full h-20 bg-card p-2 items-center justify-center gap-3">
+      <div className="corner-superellipse/1.5 bg-card flex h-20 w-full items-center justify-center gap-3 rounded-2xl p-2">
         {expire ? (
           <Button
             type="button"
             onClick={handleRestart}
             variant="default"
-            className="h-full w-1/2 corner-squircle cursor-pointer"
+            className="corner-squircle h-full w-1/2 cursor-pointer"
           >
             <RotateCcw size={16} color="#fff" />
           </Button>
@@ -172,24 +183,24 @@ function Minuteur() {
               type="button"
               onDoubleClick={handleRestart}
               onClick={handleStart}
-              variant={isRunning ? "default" : "white"}
+              variant={isRunning ? 'default' : 'white'}
               className="corner-squircle h-full flex-1 cursor-pointer"
             >
               <Play
-                fill={isRunning ? "#fff" : "var(--primary)"}
-                color={isRunning ? "#fff" : "var(--primary)"}
+                fill={isRunning ? '#fff' : 'var(--primary)'}
+                color={isRunning ? '#fff' : 'var(--primary)'}
               />
             </Button>
 
             <Button
               onDoubleClick={handleReset}
               onClick={pause}
-              variant={isRunning ? "white" : "default"}
+              variant={isRunning ? 'white' : 'default'}
               className="corner-squircle h-full flex-1 cursor-pointer"
             >
               <Pause
-                fill={isRunning ? "var(--primary)" : "#fff"}
-                color={isRunning ? "var(--primary)" : "#fff"}
+                fill={isRunning ? 'var(--primary)' : '#fff'}
+                color={isRunning ? 'var(--primary)' : '#fff'}
                 size={16}
               />
             </Button>

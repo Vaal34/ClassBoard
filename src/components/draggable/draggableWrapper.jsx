@@ -64,7 +64,7 @@ export function DraggableWrapper({
         <Button
           variant="destructive"
           size="icon"
-          className="absolute -right-3 -top-3 z-10 h-7 w-7 rounded-full opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100"
+          className="absolute -top-3 -right-3 z-10 h-7 w-7 rounded-full opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100"
           onClick={(e) => {
             e.stopPropagation()
             onRemove(id)
@@ -85,7 +85,11 @@ export function DraggableWrapper({
       )}
 
       {/* Contenu de l'outil */}
-      <div className={isModifierPressed ? 'pointer-events-none' : 'pointer-events-auto'}>
+      <div
+        className={
+          isModifierPressed ? 'pointer-events-none' : 'pointer-events-auto'
+        }
+      >
         {children}
       </div>
     </div>

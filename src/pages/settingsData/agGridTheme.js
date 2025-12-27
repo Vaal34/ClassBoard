@@ -29,7 +29,7 @@ export const myTheme = themeQuartz.withParams({
   columnBorder: false,
   pinnedColumnBorder: false,
   wrapperBorderRadius: '1rem',
-  wrapperBorder: "0.5px solid var(--primary)",
+  wrapperBorder: '0.5px solid var(--primary)',
 
   // Sélection - couleur douce
   selectedRowBackgroundColor: 'var(--secondary)',

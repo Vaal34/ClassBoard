@@ -14,7 +14,7 @@ export function SettingGenerate({
   handleIsGenerate,
 }) {
   return (
-    <Card className="corner-squircle cursor-pointer relative grid h-96 w-full grid-cols-2 grid-rows-2 p-6">
+    <Card className="corner-squircle relative grid h-96 w-full cursor-pointer grid-cols-2 grid-rows-2 p-6">
       {/* Liste des élèves - une seule cellule pour toute la hauteur */}
       <div className="col-start-1 row-span-2 row-start-1 flex flex-col">
         <ScrollArea
@@ -52,7 +52,7 @@ export function SettingGenerate({
       </div>
 
       {/* Nombre de groupes - ligne 1, colonne 2 */}
-      <div className="corner-superellipse/1.5 bg-neutral-100 col-start-2 row-start-1 flex flex-col items-center justify-between rounded-3xl p-4">
+      <div className="corner-superellipse/1.5 col-start-2 row-start-1 flex flex-col items-center justify-between rounded-3xl bg-neutral-100 p-4">
         <span className="text-primary text-sm font-light">Groupes</span>
         <Counter
           className={'w-full justify-between bg-transparent'}
@@ -70,7 +70,7 @@ export function SettingGenerate({
       </div>
 
       {/* Élèves par groupe - ligne 2, colonne 2 */}
-      <div className="corner-superellipse/1.5 bg-neutral-100 col-start-2 row-start-2 flex flex-col items-center justify-between rounded-3xl p-4">
+      <div className="corner-superellipse/1.5 col-start-2 row-start-2 flex flex-col items-center justify-between rounded-3xl bg-neutral-100 p-4">
         <span className="text-primary text-sm font-light">Élèves</span>
         <Counter
           className={'w-full justify-between bg-transparent'}

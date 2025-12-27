@@ -14,7 +14,11 @@ import { Button } from '@/components/ui/button'
 import { Trash2 } from '@/components/animate-ui/icons/trash-2'
 import { AnimateIcon } from '@/components/animate-ui/icons/icon'
 import { toast } from 'sonner'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 
 function BtnDeleteEleve({ selectEleves, selectClass }) {
   const deleteEleve = useDeleteEleve(selectClass)
@@ -43,7 +47,7 @@ function BtnDeleteEleve({ selectEleves, selectClass }) {
               size="icon"
               variant="destructive"
               disabled={selectEleves.length === 0}
-              className="corner-superellipse/1.5 disabled:blur-[0.5px] font-clash flex h-full w-full flex-col gap-0 p-6 text-lg font-extrabold uppercase"
+              className="corner-superellipse/1.5 font-clash flex h-full w-full flex-col gap-0 p-6 text-lg font-extrabold uppercase disabled:blur-[0.5px]"
             >
               <AnimateIcon
                 animateOnHover
@@ -54,11 +58,11 @@ function BtnDeleteEleve({ selectEleves, selectClass }) {
             </Button>
           </AlertDialogTrigger>
         </TooltipTrigger>
-        <TooltipContent className="[&_svg]:bg-red-200 [&_svg]:fill-red-200 bg-red-200 text-red-800 font-clash text-lg font-extrabold uppercase">
+        <TooltipContent className="font-clash bg-red-200 text-lg font-extrabold text-red-800 uppercase [&_svg]:bg-red-200 [&_svg]:fill-red-200">
           Supprimer l'élève
         </TooltipContent>
       </Tooltip>
-      <AlertDialogContent className="p-8 corner-squircle">
+      <AlertDialogContent className="corner-squircle p-8">
         <AlertDialogHeader>
           <AlertDialogTitle>Êtes-vous sûr ?</AlertDialogTitle>
           <AlertDialogDescription>
@@ -74,8 +78,14 @@ function BtnDeleteEleve({ selectEleves, selectClass }) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="corner-superellipse/1.5">Annuler</AlertDialogCancel>
-          <AlertDialogAction className="corner-superellipse/1.5" onClick={handleDelete} variant="destructive">
+          <AlertDialogCancel className="corner-superellipse/1.5">
+            Annuler
+          </AlertDialogCancel>
+          <AlertDialogAction
+            className="corner-superellipse/1.5"
+            onClick={handleDelete}
+            variant="destructive"
+          >
             {deleteEleve.isPending ? 'Suppression...' : 'Supprimer les élèves'}
           </AlertDialogAction>
         </AlertDialogFooter>

@@ -28,9 +28,9 @@ function SwapData({ handleSwapData, activeSwap }) {
     <Tabs
       value={activeSwap}
       onValueChange={handleSwapData}
-      className="w-full h-full"
+      className="h-full w-full"
     >
-      <TabsList className="h-full w-full p-3 corner-squircle">
+      <TabsList className="corner-squircle h-full w-full p-3">
         {tabs.map((tab) => (
           <AnimateIcon
             key={tab.value}

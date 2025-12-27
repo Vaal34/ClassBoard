@@ -36,7 +36,11 @@ import * as z from 'zod'
 import { Badge } from '@/components/ui/badge'
 import { useUpdateEleve } from '@/hooks/useUpdateEleve'
 import { toast } from 'sonner'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 
 const eleveSchema = z.object({
   prenom: z.string().min(1, { message: 'Le champ est requis' }),
@@ -143,11 +147,11 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
             </AnimateIcon>
           </DialogTrigger>
         </TooltipTrigger>
-        <TooltipContent className=" [&_svg]:bg-blue-200 [&_svg]:fill-blue-200 bg-blue-200 text-blue-800 font-clash text-lg font-extrabold uppercase">
+        <TooltipContent className="font-clash bg-blue-200 text-lg font-extrabold text-blue-800 uppercase [&_svg]:bg-blue-200 [&_svg]:fill-blue-200">
           Modifier un élève
         </TooltipContent>
       </Tooltip>
-      <DialogContent className="p-8 corner-squircle">
+      <DialogContent className="corner-squircle p-8">
         <DialogHeader>
           <DialogTitle>Modifier l'élève</DialogTitle>
           <DialogDescription>
@@ -159,10 +163,14 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
           <SelectTrigger className="corner-superellipse/1.5">
             <SelectValue placeholder="Choisir un élève à modifier" />
           </SelectTrigger>
-          <SelectContent className="rounded-4xl border-0 p-1 corner-superellipse/1.5">
+          <SelectContent className="corner-superellipse/1.5 rounded-4xl border-0 p-1">
             {elevesToUse && elevesToUse.length > 0 ? (
               elevesToUse.map((eleve) => (
-                <SelectItem key={eleve.id} value={eleve.id} className="corner-superellipse/1.5">
+                <SelectItem
+                  key={eleve.id}
+                  value={eleve.id}
+                  className="corner-superellipse/1.5"
+                >
                   <span className="font-semibold">
                     {eleve.prenom}{' '}
                     <span className="font-light uppercase">{eleve.nom}</span>
@@ -235,7 +243,7 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
                       <SelectTrigger className="corner-superellipse/1.5">
                         <SelectValue placeholder="Choisir une classe" />
                       </SelectTrigger>
-                      <SelectContent className="rounded-4xl border-0 p-1 corner-superellipse/1.5">
+                      <SelectContent className="corner-superellipse/1.5 rounded-4xl border-0 p-1">
                         {listClasses &&
                           listClasses.map((classe) => (
                             <SelectItem
@@ -265,7 +273,9 @@ function BtnUpdateEleve({ selectClass, activeSwap }) {
                   Annuler
                 </Button>
               </DialogClose>
-              <Button className="corner-superellipse/1.5" type="submit">Modifier l'élève</Button>
+              <Button className="corner-superellipse/1.5" type="submit">
+                Modifier l'élève
+              </Button>
             </div>
           </form>
         </Form>

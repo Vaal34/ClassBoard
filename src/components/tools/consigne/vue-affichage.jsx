@@ -11,7 +11,7 @@ export function VueAffichage({ content, onBack, onSaveToHistory }) {
   }
 
   return (
-    <Card className="corner-squircle flex h-full w-full flex-col p-8 gap-2 shadow-lg">
+    <Card className="corner-squircle flex h-full w-full flex-col gap-2 p-8 shadow-lg">
       {/* Header avec actions */}
       <div className="flex items-center justify-between">
         <div className="text-muted-foreground/40 text-sm">

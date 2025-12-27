@@ -24,7 +24,11 @@ import { Button } from '@/components/ui/button'
 import { AnimateIcon } from '@/components/animate-ui/icons/icon'
 import { Users } from '@/components/animate-ui/icons/users'
 import { showToast } from '@/lib/toast-styles'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 // Schéma de validation
 const classeSchema = z.object({
   name: z
@@ -74,13 +78,13 @@ function BtnCreateClasse({ disabled }) {
   }
 
   return (
-    <Dialog open={formOpen} onOpenChange={setFormOpen}> 
+    <Dialog open={formOpen} onOpenChange={setFormOpen}>
       <Tooltip>
         <TooltipTrigger asChild>
           <DialogTrigger asChild>
             <Button
               disabled={disabled}
-              className="corner-superellipse/1.5 disabled:blur-[0.5px] rounded-full w-full font-clash flex h-full flex-col justify-center gap-0 text-lg font-extrabold uppercase"
+              className="corner-superellipse/1.5 font-clash flex h-full w-full flex-col justify-center gap-0 rounded-full text-lg font-extrabold uppercase disabled:blur-[0.5px]"
             >
               <AnimateIcon
                 animateOnHover
@@ -92,12 +96,12 @@ function BtnCreateClasse({ disabled }) {
             </Button>
           </DialogTrigger>
         </TooltipTrigger>
-        <TooltipContent className=" [&_svg]:bg-purple-200 [&_svg]:fill-purple-200 bg-purple-200 text-purple-800 font-clash text-lg font-extrabold uppercase">
+        <TooltipContent className="font-clash bg-purple-200 text-lg font-extrabold text-purple-800 uppercase [&_svg]:bg-purple-200 [&_svg]:fill-purple-200">
           Créer une classe
         </TooltipContent>
       </Tooltip>
 
-      <DialogContent className="p-8 corner-squircle">
+      <DialogContent className="corner-squircle p-8">
         <DialogHeader>
           <DialogTitle>Nouvelle Classe</DialogTitle>
           <DialogDescription>
@@ -114,7 +118,11 @@ function BtnCreateClasse({ disabled }) {
                 <FormItem>
                   <FormLabel>Nom de la Classe</FormLabel>
                   <FormControl>
-                    <Input className="corner-superellipse/1.5" placeholder="Ex: TleL" {...field} />
+                    <Input
+                      className="corner-superellipse/1.5"
+                      placeholder="Ex: TleL"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -128,7 +136,11 @@ function BtnCreateClasse({ disabled }) {
                 <FormItem>
                   <FormLabel>Chemin</FormLabel>
                   <FormControl>
-                    <Input className="corner-superellipse/1.5" placeholder="Ex: tlel" {...field} />
+                    <Input
+                      className="corner-superellipse/1.5"
+                      placeholder="Ex: tlel"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -144,7 +156,11 @@ function BtnCreateClasse({ disabled }) {
               >
                 Annuler
               </Button>
-              <Button className="corner-superellipse/1.5" type="submit" disabled={createClasse.isPending}>
+              <Button
+                className="corner-superellipse/1.5"
+                type="submit"
+                disabled={createClasse.isPending}
+              >
                 {createClasse.isPending ? 'Enregistrement...' : 'Enregistrer'}
               </Button>
             </div>

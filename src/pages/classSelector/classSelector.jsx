@@ -35,7 +35,7 @@ function ClassSelector() {
 
         <div className="flex gap-2">
           {/* Barre de recherche */}
-          <InputGroup className="w-80 corner-squircle">
+          <InputGroup className="corner-squircle w-80">
             <InputGroupInput
               placeholder="Rechercher une classe..."
               value={searchText}
@@ -55,7 +55,7 @@ function ClassSelector() {
               className="flex flex-col items-center"
             >
               <Button className="corner-squircle">
-                <Cog className="text-purple-200 " />
+                <Cog className="text-purple-200" />
               </Button>
             </AnimateIcon>
           </Link>

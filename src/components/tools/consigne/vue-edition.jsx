@@ -20,14 +20,19 @@ import {
   AlignRight,
   AlignJustify,
   AArrowDown,
-  AArrowUp
+  AArrowUp,
 } from 'lucide-react'
 import { useState } from 'react'
 
 /**
  * Vue d'édition de la consigne avec éditeur de texte riche
  */
-export function VueEdition({ content, onContentChange, onShowDisplay, onShowHistory }) {
+export function VueEdition({
+  content,
+  onContentChange,
+  onShowDisplay,
+  onShowHistory,
+}) {
   const [currentFontSize, setCurrentFontSize] = useState(16) // Taille en pixels
   const [showColorPicker, setShowColorPicker] = useState(false)
 
@@ -80,9 +85,9 @@ export function VueEdition({ content, onContentChange, onShowDisplay, onShowHist
   }
 
   return (
-    <Card className="corner-squircle p-6 w-[485px] flex flex-col gap-4 shadow-lg">
+    <Card className="corner-squircle flex w-[485px] flex-col gap-4 p-6 shadow-lg">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold text-primary">
+        <h2 className="text-primary text-xl font-semibold">
           Éditer la consigne
         </h2>
         <Button
@@ -96,7 +101,7 @@ export function VueEdition({ content, onContentChange, onShowDisplay, onShowHist
       </div>
 
       {/* Toolbar de formatage */}
-      <div className="flex gap-1.5 p-2 bg-muted/30 rounded-lg corner-squircle overflow-visible">
+      <div className="bg-muted/30 corner-squircle flex gap-1.5 overflow-visible rounded-lg p-2">
         {/* Formatage de texte */}
         <div className="flex gap-1">
           <Button
@@ -125,7 +130,7 @@ export function VueEdition({ content, onContentChange, onShowDisplay, onShowHist
           </Button>
         </div>
 
-        <div className="h-9 w-px bg-border" />
+        <div className="bg-border h-9 w-px" />
 
         {/* Taille de texte */}
         <div className="flex gap-1">
@@ -149,13 +154,15 @@ export function VueEdition({ content, onContentChange, onShowDisplay, onShowHist
           </Button>
         </div>
 
-        <div className="h-9 w-px bg-border" />
+        <div className="bg-border h-9 w-px" />
 
         {/* Alignement de texte */}
         <div className="flex gap-1">
           <Button
             onClick={() => editor.chain().focus().setTextAlign('left').run()}
-            variant={editor.isActive({ textAlign: 'left' }) ? 'default' : 'outline'}
+            variant={
+              editor.isActive({ textAlign: 'left' }) ? 'default' : 'outline'
+            }
             size="icon"
             className="corner-squircle h-9 w-9"
           >
@@ -163,7 +170,9 @@ export function VueEdition({ content, onContentChange, onShowDisplay, onShowHist
           </Button>
           <Button
             onClick={() => editor.chain().focus().setTextAlign('center').run()}
-            variant={editor.isActive({ textAlign: 'center' }) ? 'default' : 'outline'}
+            variant={
+              editor.isActive({ textAlign: 'center' }) ? 'default' : 'outline'
+            }
             size="icon"
             className="corner-squircle h-9 w-9"
           >
@@ -171,7 +180,9 @@ export function VueEdition({ content, onContentChange, onShowDisplay, onShowHist
           </Button>
           <Button
             onClick={() => editor.chain().focus().setTextAlign('right').run()}
-            variant={editor.isActive({ textAlign: 'right' }) ? 'default' : 'outline'}
+            variant={
+              editor.isActive({ textAlign: 'right' }) ? 'default' : 'outline'
+            }
             size="icon"
             className="corner-squircle h-9 w-9"
           >
@@ -179,7 +190,9 @@ export function VueEdition({ content, onContentChange, onShowDisplay, onShowHist
           </Button>
           <Button
             onClick={() => editor.chain().focus().setTextAlign('justify').run()}
-            variant={editor.isActive({ textAlign: 'justify' }) ? 'default' : 'outline'}
+            variant={
+              editor.isActive({ textAlign: 'justify' }) ? 'default' : 'outline'
+            }
             size="icon"
             className="corner-squircle h-9 w-9"
           >
@@ -187,7 +200,7 @@ export function VueEdition({ content, onContentChange, onShowDisplay, onShowHist
           </Button>
         </div>
 
-        <div className="h-9 w-px bg-border" />
+        <div className="bg-border h-9 w-px" />
 
         {/* Couleurs */}
         <div className="relative">
@@ -201,7 +214,7 @@ export function VueEdition({ content, onContentChange, onShowDisplay, onShowHist
           </Button>
 
           {showColorPicker && (
-            <div className="fixed mt-2 z-50 p-2 bg-card border rounded-lg grid grid-cols-4 corner-superellipse/3 shadow-lg gap-1 flex-wrap">
+            <div className="bg-card corner-superellipse/3 fixed z-50 mt-2 grid grid-cols-4 flex-wrap gap-1 rounded-lg border p-2 shadow-lg">
               {colors.map((color) => (
                 <Button
                   key={color}
@@ -209,7 +222,7 @@ export function VueEdition({ content, onContentChange, onShowDisplay, onShowHist
                     editor.chain().focus().setColor(color).run()
                     setShowColorPicker(false)
                   }}
-                  className="w-8 h-8 rounded-lg border border-black corner-squircle hover:scale-110 transition-transform"
+                  className="corner-squircle h-8 w-8 rounded-lg border border-black transition-transform hover:scale-110"
                   style={{ backgroundColor: color }}
                 />
               ))}
@@ -219,9 +232,7 @@ export function VueEdition({ content, onContentChange, onShowDisplay, onShowHist
       </div>
 
       {/* Éditeur */}
-      <div
-        className="flex-1 min-h-[200px] max-h-[300px] overflow-y-auto p-4 border rounded-lg corner-squircle bg-card focus-within:ring-2 focus-within:ring-primary"
-      >
+      <div className="corner-squircle bg-card focus-within:ring-primary max-h-[300px] min-h-[200px] flex-1 overflow-y-auto rounded-lg border p-4 focus-within:ring-2">
         <style>{`
           .ProseMirror {
             outline: none;
@@ -245,7 +256,7 @@ export function VueEdition({ content, onContentChange, onShowDisplay, onShowHist
         <Button
           onClick={onShowDisplay}
           variant="default"
-          className="corner-squircle flex-1 h-12"
+          className="corner-squircle h-12 flex-1"
         >
           <Eye size={16} className="mr-2" />
           Afficher à la classe

@@ -6,7 +6,12 @@ import { ArrowLeft, Trash2, Eye } from 'lucide-react'
 /**
  * Vue de l'historique des consignes sauvegardées
  */
-export function VueHistorique({ history, onBack, onLoadFromHistory, onDeleteFromHistory }) {
+export function VueHistorique({
+  history,
+  onBack,
+  onLoadFromHistory,
+  onDeleteFromHistory,
+}) {
   const formatDate = (timestamp) => {
     const date = new Date(timestamp)
     return date.toLocaleString('fr-FR', {
@@ -27,7 +32,7 @@ export function VueHistorique({ history, onBack, onLoadFromHistory, onDeleteFrom
   }
 
   return (
-    <Card className="corner-squircle p-6 w-full flex flex-col gap-4 shadow-lg">
+    <Card className="corner-squircle flex w-full flex-col gap-4 p-6 shadow-lg">
       <div className="flex items-center gap-3">
         <Button
           onClick={onBack}
@@ -37,57 +42,57 @@ export function VueHistorique({ history, onBack, onLoadFromHistory, onDeleteFrom
         >
           <ArrowLeft size={16} />
         </Button>
-        <h2 className="text-xl font-semibold text-primary">
+        <h2 className="text-primary text-xl font-semibold">
           Historique des consignes
         </h2>
       </div>
 
-      <div className="h-[400px] w-full border corner-squircle rounded-xl overflow-hidden">
-        <ScrollArea className="h-full w-full  ">
+      <div className="corner-squircle h-[400px] w-full overflow-hidden rounded-xl border">
+        <ScrollArea className="h-full w-full">
           {history.length === 0 ? (
-            <div className="flex items-center justify-center h-full">
+            <div className="flex h-full items-center justify-center">
               <p className="text-muted-foreground">
                 Aucune consigne dans l'historique
               </p>
             </div>
           ) : (
             <div className="flex flex-col gap-2 p-2">
-            {history.map((item) => (
-              <Card
-                key={item.id}
-                className="corner-squircle p-4 hover:bg-muted/50 transition-colors"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex-1 min-w-0">
-                    <p className="text-xs text-muted-foreground mb-1">
-                      {formatDate(item.timestamp)}
-                    </p>
-                    <p className="text-sm truncate">
-                      {getPreview(item.content)}
-                    </p>
-                  </div>
+              {history.map((item) => (
+                <Card
+                  key={item.id}
+                  className="corner-squircle hover:bg-muted/50 p-4 transition-colors"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-muted-foreground mb-1 text-xs">
+                        {formatDate(item.timestamp)}
+                      </p>
+                      <p className="truncate text-sm">
+                        {getPreview(item.content)}
+                      </p>
+                    </div>
 
-                  <div className="flex gap-1">
-                    <Button
-                      onClick={() => onLoadFromHistory(item.content)}
-                      variant="outline"
-                      size="icon"
-                      className="corner-squircle h-8 w-8"
-                    >
-                      <Eye size={14} />
-                    </Button>
-                    <Button
-                      onClick={() => onDeleteFromHistory(item.id)}
-                      variant="outline"
-                      size="icon"
-                      className="corner-squircle h-8 w-8 text-destructive hover:text-destructive"
-                    >
-                      <Trash2 size={14} />
-                    </Button>
+                    <div className="flex gap-1">
+                      <Button
+                        onClick={() => onLoadFromHistory(item.content)}
+                        variant="outline"
+                        size="icon"
+                        className="corner-squircle h-8 w-8"
+                      >
+                        <Eye size={14} />
+                      </Button>
+                      <Button
+                        onClick={() => onDeleteFromHistory(item.id)}
+                        variant="outline"
+                        size="icon"
+                        className="corner-squircle text-destructive hover:text-destructive h-8 w-8"
+                      >
+                        <Trash2 size={14} />
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              </Card>
-            ))}
+                </Card>
+              ))}
             </div>
           )}
         </ScrollArea>

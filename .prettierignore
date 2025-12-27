@@ -10,3 +10,6 @@ coverage
 *.log
 .env*
 .DS_Store
+.claude
+/src/components/ui
+/src/components/animate-ui

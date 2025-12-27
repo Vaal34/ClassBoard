@@ -14,7 +14,11 @@ import { Button } from '@/components/ui/button'
 import { AnimateIcon } from '@/components/animate-ui/icons/icon'
 import { Trash2 } from '@/components/animate-ui/icons/trash-2'
 import { toast } from 'sonner'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 
 function BtnDeleteClasse({ selectClass, disabled }) {
   const deleteClass = useDeleteClasse()
@@ -44,7 +48,7 @@ function BtnDeleteClasse({ selectClass, disabled }) {
             <Button
               variant="destructive"
               disabled={disabled || !selectClass}
-              className="corner-superellipse/1.5 disabled:blur-[0.5px] font-clash flex h-full w-full flex-col p-6 text-lg font-extrabold uppercase"
+              className="corner-superellipse/1.5 font-clash flex h-full w-full flex-col p-6 text-lg font-extrabold uppercase disabled:blur-[0.5px]"
             >
               <AnimateIcon
                 animateOnHover
@@ -55,11 +59,11 @@ function BtnDeleteClasse({ selectClass, disabled }) {
             </Button>
           </AlertDialogTrigger>
         </TooltipTrigger>
-        <TooltipContent className=" [&_svg]:bg-red-200 [&_svg]:fill-red-200 bg-red-200 text-red-800 font-clash text-lg font-extrabold uppercase">
+        <TooltipContent className="font-clash bg-red-200 text-lg font-extrabold text-red-800 uppercase [&_svg]:bg-red-200 [&_svg]:fill-red-200">
           Supprimer la classe
         </TooltipContent>
       </Tooltip>
-      <AlertDialogContent className="p-8 corner-squircle">
+      <AlertDialogContent className="corner-squircle p-8">
         <AlertDialogHeader>
           <AlertDialogTitle>Êtes-vous sûr ?</AlertDialogTitle>
           <AlertDialogDescription>
@@ -68,7 +72,9 @@ function BtnDeleteClasse({ selectClass, disabled }) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="corner-superellipse/1.5">Annuler</AlertDialogCancel>
+          <AlertDialogCancel className="corner-superellipse/1.5">
+            Annuler
+          </AlertDialogCancel>
           <AlertDialogAction
             onClick={handleDelete}
             disabled={deleteClass.isPending}

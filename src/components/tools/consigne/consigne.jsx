@@ -29,7 +29,7 @@ function Consigne({ dataClasse }) {
       try {
         setHistory(JSON.parse(savedHistory))
       } catch (e) {
-        console.error('Erreur lors du chargement de l\'historique:', e)
+        console.error("Erreur lors du chargement de l'historique:", e)
       }
     }
   }, [])
@@ -148,7 +148,7 @@ function Consigne({ dataClasse }) {
       {currentView === 'affichage' && (
         <div
           onMouseDown={handleMouseDown}
-          className="absolute bottom-2 right-2 cursor-se-resize p-1 rounded hover:bg-muted/50 transition-colors"
+          className="hover:bg-muted/50 absolute right-2 bottom-2 cursor-se-resize rounded p-1 transition-colors"
           style={{ touchAction: 'none' }}
         >
           <Maximize2 size={16} className="text-muted-foreground" />
