@@ -3,14 +3,13 @@ import {
   ChevronDown,
   Play,
   RotateCcw,
-  Square,
-  SquareArrowLeft,
   Pause,
+  Volume2,
+  VolumeX,
+  Clock,
 } from 'lucide-react'
 import { useTimer } from 'react-timer-hook'
-import { useState } from 'react'
-import catDay from '@/assets/images/catDay.png'
-import catNight from '@/assets/images/catNight.jpg'
+import { useState, useRef } from 'react'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 
@@ -20,6 +19,9 @@ function Minuteur() {
   const [customHours, setCustomHours] = useState(0)
   const [customMinutes, setCustomMinutes] = useState(0)
   const [customSeconds, setCustomSeconds] = useState(10)
+  const [soundEnabled, setSoundEnabled] = useState(true)
+  const [showPresets, setShowPresets] = useState(false)
+  const audioContextRef = useRef(null)
 
   const getExpiryTime = () => {
     const now = new Date()
@@ -28,12 +30,75 @@ function Minuteur() {
     return now
   }
 
+  // Play notification sound using Web Audio API
+  const playNotificationSound = () => {
+    if (!soundEnabled) return
+
+    try {
+      if (!audioContextRef.current) {
+        audioContextRef.current = new (window.AudioContext ||
+          window.webkitAudioContext)()
+      }
+
+      const ctx = audioContextRef.current
+      const oscillator = ctx.createOscillator()
+      const gainNode = ctx.createGain()
+
+      oscillator.connect(gainNode)
+      gainNode.connect(ctx.destination)
+
+      // Pleasant bell-like sound
+      oscillator.frequency.setValueAtTime(800, ctx.currentTime)
+      oscillator.frequency.exponentialRampToValueAtTime(
+        400,
+        ctx.currentTime + 0.5
+      )
+
+      gainNode.gain.setValueAtTime(0.3, ctx.currentTime)
+      gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5)
+
+      oscillator.start(ctx.currentTime)
+      oscillator.stop(ctx.currentTime + 0.5)
+    } catch (error) {
+      console.error('Error playing sound:', error)
+    }
+  }
+
   const { seconds, minutes, hours, isRunning, pause, resume, restart } =
     useTimer({
       expiryTimestamp: getExpiryTime(),
       autoStart: false,
-      onExpire: () => setExpire(true),
+      onExpire: () => {
+        setExpire(true)
+        playNotificationSound()
+      },
     })
+
+  // Preset times in seconds
+  const presets = [
+    { label: '1 min', seconds: 60 },
+    { label: '5 min', seconds: 300 },
+    { label: '10 min', seconds: 600 },
+    { label: '15 min', seconds: 900 },
+    { label: '30 min', seconds: 1800 },
+  ]
+
+  const setPresetTime = (totalSeconds) => {
+    const h = Math.floor(totalSeconds / 3600)
+    const m = Math.floor((totalSeconds % 3600) / 60)
+    const s = totalSeconds % 60
+
+    setCustomHours(h)
+    setCustomMinutes(m)
+    setCustomSeconds(s)
+    setShowPresets(false)
+    setEditTime(false)
+
+    const now = new Date()
+    now.setSeconds(now.getSeconds() + totalSeconds)
+    restart(now, false)
+    setExpire(false)
+  }
 
   const handleRestart = () => {
     restart(getExpiryTime(), false)
@@ -119,11 +184,77 @@ function Minuteur() {
 
   return (
     <Card
-      className={`corner-squircle relative flex cursor-pointer overflow-hidden p-6 shadow-lg ${isRunning ? 'running' : ''}`}
+      className={`corner-squircle relative flex flex-col w-80 overflow-hidden p-6 shadow-lg gap-4 ${isRunning ? 'running' : ''} ${expire ? 'animate-pulse' : ''}`}
     >
+      {/* Expiration overlay */}
+      {expire && (
+        <div className="absolute inset-0 bg-primary/95 flex flex-col items-center justify-center z-10 gap-4">
+          <p className="text-4xl font-bold text-white">Temps écoulé !</p>
+          <Button
+            onClick={handleRestart}
+            variant="secondary"
+            className="corner-squircle"
+          >
+            <RotateCcw size={16} className="mr-2" />
+            Recommencer
+          </Button>
+        </div>
+      )}
+
+      {/* Header with preset and sound buttons */}
+      {!isRunning && (
+        <div className="flex items-center justify-between gap-2">
+          <Button
+            onClick={(e) => {
+              e.stopPropagation()
+              setShowPresets(!showPresets)
+            }}
+            variant="outline"
+            size="sm"
+            className="corner-squircle h-8"
+          >
+            <Clock size={14} className="mr-1" />
+            Presets
+          </Button>
+
+          <Button
+            onClick={(e) => {
+              e.stopPropagation()
+              setSoundEnabled(!soundEnabled)
+            }}
+            variant="ghost"
+            size="sm"
+            className="corner-squircle h-8 w-8 p-0"
+          >
+            {soundEnabled ? (
+              <Volume2 size={16} color="var(--primary)" />
+            ) : (
+              <VolumeX size={16} color="var(--muted-foreground)" />
+            )}
+          </Button>
+        </div>
+      )}
+
+      {/* Preset buttons */}
+      {showPresets && !isRunning && (
+        <div className="flex flex-wrap gap-2">
+          {presets.map((preset) => (
+            <Button
+              key={preset.label}
+              onClick={() => setPresetTime(preset.seconds)}
+              variant="outline"
+              size="sm"
+              className="corner-squircle flex-1"
+            >
+              {preset.label}
+            </Button>
+          ))}
+        </div>
+      )}
+
       <div
         onClick={handleEditTime}
-        className={`flex w-4/5 justify-between gap-3`}
+        className={`flex justify-between gap-3 ${editTime ? 'ring-2 ring-primary/50 rounded-lg p-2 -m-2' : 'cursor-pointer'}`}
       >
         {textTimesDict.map((textTime, index) => (
           <div
@@ -152,7 +283,7 @@ function Minuteur() {
             >
               {textTime.value.toString().padStart(2, '0')}
             </span>
-            <span className="mt-[-8px] text-base font-extralight">
+            <span className="-mt-2 text-base font-extralight">
               {textTime.label}
             </span>
             {editTime && !isRunning && (
@@ -168,45 +299,41 @@ function Minuteur() {
         ))}
       </div>
       <div className="corner-superellipse/1.5 bg-card flex h-20 w-full items-center justify-center gap-3 rounded-2xl p-2">
-        {expire ? (
-          <Button
-            type="button"
-            onClick={handleRestart}
-            variant="default"
-            className="corner-squircle h-full w-1/2 cursor-pointer"
-          >
-            <RotateCcw size={16} color="#fff" />
-          </Button>
-        ) : (
-          <>
-            <Button
-              type="button"
-              onDoubleClick={handleRestart}
-              onClick={handleStart}
-              variant={isRunning ? 'default' : 'white'}
-              className="corner-squircle h-full flex-1 cursor-pointer"
-            >
-              <Play
-                fill={isRunning ? '#fff' : 'var(--primary)'}
-                color={isRunning ? '#fff' : 'var(--primary)'}
-              />
-            </Button>
+        <Button
+          type="button"
+          onDoubleClick={handleRestart}
+          onClick={handleStart}
+          variant={isRunning ? 'default' : 'white'}
+          className="corner-squircle h-full flex-1 cursor-pointer"
+        >
+          <Play
+            fill={isRunning ? 'currentColor' : 'var(--primary)'}
+            color={isRunning ? 'currentColor' : 'var(--primary)'}
+            className={isRunning ? 'text-white' : ''}
+          />
+        </Button>
 
-            <Button
-              onDoubleClick={handleReset}
-              onClick={pause}
-              variant={isRunning ? 'white' : 'default'}
-              className="corner-squircle h-full flex-1 cursor-pointer"
-            >
-              <Pause
-                fill={isRunning ? 'var(--primary)' : '#fff'}
-                color={isRunning ? 'var(--primary)' : '#fff'}
-                size={16}
-              />
-            </Button>
-          </>
-        )}
+        <Button
+          onDoubleClick={handleReset}
+          onClick={pause}
+          variant={isRunning ? 'white' : 'default'}
+          className="corner-squircle h-full flex-1 cursor-pointer"
+        >
+          <Pause
+            fill={isRunning ? 'var(--primary)' : 'currentColor'}
+            color={isRunning ? 'var(--primary)' : 'currentColor'}
+            className={isRunning ? '' : 'text-white'}
+            size={16}
+          />
+        </Button>
       </div>
+
+      {/* Hint text */}
+      {!isRunning && !editTime && !showPresets && (
+        <p className="text-xs text-muted-foreground/40 text-center -mt-2">
+          Cliquez sur les chiffres pour éditer • Double-clic pour reset
+        </p>
+      )}
     </Card>
   )
 }
