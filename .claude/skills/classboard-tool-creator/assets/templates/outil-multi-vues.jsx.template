@@ -1,0 +1,45 @@
+import { useState } from 'react'
+import { VuePrincipale } from './vue-principale'
+import { VueParametres } from './vue-parametres'
+
+/**
+ * {{TOOL_DESCRIPTION}}
+ *
+ * Outil avec plusieurs vues pour ClassBoard
+ * @param {Object} dataClasse - Données de la classe (id, nom, niveau, eleves)
+ */
+function {{TOOL_NAME_PASCAL}}({ dataClasse }) {
+  const [currentView, setCurrentView] = useState('principale')
+  const [config, setConfig] = useState({
+    option1: true,
+    option2: false,
+  })
+
+  const handleViewChange = (view) => {
+    setCurrentView(view)
+  }
+
+  const handleConfigChange = (newConfig) => {
+    setConfig(newConfig)
+  }
+
+  return (
+    <>
+      {currentView === 'principale' ? (
+        <VuePrincipale
+          dataClasse={dataClasse}
+          config={config}
+          onOpenSettings={() => handleViewChange('parametres')}
+        />
+      ) : (
+        <VueParametres
+          config={config}
+          onConfigChange={handleConfigChange}
+          onBack={() => handleViewChange('principale')}
+        />
+      )}
+    </>
+  )
+}
+
+export default {{TOOL_NAME_PASCAL}}

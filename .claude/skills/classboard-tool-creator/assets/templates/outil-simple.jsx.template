@@ -1,0 +1,35 @@
+import { Card } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+
+/**
+ * {{TOOL_DESCRIPTION}}
+ *
+ * Outil simple pour ClassBoard
+ * @param {Object} dataClasse - Données de la classe (id, nom, niveau, eleves)
+ */
+function {{TOOL_NAME_PASCAL}}({ dataClasse }) {
+  return (
+    <Card className="corner-squircle p-6 w-96 h-48 flex flex-col gap-4 shadow-lg">
+      <h2 className="text-xl font-semibold text-primary">
+        {{TOOL_DISPLAY_NAME}}
+      </h2>
+
+      <div className="flex-1 flex items-center justify-center">
+        <p className="text-muted-foreground">
+          Contenu de l'outil ici
+        </p>
+      </div>
+
+      <div className="flex gap-2">
+        <Button
+          variant="default"
+          className="corner-squircle flex-1"
+        >
+          Action
+        </Button>
+      </div>
+    </Card>
+  )
+}
+
+export default {{TOOL_NAME_PASCAL}}

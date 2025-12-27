@@ -1,0 +1,75 @@
+import { useState } from 'react'
+import { Card } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+
+/**
+ * {{TOOL_DESCRIPTION}}
+ *
+ * Outil avec état pour ClassBoard
+ * @param {Object} dataClasse - Données de la classe (id, nom, niveau, eleves)
+ */
+function {{TOOL_NAME_PASCAL}}({ dataClasse }) {
+  const [isActive, setIsActive] = useState(false)
+  const [value, setValue] = useState(0)
+
+  const handleToggle = () => {
+    setIsActive(!isActive)
+  }
+
+  const handleIncrement = () => {
+    setValue((prev) => prev + 1)
+  }
+
+  const handleReset = () => {
+    setValue(0)
+    setIsActive(false)
+  }
+
+  return (
+    <Card className="corner-squircle p-6 w-96 flex flex-col gap-4 shadow-lg">
+      <h2 className="text-xl font-semibold text-primary">
+        {{TOOL_DISPLAY_NAME}}
+      </h2>
+
+      <div className="flex-1 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-5xl font-bold tabular-nums text-primary">
+            {value}
+          </p>
+          <p className="text-sm text-muted-foreground mt-2">
+            {isActive ? 'Actif' : 'Inactif'}
+          </p>
+        </div>
+      </div>
+
+      <div className="flex gap-2">
+        <Button
+          onClick={handleToggle}
+          variant={isActive ? 'default' : 'white'}
+          className="corner-squircle flex-1"
+        >
+          {isActive ? 'Désactiver' : 'Activer'}
+        </Button>
+
+        <Button
+          onClick={handleIncrement}
+          variant="default"
+          className="corner-squircle flex-1"
+          disabled={!isActive}
+        >
+          +1
+        </Button>
+
+        <Button
+          onClick={handleReset}
+          variant="outline"
+          className="corner-squircle"
+        >
+          Reset
+        </Button>
+      </div>
+    </Card>
+  )
+}
+
+export default {{TOOL_NAME_PASCAL}}

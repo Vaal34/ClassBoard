@@ -1,0 +1,66 @@
+import { Card } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
+import { ArrowLeft } from 'lucide-react'
+
+/**
+ * Vue des paramètres de l'outil {{TOOL_NAME_PASCAL}}
+ */
+export function VueParametres({ config, onConfigChange, onBack }) {
+  const handleToggleOption = (optionKey) => {
+    onConfigChange({
+      ...config,
+      [optionKey]: !config[optionKey],
+    })
+  }
+
+  return (
+    <Card className="corner-squircle p-6 w-96 flex flex-col gap-4 shadow-lg">
+      <div className="flex items-center gap-3">
+        <Button
+          onClick={onBack}
+          variant="outline"
+          size="icon"
+          className="corner-squircle"
+        >
+          <ArrowLeft size={16} />
+        </Button>
+        <h2 className="text-xl font-semibold text-primary">
+          Paramètres
+        </h2>
+      </div>
+
+      <div className="flex-1 flex flex-col gap-3">
+        <div className="flex items-center gap-2">
+          <Checkbox
+            id="option1"
+            checked={config.option1}
+            onCheckedChange={() => handleToggleOption('option1')}
+          />
+          <label htmlFor="option1" className="text-sm cursor-pointer">
+            Option 1
+          </label>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <Checkbox
+            id="option2"
+            checked={config.option2}
+            onCheckedChange={() => handleToggleOption('option2')}
+          />
+          <label htmlFor="option2" className="text-sm cursor-pointer">
+            Option 2
+          </label>
+        </div>
+      </div>
+
+      <Button
+        onClick={onBack}
+        variant="default"
+        className="corner-squircle"
+      >
+        Valider
+      </Button>
+    </Card>
+  )
+}

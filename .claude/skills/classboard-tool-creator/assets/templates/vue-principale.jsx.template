@@ -1,0 +1,41 @@
+import { Card } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Settings } from 'lucide-react'
+
+/**
+ * Vue principale de l'outil {{TOOL_NAME_PASCAL}}
+ */
+export function VuePrincipale({ dataClasse, config, onOpenSettings }) {
+  return (
+    <Card className="corner-squircle p-6 w-96 flex flex-col gap-4 shadow-lg">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-semibold text-primary">
+          {{TOOL_DISPLAY_NAME}}
+        </h2>
+        <Button
+          onClick={onOpenSettings}
+          variant="outline"
+          size="icon"
+          className="corner-squircle"
+        >
+          <Settings size={16} />
+        </Button>
+      </div>
+
+      <div className="flex-1 flex items-center justify-center">
+        <p className="text-muted-foreground">
+          Contenu principal ici
+        </p>
+      </div>
+
+      <div className="flex gap-2">
+        <Button
+          variant="default"
+          className="corner-squircle flex-1"
+        >
+          Action
+        </Button>
+      </div>
+    </Card>
+  )
+}
